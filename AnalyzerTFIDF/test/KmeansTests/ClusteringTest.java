@@ -21,12 +21,21 @@ import static org.junit.Assert.*;
  * @author Mads
  */
 public class ClusteringTest {
-    
+    Double[] space1;
+    Double[] space2;
+    Double[] space3;
+    Double[] space4;
+    Text text1;
+    Text text2;
+    Text text3;
+    Text text4;
+    ArrayList<Text> corpus;
+    Clustering clusterClass;
     public ClusteringTest() {
     }
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() {  
     }
     
     @AfterClass
@@ -35,15 +44,9 @@ public class ClusteringTest {
     
     @Before
     public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-     @Test
-     public void clustering() {
-         Double[] space1 = new Double[10];
+        //Setup vector space for each text
+        //The values are approximately correct, but not computed. 
+        space1 = new Double[10];
         space1[0] = 0.1;
         space1[1] = 0.2;
         space1[2] = 0.2;
@@ -54,7 +57,7 @@ public class ClusteringTest {
         space1[7] = 0.0;
         space1[8] = 0.0;
         space1[9] = 0.0;
-        Double[] space2 = new Double[10];
+        space2 = new Double[10];
         space2[0] = 0.0;
         space2[1] = 0.2;
         space2[2] = 0.2;
@@ -65,7 +68,7 @@ public class ClusteringTest {
         space2[7] = 0.0;
         space2[8] = 0.0;
         space2[9] = 0.0;
-        Double[] space3 = new Double[10];
+        space3 = new Double[10];
         space3[0] = 0.0;
         space3[1] = 0.0;
         space3[2] = 0.0;
@@ -76,7 +79,7 @@ public class ClusteringTest {
         space3[7] = 0.0;
         space3[8] = 0.0;
         space3[9] = 0.0;
-        Double[] space4 = new Double[10];
+        space4 = new Double[10];
         space4[0] = 0.0;
         space4[1] = 0.0;
         space4[2] = 0.0;
@@ -88,21 +91,46 @@ public class ClusteringTest {
         space4[8] = 0.1;
         space4[9] = 0.1;
         //Create test texts
-        Text text1 = new Text("Mads er dejlig", space1);
-        Text text2 = new Text("Is er dejlig", space2);
-        Text text3 = new Text("En sort kat", space3);
-        Text text4 = new Text("En sort gryde med låg", space4);
-        Clustering clusterClass = new Clustering();
-        ArrayList<Text> texts = new ArrayList<>();
+        text1 = new Text("Mads er dejlig", space1);
+        text2 = new Text("Is er dejlig", space2);
+        text3 = new Text("En sort kat", space3);
+        text4 = new Text("En sort gryde med låg", space4);
+        clusterClass = new Clustering();
+        corpus = new ArrayList<>();
         //Add texts to corpus
-        texts.add(text4); texts.add(text2); texts.add(text3); texts.add(text1);
-        ArrayList<Centroid> result = clusterClass.prepareCluster(2, texts);
-        
-        for(Centroid c : result) {
-            System.out.print("Cluster \n");
+        corpus.add(text4); corpus.add(text2); corpus.add(text3); corpus.add(text1);
+    }
+    
+    @After
+    public void tearDown() {
+    }
+
+     @Test
+     public void clustering() { 
+         
+         //Because of the random picking of centroids, testing the clustering will not always yield the correct result.
+         //Use Human eyes to verify test results. 
+         //Expected result is a cluster with: "Is er dejlig" & "Mads er dejlig" and a cluster with: "En sort gryde med låg" & "En sort kat"
+         //Not necessarily in that order.
+         
+         ArrayList<ArrayList<Centroid>> results = new ArrayList<>();
+        results.add(clusterClass.prepareCluster(2, corpus));
+        results.add(clusterClass.prepareCluster(2, corpus));
+        results.add(clusterClass.prepareCluster(2, corpus));
+        results.add(clusterClass.prepareCluster(2, corpus));
+        results.add(clusterClass.prepareCluster(2, corpus));
+        int i = 1;
+        for(ArrayList<Centroid> r : results) {
+            int index =1;
+            System.out.println("---------------------------------------Result: " + i + "-------------------------------------------------");
+            for(Centroid c : r) {
+            System.out.println("\nCluster: " + index);
             for(Text t : c.GroupedDocument) {
-                System.out.println(t.getContent() + "\n");
+                System.out.println(t.getContent());
             }
+            index++;
         }
+        }
+        
      }
 }
