@@ -26,7 +26,7 @@ public class Corpus {
 
     public Corpus(Text text) {
         texts = new ArrayList<Text>();
-        keywords = new Keywords(text.keywords.keywordMap);
+        keywords = new Keywords(text);
         update(text);
     }
 
@@ -44,23 +44,15 @@ public class Corpus {
         // Add text to corpus
         texts.add(text);
 
-        // compare text keywords with the rest of the corpus texts
-        for (Text t : texts) {
-
-            Iterator it = t.keywords.keywordMap.entrySet().iterator();
-
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-
-                if (keywords.keywordMap.containsKey(pair.getKey())) {
-                    keywords.keywordMap.put(pair.getKey().toString(), keywords.keywordMap.get(pair.getKey()) + 1);
-                } else {
-                    keywords.keywordMap.put(pair.getKey().toString(), 1);
-                }
-
+        // Update key value (frequency) map
+        for (Map.Entry<String, Integer> entry : text.keywords.keywordMap.entrySet()) {
+            if (keywords.keywordMap.containsKey(entry.getKey())) {
+                keywords.keywordMap.put(entry.getKey().toString(), keywords.keywordMap.get(entry.getKey()) + 1);
+            } else {
+                keywords.keywordMap.put(entry.getKey().toString(), 1);
             }
-
         }
+
     }
 
     @Override
