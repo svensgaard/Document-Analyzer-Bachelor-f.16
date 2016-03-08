@@ -19,11 +19,12 @@ public class Clustering {
     private int counter;
     public int publicCounter;
 
+    //k is number of clusters.
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts) {
         globalCounter = 0;
         ArrayList<Centroid> centroids = new ArrayList<>();
         Centroid x;
-
+        System.out.println(texts.size());
         HashSet<Integer> uniqNumber = generateRandomNumbers(k, texts.size());
         for (Integer i : uniqNumber) {
             x = new Centroid();
