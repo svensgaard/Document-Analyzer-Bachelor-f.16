@@ -39,3 +39,7 @@
 hs_err_pid*
 /AnalyzerTFIDF/nbproject/private/
 /AnalyzerTFIDF/build/
+*.properties
+AnalyzerTFIDF/nbproject/genfiles.properties
+*.xml
+AnalyzerTFIDF/nbproject/project.xml

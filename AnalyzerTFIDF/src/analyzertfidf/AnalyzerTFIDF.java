@@ -5,6 +5,8 @@
  */
 package analyzertfidf;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Bryan
@@ -15,7 +17,13 @@ public class AnalyzerTFIDF {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        TextProcessor tp = new TextProcessor();
+        
+        HashMap<String, Integer> testMap = tp.readFile("EuroparlDaEn1.txt");
+        
+        for (HashMap.Entry<String, Integer> entry : testMap.entrySet()) {
+            System.out.println("Word: " + entry.getKey() + ", " + entry.getValue());
+        }
     }
     
 }
