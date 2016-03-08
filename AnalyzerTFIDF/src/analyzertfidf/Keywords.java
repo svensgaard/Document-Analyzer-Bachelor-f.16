@@ -23,7 +23,12 @@ public class Keywords {
     public Keywords(HashMap<String, Integer> keywords) {
         this.keywordMap = keywords;
     }
-    
+
+    public Keywords(Text t) {
+        this.keywordMap = t.keywords.keywordMap;
+        this.keywordTFIDFMap = t.keywords.keywordTFIDFMap;
+    }
+
     public void TFIDFMap(HashMap<String, Double> keywordTFIDMap) {
         this.keywordTFIDFMap = keywordTFIDMap;
     }
@@ -34,37 +39,45 @@ public class Keywords {
 
     public double compare(Keywords k) {
 
-        Iterator it = keywordTFIDFMap.entrySet().iterator();
         double difference = 0;
         double sumDifferences = 0;
         
+        double a = 0;
+        double b = 0;
+
         ArrayList<Double> differences = new ArrayList<>();
 
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
+        for (Map.Entry<String, Double> entry : this.keywordTFIDFMap.entrySet()) {
+            if (k.keywordTFIDFMap.containsKey(entry.getKey())) {
+//                if (entry.getValue() > 0.0 && k.keywordTFIDFMap.get(entry.getKey()) > 0.0) {
+//                    System.out.println("Keyword match: " + entry.getKey());
+//                    System.out.println("A value: " + entry.getValue());
+//                    System.out.println("B value: " + k.keywordTFIDFMap.get(entry.getKey()));
+//                }
+                a += entry.getValue();
+                b += k.keywordTFIDFMap.get(entry.getKey());
 
-            if (k.keywordTFIDFMap.containsKey(pair.getKey())) {
-                difference = k.keywordTFIDFMap.get(pair.getKey()) / (double) pair.getValue();
             } else {
                 difference = 0;
             }
             differences.add(difference);
-
         }
+        
+        System.out.println("A sum value: " + a);
+        System.out.println("B sum value: " + b);
+        System.out.println("------------");
 
         Collections.sort(differences);
         Collections.reverse(differences);
-        
-//        System.out.println("Size " + differences.size());
 
+//        System.out.println("Size " + differences.size());
         // 100 most frequent words
         int mostFrequent = 100;
         for (int i = 0; i < mostFrequent; i++) {
             sumDifferences += differences.get(i);
         }
-        
-        System.out.println("Sum of Differences: " + sumDifferences);
 
+//        System.out.println("Sum of Differences: " + sumDifferences);
         return sumDifferences / (double) mostFrequent;
     }
 

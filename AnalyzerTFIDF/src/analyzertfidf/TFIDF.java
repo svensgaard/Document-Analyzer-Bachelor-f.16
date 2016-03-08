@@ -29,8 +29,14 @@ public class TFIDF {
      * @param document - Text containing word
      * @return Frequency of term in document
      */
-    private int calculateTF(String term, Text document) {
-        return document.keywords.keywordMap.get(term);
+    private double calculateTF(String term, Text document) {
+        
+        int frequency = document.keywords.keywordMap.get(term);
+        int total = document.keywords.keywordMap.size();
+//        System.out.println("Frequency: " + frequency +" / "+total);
+        double i = (double)frequency/(double)total;
+        System.out.println("TF: " + i);
+        return i;
     }
 
     /**
@@ -41,7 +47,7 @@ public class TFIDF {
      * a: Size of corpus
      * b: Term occurrences in texts
      * 
-     * returns 0 if term occurs in every text - e.g 2/2
+     * returns 0 if term occurs in every text
      * 
      * @param term
      * @param corpus
@@ -55,7 +61,14 @@ public class TFIDF {
                 count++;
             }
         }
-        return Math.log10(corpus.size()/count);
+        
+        double a = (double) corpus.size() / (double) (1+count);
+        
+        double d = Math.log10(a);
+        System.out.println("IDF: " + d);
+        
+        return d;
+
     }
     
     /**
@@ -69,7 +82,9 @@ public class TFIDF {
      * @return
      */
     public double calculateTFIDF(String term, Text document, ArrayList<Text> corpus) {
-        return calculateTF(term, document) * calculateIDF(term, corpus);
+        double tfidf = calculateTF(term, document) * calculateIDF(term, corpus);
+        System.out.println("TF-IDF: " + tfidf);
+        return tfidf;
     }
     
 }
