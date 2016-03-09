@@ -5,6 +5,8 @@
  */
 package analyzertfidf;
 
+import Kmeans.Centroid;
+import Kmeans.Clustering;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -58,21 +60,43 @@ public class AnalyzerTFIDF {
 
             t.keywords.TFIDFMap(tp.sortHashMapByValuesDouble(termWeightMap));
         }
-        
-        // top 3 most important words in each text
+        //Make a list of all distinct terms in the corpus
+        ArrayList<String> distinctTerms = new ArrayList<>();
         for (Text t : texts) {
-            System.out.println(t.fileName);
-            Iterator it = t.keywords.keywordTFIDFMap.entrySet().iterator();
+            Iterator it = t.keywords.keywordMap.entrySet().iterator();
             for (int i = 0; i < 3; i++) {
-                Map.Entry<String, Double> pair = (Map.Entry) it.next();
-                System.out.println(pair.getKey() + ", " + pair.getValue());
+                Map.Entry<String, Integer> pair = (Map.Entry) it.next();
+                if (!distinctTerms.contains(pair.getKey())) {
+                    distinctTerms.add(pair.getKey());
+                }
+            }
+        }
+        //Initialize vectorspace in all texts
+        for (Text t : texts) {
+            t.vectorSpace = new Double[distinctTerms.size()];
+            int count = 0;
+            for (String s : distinctTerms) {
+                if (t.keywords.keywordTFIDFMap.containsKey(s)) {
+                    t.vectorSpace[count] = t.keywords.keywordTFIDFMap.get(s);
+                } else {
+                    t.vectorSpace[count] = 0.0;
+                }
+                count++;
+            }
+        }
+        Clustering clustering = new Clustering();
+        ArrayList<Centroid> result = clustering.prepareCluster(2, texts);
+
+        for (Centroid c : result) {
+            System.out.println("\nCluster: ");
+            for (Text t : c.GroupedDocument) {
+                System.out.println(t.fileName);
             }
         }
 
 //        for (Text t : texts) {
 //            comparer.compareText(t);
 //        }
-
 //        for (HashMap.Entry<String, Double> entry : termWeightMap.entrySet()) {
 //            if (entry.getValue() > 0) {
 //                System.out.println(entry.getKey() + ", " + entry.getValue());
