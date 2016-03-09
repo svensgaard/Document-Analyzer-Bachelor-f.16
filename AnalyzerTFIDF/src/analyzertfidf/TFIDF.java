@@ -55,11 +55,13 @@ public class TFIDF {
     private double calculateIDF(String term, ArrayList<Text> corpus) {
         int count = 0;
         
+//        long start = System.currentTimeMillis();
         for (Text text : corpus) {
             if (text.keywords.contains(term)) {
                 count++;
             }
         }
+//        System.out.println("IDF - Time elapsed: " + (System.currentTimeMillis()-start) + "ms");
         if (count == 0) {
             count++;
         }

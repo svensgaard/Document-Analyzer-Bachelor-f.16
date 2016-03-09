@@ -49,11 +49,6 @@ public class Keywords {
 
         for (Map.Entry<String, Double> entry : this.keywordTFIDFMap.entrySet()) {
             if (k.keywordTFIDFMap.containsKey(entry.getKey())) {
-//                if (entry.getValue() > 0.0 && k.keywordTFIDFMap.get(entry.getKey()) > 0.0) {
-//                    System.out.println("Keyword match: " + entry.getKey());
-//                    System.out.println("A value: " + entry.getValue());
-//                    System.out.println("B value: " + k.keywordTFIDFMap.get(entry.getKey()));
-//                }
                 a += entry.getValue();
                 b += k.keywordTFIDFMap.get(entry.getKey());
 
@@ -63,42 +58,18 @@ public class Keywords {
             differences.add(difference);
         }
         
-        System.out.println("A sum value: " + a);
-        System.out.println("B sum value: " + b);
-        System.out.println("------------");
-
         Collections.sort(differences);
         Collections.reverse(differences);
 
-//        System.out.println("Size " + differences.size());
         // 100 most frequent words
         int mostFrequent = 100;
         for (int i = 0; i < mostFrequent; i++) {
             sumDifferences += differences.get(i);
         }
 
-//        System.out.println("Sum of Differences: " + sumDifferences);
         return sumDifferences / (double) mostFrequent;
     }
-
-//    public double compare(Keywords k) {
-//
-//        Iterator it = keywordMap.entrySet().iterator();
-//        int count = 0;
-//        int matches = 0;
-//        
-//        while (it.hasNext()) {
-//            Map.Entry pair = (Map.Entry) it.next();
-//            
-//            if (k.keywordMap.containsKey(pair.getKey())) {
-//                matches++;
-//            }
-//            
-//            count++;
-//        }
-//        
-//        return (double) matches/ (double) count;
-//    }
+    
     public int size() {
         return keywordMap.size();
     }
