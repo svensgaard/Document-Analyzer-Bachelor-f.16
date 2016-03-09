@@ -6,7 +6,6 @@
 package analyzertfidf;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *
@@ -33,10 +32,10 @@ public class TFIDF {
         
         int frequency = document.keywords.keywordMap.get(term);
         int total = document.keywords.keywordMap.size();
-//        System.out.println("Frequency: " + frequency +" / "+total);
-        double i = (double)frequency/(double)total;
-        System.out.println("TF: " + i);
-        return i;
+//        System.out.println("\tFrequency: " + frequency +" / "+total);
+        double d = (double)frequency/(double)total;
+//        System.out.println("\tTF: " + d);
+        return d;
     }
 
     /**
@@ -61,12 +60,13 @@ public class TFIDF {
                 count++;
             }
         }
-        
-        double a = (double) corpus.size() / (double) (1+count);
-        
+        if (count == 0) {
+            count++;
+        }
+        double a = (double) corpus.size() / (double) (count);        
         double d = Math.log10(a);
-        System.out.println("IDF: " + d);
-        
+//        System.out.println("\tCorpus size: " + corpus.size() + ", " + "Appears in: " + count);
+//        System.out.println("\tIDF: " + d);
         return d;
 
     }
@@ -82,8 +82,9 @@ public class TFIDF {
      * @return
      */
     public double calculateTFIDF(String term, Text document, ArrayList<Text> corpus) {
+//        System.out.println("TERM: " + term + ", Document: " + document.fileName);
         double tfidf = calculateTF(term, document) * calculateIDF(term, corpus);
-        System.out.println("TF-IDF: " + tfidf);
+//        System.out.println("TF-IDF: " + tfidf + "\n");
         return tfidf;
     }
     
