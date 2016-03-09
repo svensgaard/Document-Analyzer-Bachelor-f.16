@@ -14,7 +14,15 @@ import java.util.ArrayList;
  * @author Bryan
  */
 public class TFIDF {
+    private ArrayList<String> distinctTerms;
 
+    public ArrayList<String> getDistinctTerms() {
+        return distinctTerms;
+    }
+
+    public void setDistinctTerms(ArrayList<String> distinctTerms) {
+        this.distinctTerms = distinctTerms;
+    }
     public TFIDF() {
         
     }
@@ -70,7 +78,7 @@ public class TFIDF {
         return d;
 
     }
-    
+      
     /**
      * Calculates weight of a term in a corpus
      * 
@@ -82,7 +90,7 @@ public class TFIDF {
      * @return
      */
     public double calculateTFIDF(String term, Text document, ArrayList<Text> corpus) {
-//        System.out.println("TERM: " + term + ", Document: " + document.fileName);
+//        System.out.println("TERM: " + term + ", Document: " + document.fileName);       
         double tfidf = calculateTF(term, document) * calculateIDF(term, corpus);
 //        System.out.println("TF-IDF: " + tfidf + "\n");
         return tfidf;

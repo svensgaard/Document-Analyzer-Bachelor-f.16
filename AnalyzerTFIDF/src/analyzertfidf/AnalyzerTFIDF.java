@@ -31,17 +31,19 @@ public class AnalyzerTFIDF {
         HashMap<String, Double> termWeightMap;
         HashMap<String, Integer> tempMap = new HashMap<>();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 10; i++) {
             String fileName = "EuroparlDaEn" + i;
             System.out.println("Processing: " + fileName);
             tempMap = tp.readFile(fileName);
             texts.add(new Text(fileName, new Keywords(tempMap)));
         }
 
-        String fileName = "Physics1";
-        System.out.println("Processing: " + fileName);
-        tempMap = tp.readFile(fileName);
-        texts.add(new Text(fileName, new Keywords(tempMap)));
+        for (int i = 1; i < 8; i++) {
+            String fileName = "Physics" + i;
+            System.out.println("Processing: " + fileName);
+            tempMap = tp.readFile(fileName);
+            texts.add(new Text(fileName, new Keywords(tempMap)));
+        }
 
         System.out.println("Processing Done\n");
 
@@ -58,7 +60,7 @@ public class AnalyzerTFIDF {
                 termWeightMap.put(entry.getKey(), calculator.calculateTFIDF(entry.getKey(), t, texts));
             }
 
-            t.keywords.TFIDFMap(tp.sortHashMapByValuesDouble(termWeightMap));
+            t.keywords.keywordTFIDFMap = termWeightMap;
         }
         //Make a list of all distinct terms in the corpus
         ArrayList<String> distinctTerms = new ArrayList<>();
@@ -84,8 +86,9 @@ public class AnalyzerTFIDF {
                 count++;
             }
         }
+        //Cluster texts
         Clustering clustering = new Clustering();
-        ArrayList<Centroid> result = clustering.prepareCluster(2, texts);
+        ArrayList<Centroid> result = clustering.prepareCluster(3, texts);
 
         for (Centroid c : result) {
             System.out.println("\nCluster: ");

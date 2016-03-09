@@ -5,6 +5,7 @@
  */
 package Kmeans;
 
+import analyzertfidf.Text;
 import java.util.ArrayList;
 
 /**
