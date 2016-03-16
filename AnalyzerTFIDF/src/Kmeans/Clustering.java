@@ -6,6 +6,7 @@
 package Kmeans;
 
 import analyzertfidf.Text;
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -87,10 +88,9 @@ public class Clustering {
 
     }
 
-    private int FindClosestClusterCenter(ArrayList<Centroid> centroids, Text t) {
+    public int FindClosestClusterCenter(ArrayList<Centroid> centroids, Text t) {
         SimilarityMatrics similarityMatrics = new SimilarityMatrics();
         Double[] tfdif = new Double[centroids.size()];
-
         for (int i = 0; i < centroids.size(); i++) {
             tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).GroupedDocument.get(0).getVectorSpace(), t.getVectorSpace());
         }
