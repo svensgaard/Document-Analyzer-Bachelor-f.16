@@ -8,11 +8,14 @@ package analyzertfidf;
 import Stemming.WordStemmer;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -58,7 +61,7 @@ public class TextProcessor {
 
         // Read file
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName+".txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(fileName + ".txt"));
 
             HashMap<String, Integer> tempMap = new HashMap<>();
             String line = "";
@@ -72,30 +75,25 @@ public class TextProcessor {
                 for (String word : wordArray) {
                     // Remove letters
                     if (word.length() > 1) {
-                        // Remove most common words
-                        if (!mostCommonWords.contains(word)) {
 
-                            // Stem word
-                            stem = stemmer.stem(word);
+                        // Stem word
+                        stem = stemmer.stem(word);
 
-                            // Increment if word is known
-                            if (tempMap.containsKey(stem)) {
-                                tempMap.put(stem, tempMap.get(stem) + 1);
-                            } else {
-                                // Add new word and frequency to map
-                                tempMap.put(stem, 1);
-                            }
+                        // Increment if word is known
+                        if (tempMap.containsKey(stem)) {
+                            tempMap.put(stem, tempMap.get(stem) + 1);
+                        } else {
+                            // Add new word and frequency to map
+                            tempMap.put(stem, 1);
                         }
+
                     }
                 }
             }
-            
-            LinkedHashMap sorted = sortHashMapByValuesD(tempMap);
-            
-//            writeToFile(fileName, sorted);
-            
 
-            
+            LinkedHashMap sorted = sortHashMapByValuesD(tempMap);
+
+//            writeToFile(fileName, sorted);
             // Sort HashMap and return a LinkedHashMap
             return sorted;
 
@@ -103,15 +101,15 @@ public class TextProcessor {
             throw new Error("Reading File Exception", e);
         }
     }
-    
+
     public void writeToFile(String fileName, HashMap<String, Integer> keywords) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(new File(fileName+"keywords.txt")));
-        
+        BufferedWriter bw = new BufferedWriter(new FileWriter(new File(fileName + "keywords.txt")));
+
         for (HashMap.Entry<String, Integer> entry : keywords.entrySet()) {
-            bw.write(entry.getKey() + ", " + entry.getValue()+"\n");
+            bw.write(entry.getKey() + ", " + entry.getValue() + "\n");
         }
         bw.close();
-        
+
     }
 
     public LinkedHashMap findKeywords(BufferedReader br) throws IOException {
@@ -184,7 +182,7 @@ public class TextProcessor {
         }
         return sortedMap;
     }
-    
+
     public LinkedHashMap sortHashMapByValuesDouble(HashMap passedMap) {
         List mapKeys = new ArrayList(passedMap.keySet());
         List mapValues = new ArrayList(passedMap.values());
@@ -214,6 +212,50 @@ public class TextProcessor {
             }
         }
         return sortedMap;
+    }
+
+    public Text readInput(String input) {
+        try {
+            InputStream is = new ByteArrayInputStream(input.getBytes());
+
+            // read it with BufferedReader
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+
+            HashMap<String, Integer> tempMap = new HashMap<>();
+            String line = "";
+            String stem = "";
+
+            // Split symbols
+            while ((line = reader.readLine()) != null) {
+                String[] wordArray = line.toLowerCase().split("[\\d\\p{Punct}\\s]+");
+
+                // Generate HashMap with keys and values
+                for (String word : wordArray) {
+                    // Remove letters
+                    if (word.length() > 1) {
+
+                        // Stem word
+                        stem = stemmer.stem(word);
+
+                        // Increment if word is known
+                        if (tempMap.containsKey(stem)) {
+                            tempMap.put(stem, tempMap.get(stem) + 1);
+                        } else {
+                            // Add new word and frequency to map
+                            tempMap.put(stem, 1);
+                        }
+
+                    }
+                }
+            }
+            //Create text object
+            Text inputText = new Text("Input", new Keywords(tempMap));
+            // Sort HashMap and return a LinkedHashMap
+            return inputText;
+
+        } catch (IOException e) {
+            throw new Error("Reading File Exception", e);
+        }
     }
 
 }
