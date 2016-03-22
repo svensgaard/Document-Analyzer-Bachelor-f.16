@@ -13,7 +13,24 @@ import java.util.ArrayList;
  * @author Mads
  */
 public class Comparer {
-    public Centroid compareText(ArrayList<Centroid> corpus, Text t) {
+    
+    public Centroid compareTextAverage(ArrayList<Centroid> corpus, Text t) {
+//        for(Double d : t.vectorSpace) {
+//            System.out.println(d);
+//        }
+        Clustering clusterText = new Clustering();
+        ArrayList<Centroid> nonEmptyClusters = new ArrayList<>();
+        //Only look though clusters that are not empty
+        for(Centroid c : corpus) {
+            if(!c.GroupedDocument.isEmpty()) {
+                nonEmptyClusters.add(c);
+            }
+        }
+        int index = clusterText.findClosestClusterAverage(nonEmptyClusters, t);
+        return corpus.get(index);
+    }
+    
+    public Centroid compareTextCentroid(ArrayList<Centroid> corpus, Text t) {
         Clustering clusterText = new Clustering();
         ArrayList<Centroid> nonEmptyClusters = new ArrayList<>();
         //Only look though clusters that are not empty

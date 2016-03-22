@@ -29,9 +29,14 @@ public class Centroid {
         } else {
             averageVector = new Double[0];
         }
-        int count = 0;
+        //Initialize average vector
+        for (int i = 0; i < averageVector.length; i++) {
+             averageVector[i] = 0.0;
+        }
+        //Add the total
+        int count = 0;       
         for(Text t : GroupedDocument) {
-            for(int i = 0; i < averageVector.length;i++) {
+            for(int i = 0; i < averageVector.length;i++) {                
                 averageVector[i] += t.vectorSpace[i];
             }
             count++;

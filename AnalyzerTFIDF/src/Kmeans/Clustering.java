@@ -16,7 +16,7 @@ import java.util.Random;
  * @author Mads
  */
 public class Clustering {
-
+    
     private int globalCounter = 0;
     private int counter;
     public int publicCounter;
@@ -26,7 +26,7 @@ public class Clustering {
         globalCounter = 0;
         ArrayList<Centroid> centroids = new ArrayList<>();
         Centroid x;
-        System.out.println(texts.size());
+
         HashSet<Integer> uniqNumber = generateRandomNumbers(k, texts.size());
         for (Integer i : uniqNumber) {
             x = new Centroid();
@@ -98,7 +98,7 @@ public class Clustering {
         int index = 0;
         Double maxFound = tfdif[0];
         for (int i = 0; i < tfdif.length; i++) {
-            if (tfdif[i] < maxFound) {
+            if (tfdif[i] < maxFound) {                
                 maxFound = tfdif[i];
                 index = i;
             }
@@ -159,6 +159,25 @@ public class Clustering {
             }
         }
         return stop;
+    }
+    //Uses the average vectorspacemodel instead of the centroids.
+    public int findClosestClusterAverage(ArrayList<Centroid> centroids, Text t) {
+        SimilarityMatrics similarityMatrics = new SimilarityMatrics();
+        Double[] tfdif = new Double[centroids.size()];
+        for (int i = 0; i < centroids.size(); i++) {
+            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace());
+        }
+
+        int index = 0;
+        Double maxFound = tfdif[0];
+        for (int i = 0; i < tfdif.length; i++) {
+            if (tfdif[i] < maxFound) {
+                
+                maxFound = tfdif[i];
+                index = i;
+            }
+        }
+        return index;
     }
 
 }

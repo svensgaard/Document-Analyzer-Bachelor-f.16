@@ -68,7 +68,7 @@ public class AnalyzerTFIDF {
         ArrayList<String> distinctTerms = new ArrayList<>();
         for (Text t : texts) {
             Iterator it = t.keywords.keywordMap.entrySet().iterator();
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < t.keywords.size(); i++) {
                 Map.Entry<String, Integer> pair = (Map.Entry) it.next();
                 if (!distinctTerms.contains(pair.getKey())) {
                     distinctTerms.add(pair.getKey());
@@ -98,6 +98,8 @@ public class AnalyzerTFIDF {
                 System.out.println(t.fileName);
             }
         }
+        
+        
         //Compare input to clusters
         System.out.println("Waiting for input...");
         Scanner scan = new Scanner(System.in);
@@ -124,8 +126,13 @@ public class AnalyzerTFIDF {
         
         //Results of input
         Kmeans.Comparer kmeansComparer = new Comparer();
-        Centroid inputResult = kmeansComparer.compareText(result, inputText);    
-        System.out.println("The input belongs to the cluster with these texts: ");
+        Centroid inputResult = kmeansComparer.compareTextAverage(result, inputText);    
+        System.out.println("The average method:");
+        for(Text t : inputResult.GroupedDocument) {
+            System.out.println(t.fileName);
+        }
+        inputResult = kmeansComparer.compareTextCentroid(result, inputText);    
+        System.out.println("The centroid method:");
         for(Text t : inputResult.GroupedDocument) {
             System.out.println(t.fileName);
         }
