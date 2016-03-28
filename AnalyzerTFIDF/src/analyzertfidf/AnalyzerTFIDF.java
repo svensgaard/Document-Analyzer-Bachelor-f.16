@@ -33,7 +33,7 @@ public class AnalyzerTFIDF {
         HashMap<String, Double> termWeightMap;
         HashMap<String, Integer> tempMap = new HashMap<>();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 44; i < 53; i++) {
             String fileName = "EuroparlDaEn" + i;
             System.out.println("Processing: " + fileName);
             tempMap = tp.readFile(fileName);
@@ -42,6 +42,12 @@ public class AnalyzerTFIDF {
 
         for (int i = 1; i < 8; i++) {
             String fileName = "Physics" + i;
+            System.out.println("Processing: " + fileName);
+            tempMap = tp.readFile(fileName);
+            texts.add(new Text(fileName, new Keywords(tempMap)));
+        }
+        for (int i = 1; i < 8; i++) {
+            String fileName = "Dino" + i;
             System.out.println("Processing: " + fileName);
             tempMap = tp.readFile(fileName);
             texts.add(new Text(fileName, new Keywords(tempMap)));
@@ -90,7 +96,7 @@ public class AnalyzerTFIDF {
         }
         //Cluster texts
         Clustering clustering = new Clustering();
-        ArrayList<Centroid> result = clustering.prepareCluster(2, texts);
+        ArrayList<Centroid> result = clustering.prepareCluster(3, texts);
 
         for (Centroid c : result) {
             System.out.println("\nCluster: ");
@@ -126,15 +132,11 @@ public class AnalyzerTFIDF {
         
         //Results of input
         Kmeans.Comparer kmeansComparer = new Comparer();
-        Centroid inputResult = kmeansComparer.compareTextAverage(result, inputText);    
-        System.out.println("The average method:");
-        for(Text t : inputResult.GroupedDocument) {
-            System.out.println(t.fileName);
-        }
-        inputResult = kmeansComparer.compareTextCentroid(result, inputText);    
-        System.out.println("The centroid method:");
-        for(Text t : inputResult.GroupedDocument) {
-            System.out.println(t.fileName);
+
+        int count2 = 1;
+        for(Double d : kmeansComparer.getSimilarities(result, inputText)) {
+            System.out.println("Similarity " + d + " with cluster "+ count2);
+            count2++;
         }
 //        for (Text t : texts) {
 //            comparer.compareText(t);
