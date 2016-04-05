@@ -42,24 +42,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         //Read corpus files
         HashMap<String, Integer> tempMap;
-//        for (int i = 1; i < 8; i++) {
-//            String fileName = "Fighter" + i;
-//            System.out.println("Processing: " + fileName);
-//            tempMap = tp.readFile(fileName);
-//            texts.add(new Text(fileName, new Keywords(tempMap)));
-//        }
-//        for (int i = 1; i < 8; i++) {
-//            String fileName = "Dino" + i;
-//            System.out.println("Processing: " + fileName);
-//            tempMap = tp.readFile(fileName);
-//            texts.add(new Text(fileName, new Keywords(tempMap)));
-//        }
-//        for (int i = 1; i < 8; i++) {
-//            String fileName = "Physics" + i;
-//            System.out.println("Processing: " + fileName);
-//            tempMap = tp.readFile(fileName);
-//            texts.add(new Text(fileName, new Keywords(tempMap)));
-//        }
 
         for (int i = 1; i < 8; i++) {
             String fileName = "EuroparlDaEn" + i;
@@ -73,12 +55,12 @@ public class MainWindow extends javax.swing.JFrame {
             tempMap = tp.readFile(fileName);
             texts.add(new Text(fileName, new Keywords(tempMap)));
         }
-//        for (int i = 1; i < 8; i++) {
-//            String fileName = "Tank" + i;
-//            System.out.println("Processing: " + fileName);
-//            tempMap = tp.readFile(fileName);
-//            texts.add(new Text(fileName, new Keywords(tempMap)));
-//        }
+        for (int i = 1; i < 8; i++) {
+            String fileName = "Medical" + i;
+            System.out.println("Processing: " + fileName);
+            tempMap = tp.readFile(fileName);
+            texts.add(new Text(fileName, new Keywords(tempMap)));
+        }
 
         System.out.println("Processing Done\n");
 
