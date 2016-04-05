@@ -1,0 +1,519 @@
+Europ. J. Cancer Vol. 17, No. 6, pp. 617~122, 1981 0014-2964/81/060617-06 $02.00
+1981. Printed in Great Britain c' 1981 Pergamon Pros Ltd.
+Infectious
+Defense in
+Complications and Host
+Acute Leukemia
+Immune
+MILA NEDELKOVA, SVETLA BACALOVA and BOJANA GEORGIEVA
+Research Institute of Hematology and Blood Transfusion, Sofia, Bulgaria
+Abstract--Microbiological and immunological studies were carried out on 73 acute
+leukemia patients in order to establish the relationship between the host immune defense
+and the frequency and severity of infections. Pronounced disturbances in the functional
+activity of granulocytes, the total complement hemolytic activity and C 3 component of the
+complement are found during induction chemotherapy; in this period the infectious
+complications are more frequent and severe than at the onset of the disease. No
+relationship is established between serum lysozyme levels and resistance to infections.
+The elevated immunoglobulins G and M as a possible response to the infectious agents
+are considered. It is emphasized that a pronounced immunosuppression as well as the
+most frequent infectious complications are found in patients in relapse.
+INTRODUCTION
+INFECTIONS are the most frequent complication
+and the leading cause of death in patients
+with acute leukemia. This fact is supported by
+observations made by a number of authors
+[1-9]. The enhanced risk of infectious complications
+may be due both to the basic
+neoplastic disease, involving the cellular compartment
+of the immune system, and to the
+immunosuppressive effect of contemporary intensive
+chemotherapy. The close relationship
+between the frequency of infections and
+granulocytopenia in treated leukemic patients
+has already been pointed out [10, 11]. It is
+also well known that these patients demonstrate
+substantial changes in the phagocytic
+and bactericidal activity of granulocytes [12-
+16], serum immunoglobulin levels [17-19],
+lysozyme [20-25] and some cell-mediated immune
+reactions [17, 26-30].
+The object of this paper is to present the
+relationship between the frequency and severity
+of infections and the host defense in
+acute leukemia patients. It reflects the results
+of current studies of some of the most important
+factors of the immune system along with
+clinical and laboratory investigations on the
+infectious process.
+MATERIALS AND METHODS
+Patients
+Studies have been carried out on 73 acute
+Accepted 17 November 1980.
+leukemia patients aged between 16 and 78,
+who have undergone regular clinical, microbiological
+and immunological investigations
+throughout the course of the disease.
+Clinical and microbiological investigations
+On the day of admission patients were
+subjected to a thorough clinical examination.
+Microbiological cultures were made of oral
+secretions, sputum, urine, material from manifested
+infectious loci and hemoculture, the
+last in cases of fever. During induction chemotherapy
+the analyses were repeated depending
+upon the clinical and hematological evolution
+of the disease. Routine methods of microbiological
+diagnosis were used [31].
+Immunological studies
+On the day of admission, during induction
+chemotherapy and at diagnosis of infectious
+complications a close observation was maintained
+over the absolute granulocyte count in
+the peripheral blood, the phagocytic activity
+against Staph. aureus, the ability of granulocytes
+to ingest and kill Candida albicans, the
+serum immunoglobulin and lysozyme levels,
+and the total complement hemolytic activity
+and C 3 component of complement.
+The phagocytic function of peripheral blood
+granulocytes against Staph. aureus was tested
+according to the method of Van Furth [32],
+with determination of the indices phagocytic
+activity (PhA)and phagocytic number (PhN).
+The PhA represents the percentage of granulocytes
+which have ingested Staph. aureus and
+the PhN represents the average number of
+617
+618 Mila Nedelkova, Svetla Bacalova and Georgieva Bojana
+Staph. aureus ingested by one phagocyte. For
+the quantitative assessment of the phagocytic
+efficiency two other indices were computated,
+i.e. phagocytic capacity (PhC) and phagocytic
+capacity index (PhCI). The first reflects the
+number of microorganisms ingested by the
+granulocytes in 1/A peripheral blood, and is
+determined by the following formula:
+AxBxC
+PhC
+100 '
+where A=number of granulocytes per microliter
+blood, B = PhA, and C = PhN, while
+Phc of the patient
+PhCI
+PhC of healthy subjects
+represents the ratio of PhC of acute leukemia
+patients and that of healthy subjects.
+The bactericidal activity of granulocytes against
+Candida albicans was assayed by the method of
+Lehrer and Cline [14].
+The total complement hemolytic activity was determined
+according to the method of Kabat
+and Mayer [33].
+The C 3 component of the complement was assayed
+by the single radial immunodiffusion
+method of Mancini [34].
+Serum lysozyme levels were determined by the
+lysoplate method of Osserman and Lawlor
+[35].
+The serum immunoglobulins G, A and M were
+determined by the method of Mancini [34].
+Statistical analysis.
+Computer aided calculation of the numerical
+characteristics of the observed factors is
+given, based on the analysis of variance.
+Authors have developed FORTRAN IV software
+of the problem, which can be successfully
+applied by other users.
+RESULTS
+Infectious complications. Frequency, sites and isolated
+microorganisms
+Of the total of 60 hospitalized patients in
+the initial stage of the disease, 35 (58.33%)
+were febrile; the febrility in 19 was accompanied
+by clinical signs of infection.
+Significant pathogens from various infectious
+sources were isolated in 24 patients (40%); in
+some of them there was more than one infection,
+so that the total number of infectious
+episodes was 44, or 0.73 infections per patient
+(Fig. 1 ). The sites of infections in the various
+stages of the disease are tabulated in Table 1.
+Severe infections such as sepsis and disseminated
+infections (three or more per patient)
+D Ionff aedcmteisdps aiotine nts on day
+~ tnfectedp atientsd uring
+induction chemotherapy
+D Infectedp atients
+in relapse
+Fig. 1. Frequency of infectious complications m acute leukemia
+patients.
+Table 1. Sites of infections in acute leukemia patients
+Number of patients with sites
+During
+On induction In
+Site admission chemotherapy relapse
+Lungs 14 30 11
+Oral cavity 14 27 15
+Genito-urinary
+tract 9 17 10
+Skin 3 7 4
+Nose -- 3 1
+Meninges -- -- 1
+Septicemia 4 7 4
+Total sites 44 95 46
+Infected
+patients 24/60 41/60 17/22
+were established in 6.6% and 3.3%, respectively.
+The most commonly isolated pathogens
+are recorded in Table 2.
+During induction chemotherapy clinically
+manifested and bacteriologically confirmed infections
+were noted in 17 of the patients not
+infected at admission to hospital; 8 of
+initially infected patients developed new sites
+of infection. The overall number of infected
+patients was 41 (68.33%); the number of
+infectious episodes was 95 or 1.52 infections
+per patient. The sites of infections and isolated
+pathogens remained approximately the same
+as in the initial stage of acute leukemia.
+Frequency of sepsis and disseminated infection
+displayed a marked increase.
+Infections were documented in 17 (77.3%)
+of the 32 patients hospitalized in relapse, with
+a total of 46 infectious episodes, or 2.1 infections
+per patient. A further increase in the
+frequency of septicemia cases was noted. A
+case of Gram negative Pseudomonas meningitis
+deserves to be mentioned.
+Immunological status
+The absolute granulocyte count in the peripheral
+blood and the PhCI are presented in
+Table 3.
+Infectious Complications and Host Immune Defense in Acute Leukemia
+Table. 2. Pathogens isolated from microbiologicaUy documented infections in acute
+leukemia patients
+During
+On day of induction In
+admission chemotherapy relapse
+Pathogens No % No o//o No ° o
+Gram negative bacteria 47 74.6 79 65.3 20 47.6
+Klebsiella spp. 21 44.7 37 46.8 6 30
+Escherichia coli 13 27.7 24 30.4 9 45
+Pseudomonas aerug. 8 17.0 9 11.4 2 10.0
+Proteus spp. 5 10.6 8 10.1 3 15.0
+Alcaligenesfaec. -- -- 1 1.3 -- --
+Staphylococcus aureus 7 11.1 21 17.4 16 38.1
+Candida 9 14.3 20 16.5 6 14.3
+Streptococcusfaecalis -- -- 1 0.8 -- --
+Total 63 121 42
+619
+Table 3. Absolute granulocyte count and PhCI (Mean values +_ S.D.) in acute leukemia patients
+Index A*
+On day of During induction Patients
+admission chemotherapy with
+severe
+B A B infections
+Infected
+patients
+in
+relapse
+Healthy
+controls
+Absolute granulocyte 2541
+count ___ 2310
+Phagocytic capacity 1
+index ___ 0.62
+1018 886 427 291 345
++637 +_ 172 +225 _+ 180 _+250
+P<0.05 P<0.05 P<0.05 P<0.05 P<0.05
+0.65 0.45 0.20 0.13 0.16
++0.33 -t-0.17 _+0.11 +0.07 -t-0.12
+P<0.05 P<0.05 P<0.05 P<0.05
+3500
+± 300
+*A, Patients without infections; B, patients with infections.
+In acute leukemia patients the indices of
+• ~,
+the phagocytic process displayed different changes.
+Thus, in the initial stage, along with
+neutropenia, a certain stimulation of the PhA
+as well as of the PhN occurred, while during
+induction chemotherapy and the further decrease
+of the granulocyte count a substantial
+decrease in those indices was observed. On
+this ground we assumed the index PhC to be
+more informative, since it simultaneously reflects
+the changes occurring in the three components
+of phagocytosis: the absolute granulocyte
+count, the PhA and the PhN. For the
+sake of convenience the resulting values are
+presented by the PhCI. Thus, in the initial
+stage of acute leukemia we found a lower
+PhCI in infected patients. During intensive
+chemotherapy its values decreased in patients
+of both groups. The lowest values were observed
+in patients with severe infections and in
+relapse.
+The bactericidal activity of granulocytes,
+expressed as a percentage of killed Candida, is
+presented in Fig. 2. The granulocytes of all
+o
+o
+~o
+o
+o
+IQ
+'°
+Fig. 2. Bactericidal activity of granulocytes in acute leukemia
+patients and healthy controls. [] Healthy controls, • acute
+leukemia patients infectious complications during induction
+chemotherapy, Q) acute leukemia patients without infectious
+complications during induction chemotherapy.
+acute leukemia patients examined during induction
+chemotherapy demonstrated a strongly
+inhibited bactericidal activity.
+Complement. The mean values of the total
+complement hemolytic activity (ellS0) and the
+620 Mila Nedelkova, Svetla Bacalova and Bojana Georgieva
+C 3 component in acute leukemia patients are
+presented in Fig. 3. A decreased complement
+activity was established in infected patients
+during induction chemotherapy, particularly
+in patients with severe infections and in relapse.
+The C3 component levels displayed
+variations similar to those for CHs0.
+three classes significantly increased IgM values
+were established in patients with infectious
+complications in the initial stage of
+the disease. An increase of IgG was observed
+in some infected patients during induction
+chemotherapy. Decreased levels of all three Ig
+classes were established in patients in relapse.
+b 14o ~- [] CH~
+30 ,,0s ~-
+20- 70 L
+I0 -- 351-
+a b a b
+I "IT ~T ]]Z V
+Fig. 3. Total complement hemolytic activity and C3 component in
+acute leukemia patients and healthy controls. I, Healthy controls; II,
+acute leukemia patients on day of admission; III, acute leukemia
+patients during induction chemotherapy; IV, Acute leukemia patients
+in relapse; V, acute leukemia patients with severe infections, a,
+Patients without infections; b, patients with infections.
+Lysozyme. Acute leukemia patients display
+variations in serum lysozyme values primarily
+depending upon the form of the disease. A
+quantitative increase of over 100mcg/ml was
+observed in acute monoblastic leukemia, while
+acute lymphoblastic and acute myeloblastic
+leukemia patients had comparatively low levels
+during induction chemotherapy. No relationship
+was observed between lysozyme values
+and frequency and severity of infectious
+complications. A significant decrease was established
+only in infected patients in relapse--
+4.75 mcg/ml (P<0.001),
+Immunoglobulins. Serum immunoglobulin G,
+A and M levels in acute leukemia patients
+and healthy controls are presented in Table 4.
+Despite the great individual variations in all
+DISCUSSION
+The results demonstrate a dependence between
+host defense of acute leukemia patients
+and the occurence of infectious complications,
+the frequency and severity of which increases
+with the aggravation of immunosuppression.
+Particularly marked is the participation of
+granulocytes in the anti-infectious resistance in
+all stages of acute leukemia, where not only
+their absolute count, but also their functional
+activity is of substantial importance. At the
+onset of the disease granulocytopenia does not
+seem to be obligatory for all patients; their
+phagocytic function is preserved or even compensatorily
+increased, as has been reported by
+other authors also [36]. No particular changes
+Table 4. Immunoglobulin G, A and M levels (mean values +_ S.D.) in acute leukemia patients
+Immunoglobulin
+(mg%) A*
+On day of During induction Patients Infected
+admission chemotherapy with patients
+severe in Healthy
+B A B infections relapse controls
+1230
+IgG 4- 389
+220
+IgA -+ 55
+118
+IgM 4- 42
+1289 1474 880 918 797 1131
+± 258 + 510 4- 255 _ 303 + 779 _ 189
+P < 0.05
+207 184 164 182 154 181
+± 153 __+51 +63 ±47 -t-99 _+30
+143 85 124 138 59 110
+_+28 _+60 -+46 -+23 -+49 4- 19
+P<0.05 P<0.05
+*A, Patients without infections; B, patients with infections.
+Infectious Complications and Host Immune Defense in Acute Leukemia 621
+in humoral factors were observed. In this period
+infections are less frequent and they arise
+mainly in granulocytopenic patients in whom
+the cellular antibacterial defense is inhibited
+by quantitative changes in granulocytes. The
+increased IgM values in infected patients may
+be considered as an expression of an early
+humoral immune response against the pathogenic
+agents.
+During induction chemotherapy marked
+granulocytopenia is established in all patients,
+accompanied by functional disorders in the
+granulocytes. These changes lead to a strongly
+reduced phagocytic capacity. The bactericidal
+activity of granulocytes is also suppressed,
+most probably in connection with an impaired
+metabolism and enzyme synthesis [13, 15, 16].
+Consequently, with the suppressed cellular
+antibacterial resistance, the frequency of infectious
+complications is augmented, as well as
+the percentage of patients with severe infections.
+The increased IgG levels during that
+period in some of the infected patients most
+probably reflects the synthesis of antibodies
+against bacterial antigens. High levels of immunoglobulins
+during the active stage of
+acute leukemia is reported by other authors as
+well [19, 36]. However, these authors do not
+follow the association of immunoglobulins
+with the infections concomitant to the basic
+disorder. The decreased complement activity
+of the serum may be explained first of all by
+the suppressed synthesis of the complement
+components as a result of the administered
+cytostatic agents or of a leukemic infiltration
+of the reticuloendothelial organs. It is highly
+probable also that its cause lies in the consumption
+of complement in the course of
+bacteriolysis, or in its utilization along the
+alternative pathway by the lipopolysaccharides
+of Gram negative micro-organisms.
+Both in that period of the disease and in the
+preceding one no persistent correlation between
+serum lysozyme levels and the frequency
+and severity of bacterial infections has
+been established.
+The most pronounced immunosuppression
+is observed in patients in relapse, most proably
+in connection with previous courses of
+more or less prolonged chemotherapy. Parallel
+to the quantitative and functional damage of
+the cellular granulocytic antibacterial defense
+there occurs a reduction of all humoral immune
+factors. Infections are most frequent in
+this stage, with the highest percentage of
+sepsis and disseminated infection.
+The relationship between factors of host immune
+defense and infectious complications in
+acute leukemia patients clearly reveals the
+significance both of cellular and humoral immunity.
+Granulocyte function undergoes the
+earliest and most profound changes, while the
+humoral factors become affected later, during
+intensive induction chemotherapy and particularly
+in relapse, when one may witness a
+complete failure of host immune defense.
+Those facts should be remembered in the
+prophylaxis and management of infectious
+complications in acute leukemia.
+~NI2E$
+1. NEDELKOVA M, GEORGIEVA B. Infectious complications in acute and chronic
+leukemia. Watr bolesti 1979; 18: 103.
+2. GEORGIEVA B, NEDELKOVA M. Frequency, sites and significance of the
+infectious complications in acute leukemia. (In press).
+3. BODEY G, RODRIQUEZ V, CHANG H-Y, NARBONI G. Fever and infection in
+leukemia patients. Cancer 1978; 42: 1610.
+4. FREI E, LEVINE R, BODEY G. et al. Nature and control of infections in patients
+with acute leukemia. Cancer Res 1965; 25- 1511.
+5. LEVINE AS, GRAW RG, YOUNG RC. Management of infections in patients
+with leukemia and lymphoma: current concepts and experimental approaches.
+Semin Hematol 1972; 9" I41.
+6. LEVINE AS, SCHIMPFF SC, GRAW RG. et al. Hematological malignancies and
+other marrow failure states: progress in the managements of complicating
+infections. Semin Hematol 1974; 11: 141.
+7. SINGER C, KAPLAN MH, ARMSTRONG D. Sepsis in patients with leukemias and
+lymphomas. Antibiot Chemother 1976; 21: 187.
+8. SMITH JE, POWLES R, CLINK MD. et al. Early death in acute myelogenous
+leukemia. Cancer 1977; 39" 1710.
+9. TOBIAS JS, WRIGLEY FM, O'GRADY Fr. Bacterial infection and acute myeloblastic
+leukemia: an analysis of two hundred patients undergoing intensive
+remission induction therapy. Eur J Cancer 1978; 11: 383.
+622 Mila Nedelkova, Svetla Bacalova and Bojana Georgieva
+10. BODEY G, BUCKLEY M, SATHE J, FREIREICH E. Quantitative relationships
+between circulating leukocytes and infections in patients with acute leukemia.
+Ann Intern Med 1966; 64: 328.
+11. GILL FrA, ROBINSON R, MAcLowRY JD, LEVINE AS. The relationship of fever,
+granulocytopenia and microbial therapy to bacteremia in cancer patients.
+Cancer 1977; 39" 1704.
+12. COIFFIER B, FROBERT J, REVOL L. Polymorphonuclear function in acute
+myeloblastic leukemia. Biomedicine 1977; 27: 94.
+13. GOLDMAN JM, TH'NO KH. Phagocyte function of leukocytes from patients
+with acute myeloid and chronic granulocytic leukemia. Br j Haematol 1973;
+25: 299.
+14. LEHRER RJ, CLINE MJ. Interaction of Candida albicans with human leukocytes
+and serum, o7 Bacteriol 1969; 98" 996.
+15. STRAUSS RR, PAUL BB, JACOBS AA, SIMMONS C, SBARRA AJ. The metabolic
+phagocytic activities of leukocytes from children with acute leukemia. Cancer
+Res 1970; 30: 480.
+16. WILKINSON RM, SUMNER C, DELAMORE JW, GEARV CG, MILNER GR.
+Granulocyte function in myeloblastic leukemia. Br J Cancer 1975; 32: 574.
+17. HOSmZAKI H, NIKI J, BABA J. Lymphocyte transformation and immunoglobulins
+in acute leukemia patients. In: XVII Congr~s de la Soci¢tg Internationale
+d'Hkmatologie. Paris: Masson, 1978: 789.
+18. McKELvEV E, CARBONE PP. Serum immunoglobulin concentrations in acute
+leukemia during intensive chemotherapy. Cancer 1965; 18: 1292.
+19. KHALIFA AS, TAKE H, CEJKA J, ZUELZER WW. Immunoglobulins in acute
+leukemia in children. J Pediatr 1974; 85: 788.
+20. CASTRO O, PERILLIE PE, FINCH SC. Lysozyme in relationship to the clinical
+characteristics of adult acute leukemia. In: LEHMANNS JF, ed. XII International
+Congress of Hematology. Basel: Karger, 1971: 231.
+21. NEU HC, DREIFUS J, CANFIELD RE. Effect of human lysozyme on Grampositive
+and Gram-negative bacteria. Antimicrob Agents Chemother 1968; 8: 442.
+22. PRUZANSKI W, LEARS WD, WARDLAW AC. Bacteriolytic and bactericidal
+activity in minocytic and myelomonocytic leukemia with hyperlysozymemia.
+Cancer Res 1973; 33: 867.
+23. VILLEGAS AM, ESPINOS D, ESCRmA A, ABOIN J.Muramidase in some malignant
+hematologic disorders. Sangre 1973; 18: 215.
+24. WmRNIK PH, SERPICK AA. Clinical significance of serum and urinary
+muramidase activity in leukemia and other hematologic malignancies. Ann
+Intern Med 1969; 46: 330.
+25. ZITTOUN R, ZITTOUN J. Interfit du dosage du lysozyme en pratique h$matologique.
+Nouv Presse Med 1974; 3: 1709.
+26. DuPuv JH, KOURILSK7 FM, FRADELLIZI D. et al. Depression of immunologic
+reactivity of patients with leukemia. Cancer 1971; 27: 323.
+27. HERSH EM, WHITECAR JP, McCREDIE KB. et al. Chemotherapy,
+Immunocompetence, immunosuppression and prognosis in acute leukemia. N
+Engl J Med 1971; 285:1211.
+28. HERSH EM, GUTTERMAN JU, MAVLIOIT GM. et al. Serial studies of immunocompetence
+of patients undergoing chemotherapy for acute leukemia. J Clin
+Invest 1974; 54. 401.
+29. HERSH EM, MAVLIGIT GM, GUTTERMAN JU. Immunodeficiency in cancer
+and the importance of immune evaluation of the cancer patient. Med clin
+North Am 1976; 60: 623.
+30. MORRIS DL, HERSH EM, HsI BP et al. Recall antigen" delayed type
+hypersensitivity skin testing in melanoma and acute leukemia patients and
+their associates. Cancer Res 1979; 39: 219.
+31. BAILEY WR, SCOTT EG. Diagnostic Microbiology Saint Louis: C. V. Mosby 1974.
+32. VAN FURTH R, VAN ZWET TL. In vitro Determination of phagocytosis and
+mononuclear phagocytes. In: WEIR DM, ed. Handbook of Experimental
+Immunology Vol. 2 Oxford: Blackwell, 1973.
+33. KABAT EA, MAYER MM. Experimental Immunochemistry. Springfield: Charles C.
+Thomas 1964.
+34. MANCINI G, CARBONARA AO, HEREMANS JF. hnmunochemical quantitation of
+antigens by single radial immunodiffusion. Immunochemistry 1965; 2: 235.
+35. OSSERMAN EF, LAWLOR DP. Serum and urinary lysozyme (muramidase) in
+monocytic and rnyelomonocytic leukemia. J Exp Med 1966; 12't: 921.
+36. GOLOSOVA TS, VISKOVATOVA TN, MARTYNOVA VA et al. Immunoglobulins
+and some factors of non-specific immunity in patients with leukemia. Vopr
+Onkol 1978; 24: 3.
