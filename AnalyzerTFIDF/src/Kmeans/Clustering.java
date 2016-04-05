@@ -8,6 +8,7 @@ package Kmeans;
 import analyzertfidf.Text;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -16,7 +17,7 @@ import java.util.Random;
  * @author Mads
  */
 public class Clustering {
-    
+
     private int globalCounter = 0;
     private int counter;
     public int publicCounter;
@@ -26,7 +27,7 @@ public class Clustering {
         globalCounter = 0;
         ArrayList<Centroid> centroids = new ArrayList<>();
         Centroid x;
-
+        //Choose 3 centroids at random
         HashSet<Integer> uniqNumber = generateRandomNumbers(k, texts.size());
         for (Integer i : uniqNumber) {
             x = new Centroid();
@@ -59,20 +60,16 @@ public class Clustering {
     }
 
     private HashSet<Integer> generateRandomNumbers(int k, int size) {
-        Random random = new Random();
         HashSet<Integer> uniqRandom = new HashSet<>();
-        if (k > size) {
-            do {
-                int pos = random.nextInt(size);
-                uniqRandom.add(pos);
-            } while (uniqRandom.size() != size);
-
-        } else {
-            do {
-                int pos = random.nextInt(size);
-                uniqRandom.add(pos);
-            } while (uniqRandom.size() != k);
+        ArrayList<Integer> randomNumbers = new ArrayList<>();
+        for (int i = 1; i < size; i++) {
+            randomNumbers.add(new Integer(i));
         }
+        Collections.shuffle(randomNumbers);
+        for (int i = 0; i < k; i++) {
+            uniqRandom.add(randomNumbers.get(i));
+        }
+
         return uniqRandom;
     }
 
@@ -98,7 +95,7 @@ public class Clustering {
         int index = 0;
         Double maxFound = tfdif[0];
         for (int i = 0; i < tfdif.length; i++) {
-            if (tfdif[i] < maxFound) {                
+            if (tfdif[i] < maxFound) {
                 maxFound = tfdif[i];
                 index = i;
             }
@@ -126,7 +123,8 @@ public class Clustering {
         globalCounter++;
         counter = globalCounter;
         Boolean stop = false;
-        if (globalCounter < 11000) {
+        if (globalCounter > 1000) {
+
             return true;
         } else {
 
@@ -134,10 +132,11 @@ public class Clustering {
             int index = 0;
 
             do {
+                
                 int count = 0;
                 if (centroids.get(index).GroupedDocument.size() == 0 && previousClusterCenter.get(index).GroupedDocument.size() == 0) {
                     index++;
-                } else if (centroids.get(index).GroupedDocument.size() != 0 && previousClusterCenter.get(index).GroupedDocument.size() != 0) {
+                } else if (centroids.get(index).GroupedDocument.size() != 0 && previousClusterCenter.get(index).GroupedDocument.size() != 0) {                   
                     for (int k = 0; k < centroids.get(index).GroupedDocument.get(0).getVectorSpace().length; k++) {
                         if (centroids.get(index).GroupedDocument.get(0).getVectorSpace()[k] == previousClusterCenter.get(index).GroupedDocument.get(0).getVectorSpace()[k]) {
                             count++;
@@ -148,10 +147,14 @@ public class Clustering {
                     } else {
                         changeIndex[index] = 1;
                     }
+                    index++;                   
+                } else {
+                    changeIndex[index] = 1;
                     index++;
                 }
+                
             } while (index < centroids.size());
-            //If any index contains 1
+//            If any index contains 1
             for (int i : changeIndex) {
                 if (i == 1) {
                     stop = true;
@@ -160,7 +163,9 @@ public class Clustering {
         }
         return stop;
     }
+
     //Uses the average vectorspacemodel instead of the centroids.
+
     public int findClosestClusterAverage(ArrayList<Centroid> centroids, Text t) {
         SimilarityMatrics similarityMatrics = new SimilarityMatrics();
         Double[] tfdif = new Double[centroids.size()];
@@ -172,7 +177,7 @@ public class Clustering {
         Double maxFound = tfdif[0];
         for (int i = 0; i < tfdif.length; i++) {
             if (tfdif[i] < maxFound) {
-                
+
                 maxFound = tfdif[i];
                 index = i;
             }

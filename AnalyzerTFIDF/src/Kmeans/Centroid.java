@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public class Centroid {
     public ArrayList<Text> GroupedDocument;
+    public boolean isTheOne = false;
 
     public ArrayList<Text> getGroupedDocument() {
         return GroupedDocument;

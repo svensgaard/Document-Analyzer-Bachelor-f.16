@@ -11,9 +11,10 @@ package analyzertfidf;
  * @author Bryan
  */
 public class Text {
-    String fileName;
+    public String fileName;
     public Double[] vectorSpace;
-
+    public Keywords keywords;
+     
     public Double[] getVectorSpace() {
         return vectorSpace;
     }
@@ -21,7 +22,7 @@ public class Text {
     public void setVectorSpace(Double[] vectorSpace) {
         this.vectorSpace = vectorSpace;
     }
-    Keywords keywords;
+   
     
     public Text(String fileName, Keywords keywords) {
         this.fileName = fileName;
