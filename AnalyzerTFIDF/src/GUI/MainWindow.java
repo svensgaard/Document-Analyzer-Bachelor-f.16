@@ -8,6 +8,7 @@ package GUI;
 import Kmeans.Centroid;
 import Kmeans.Clustering;
 import Kmeans.Comparer;
+import SentenceLenght.SentenceFileReader;
 import analyzertfidf.Keywords;
 import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
@@ -34,73 +35,13 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
-        //Initialize classes and maps
-        TextProcessor tp = new TextProcessor();
-        TFIDF calculator = new TFIDF();
         texts = new ArrayList<>();
-        HashMap<String, Double> termWeightMap;
-
-        //Read corpus files
-        HashMap<String, Integer> tempMap;
-
-        for (int i = 1; i < 8; i++) {
-            String fileName = "EuroparlDaEn" + i;
-            System.out.println("Processing: " + fileName);
-            tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap)));
-        }
-        for (int i = 1; i < 8; i++) {
-            String fileName = "fairytale" + i;
-            System.out.println("Processing: " + fileName);
-            tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap)));
-        }
-        for (int i = 1; i < 8; i++) {
-            String fileName = "Medical" + i;
-            System.out.println("Processing: " + fileName);
-            tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap)));
-        }
-
-        System.out.println("Processing Done\n");
-
+        
+        //Read textfiles
+        readTexts();
         //Calculate IDIDF scores
-        System.out.println("-- IF-IDF weight processing --");
-
-        for (Text t : texts) {
-            termWeightMap = new HashMap<>();
-
-            for (HashMap.Entry<String, Integer> entry : t.keywords.keywordMap.entrySet()) {
-                termWeightMap.put(entry.getKey(), calculator.calculateTFIDF(entry.getKey(), t, texts));
-            }
-
-            t.keywords.keywordTFIDFMap = termWeightMap;
-        }
-
-        //Make a list of all distinct terms in the corpus
-        distinctTerms = new ArrayList<>();
-        for (Text t : texts) {
-            Iterator it = t.keywords.keywordMap.entrySet().iterator();
-            for (int i = 0; i < t.keywords.size(); i++) {
-                Map.Entry<String, Integer> pair = (Map.Entry) it.next();
-                if (!distinctTerms.contains(pair.getKey())) {
-                    distinctTerms.add(pair.getKey());
-                }
-            }
-        }
-        //Initialize vectorspace in all texts
-        for (Text t : texts) {
-            t.vectorSpace = new Double[distinctTerms.size()];
-            int count = 0;
-            for (String s : distinctTerms) {
-                if (t.keywords.keywordTFIDFMap.containsKey(s)) {
-                    t.vectorSpace[count] = t.keywords.keywordTFIDFMap.get(s);
-                } else {
-                    t.vectorSpace[count] = 0.0;
-                }
-                count++;
-            }
-        }
+        calculateTFDIF();
+        //Cluster teh texts
         clusterTexts();
     }
 
@@ -339,6 +280,80 @@ public class MainWindow extends javax.swing.JFrame {
             listModel.addElement(c);
         }
         clustersList.setModel(listModel);
+    }
+    private void readTexts() {
+        //Initialize classes and maps
+        TextProcessor tp = new TextProcessor();
+        texts = new ArrayList<>();
+        SentenceFileReader sentenceReader = new SentenceFileReader();
+
+        //Read corpus files
+        HashMap<String, Integer> tempMap;
+
+        for (int i = 1; i < 8; i++) {
+            String fileName = "EuroparlDaEn" + i;
+            System.out.println("Processing: " + fileName);
+            System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
+            tempMap = tp.readFile(fileName);
+            texts.add(new Text(fileName, new Keywords(tempMap)));
+        }
+        for (int i = 1; i < 8; i++) {
+            String fileName = "fairytale" + i;
+            System.out.println("Processing: " + fileName);
+            System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
+            tempMap = tp.readFile(fileName);
+            texts.add(new Text(fileName, new Keywords(tempMap)));
+        }
+        for (int i = 1; i < 8; i++) {
+            String fileName = "Medical" + i;
+            System.out.println("Processing: " + fileName);
+            //Sentence result
+            System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
+            tempMap = tp.readFile(fileName);
+            texts.add(new Text(fileName, new Keywords(tempMap)));
+        }
+
+        System.out.println("Processing Done\n");
+    }
+    private void calculateTFDIF() {
+        TFIDF calculator = new TFIDF();
+        HashMap<String, Double> termWeightMap;
+        System.out.println("-- IF-IDF weight processing --");
+
+        for (Text t : texts) {
+            termWeightMap = new HashMap<>();
+
+            for (HashMap.Entry<String, Integer> entry : t.keywords.keywordMap.entrySet()) {
+                termWeightMap.put(entry.getKey(), calculator.calculateTFIDF(entry.getKey(), t, texts));
+            }
+
+            t.keywords.keywordTFIDFMap = termWeightMap;
+        }
+
+        //Make a list of all distinct terms in the corpus
+        distinctTerms = new ArrayList<>();
+        for (Text t : texts) {
+            Iterator it = t.keywords.keywordMap.entrySet().iterator();
+            for (int i = 0; i < t.keywords.size(); i++) {
+                Map.Entry<String, Integer> pair = (Map.Entry) it.next();
+                if (!distinctTerms.contains(pair.getKey())) {
+                    distinctTerms.add(pair.getKey());
+                }
+            }
+        }
+        //Initialize vectorspace in all texts
+        for (Text t : texts) {
+            t.vectorSpace = new Double[distinctTerms.size()];
+            int count = 0;
+            for (String s : distinctTerms) {
+                if (t.keywords.keywordTFIDFMap.containsKey(s)) {
+                    t.vectorSpace[count] = t.keywords.keywordTFIDFMap.get(s);
+                } else {
+                    t.vectorSpace[count] = 0.0;
+                }
+                count++;
+            }
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList clustersList;
