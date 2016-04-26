@@ -7,11 +7,14 @@ package GUI;
 
 import Kmeans.Centroid;
 import analyzertfidf.Text;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
 /**
@@ -33,13 +36,20 @@ public class ClusterCellRenderer extends DefaultListCellRenderer{
             }
             StringBuilder textBuilder = new StringBuilder();
             textBuilder.append("Cluster ");
+//            JTextArea textArea = new JTextArea();
+//            textArea.setText("Cluster");
+//            this.add(textArea, BorderLayout.CENTER);
             for (Text text : cluster.GroupedDocument) {
-                textBuilder.append(text.fileName);
-                
+                textBuilder.append("--");
+                textBuilder.append(text.fileName);               
+//                textBuilder.append(text.getDistanceToCentroid(cluster));
+                textBuilder.append("--");
+//                  textArea = new JTextArea();
+//                  textArea.setText(text.fileName + "\n" + "Length to centroid = " + text.getDistanceToCentroid(cluster) + "\n");
+//                  
+//                  this.add(textArea, BorderLayout.CENTER);
             }
             setText(textBuilder.toString());
-            //setToolTipText(" ");
-            // setIcon(ingredient.getIcon());
         }
         return this;
     }

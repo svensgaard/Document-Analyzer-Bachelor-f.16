@@ -5,6 +5,9 @@
  */
 package analyzertfidf;
 
+import Kmeans.Centroid;
+import Kmeans.SimilarityMatrics;
+
 
 /**
  *
@@ -14,6 +17,13 @@ public class Text {
     public String fileName;
     public Double[] vectorSpace;
     public Keywords keywords;
+    public String type;
+
+    public double getDistanceToCentroid(Centroid centroid) {
+        SimilarityMatrics similarity = new SimilarityMatrics();
+        return similarity.findCosineSimilarity(centroid.getAverageVector(), vectorSpace);
+    }
+
      
     public Double[] getVectorSpace() {
         return vectorSpace;
@@ -27,6 +37,11 @@ public class Text {
     public Text(String fileName, Keywords keywords) {
         this.fileName = fileName;
         this.keywords = keywords;
+    }
+    public Text(String fileName, Keywords keywords, String type) {
+        this.fileName = fileName;
+        this.keywords = keywords;
+        this.type = type;
     }
     
     

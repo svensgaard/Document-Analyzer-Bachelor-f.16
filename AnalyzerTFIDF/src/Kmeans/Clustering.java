@@ -40,14 +40,14 @@ public class Clustering {
         ArrayList<Centroid> previousClusterCenter;
         result = InitializeClusterCentroid(centroids.size());
 
-        do {
+        do { //Continue until stop criteria are met.
             previousClusterCenter = centroids;
 
             for (Text t : texts) {
                 int i = FindClosestClusterCenter(centroids, t);
                 result.get(i).GroupedDocument.add(t);
             }
-            centroids = InitializeClusterCentroid(centroids.size());
+//            centroids = InitializeClusterCentroid(centroids.size());
             centroids = CalculateMeanPoints(result);
             stop = CheckStop(previousClusterCenter, centroids);
             if (!stop) {
@@ -134,11 +134,11 @@ public class Clustering {
             do {
                 
                 int count = 0;
-                if (centroids.get(index).GroupedDocument.size() == 0 && previousClusterCenter.get(index).GroupedDocument.size() == 0) {
+                if (centroids.get(index).GroupedDocument.isEmpty() && previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
                     index++;
-                } else if (centroids.get(index).GroupedDocument.size() != 0 && previousClusterCenter.get(index).GroupedDocument.size() != 0) {                   
+                } else if (!centroids.get(index).GroupedDocument.isEmpty() && !previousClusterCenter.get(index).GroupedDocument.isEmpty()) {                   
                     for (int k = 0; k < centroids.get(index).GroupedDocument.get(0).getVectorSpace().length; k++) {
-                        if (centroids.get(index).GroupedDocument.get(0).getVectorSpace()[k] == previousClusterCenter.get(index).GroupedDocument.get(0).getVectorSpace()[k]) {
+                        if (centroids.get(index).GroupedDocument.get(0).getVectorSpace()[k].equals(previousClusterCenter.get(index).GroupedDocument.get(0).getVectorSpace()[k])) {
                             count++;
                         }
                     }

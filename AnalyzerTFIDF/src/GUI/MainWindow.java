@@ -64,6 +64,7 @@ public class MainWindow extends javax.swing.JFrame {
         inputTextArea = new javax.swing.JTextArea();
         reClusterBtn = new javax.swing.JButton();
         findBtn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,6 +140,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Show accuracy");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,7 +160,9 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(reClusterBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(findBtn)
-                        .addGap(0, 70, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +173,8 @@ public class MainWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(reClusterBtn)
-                    .addComponent(findBtn))
+                    .addComponent(findBtn)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -202,6 +213,23 @@ public class MainWindow extends javax.swing.JFrame {
         //Results of input
         displayBelongingCorpus(inputText);
     }//GEN-LAST:event_findBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int count = 1;
+        
+        for (Centroid centroid : result) {
+           System.out.println("Results for cluster "+count+" :");
+           for(Text text : centroid.GroupedDocument) {
+               System.out.println(text.fileName);
+               if(text.type.equals(centroid.GroupedDocument.get(0).type)) {
+                   System.out.println("True");
+               } else {
+                   System.out.println("False");
+               }
+           }
+           count++;
+       }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,7 +270,7 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println("Clustering...");
         //Cluster texts
         Clustering clustering = new Clustering();
-        result = clustering.prepareCluster(2, texts);
+        result = clustering.prepareCluster(3, texts);
         //Add texts to List
         setListItems(result);
     }
@@ -290,27 +318,27 @@ public class MainWindow extends javax.swing.JFrame {
         //Read corpus files
         HashMap<String, Integer> tempMap;
 
-        for (int i = 1; i < 8; i++) {
+        for (int i = 1; i < 5; i++) {
             String fileName = "EuroparlDaEn" + i;
             System.out.println("Processing: " + fileName);
             System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
             tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap)));
+            texts.add(new Text(fileName, new Keywords(tempMap), "Politic"));
         }
-        for (int i = 1; i < 8; i++) {
+        for (int i = 1; i < 5; i++) {
             String fileName = "fairytale" + i;
             System.out.println("Processing: " + fileName);
             System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
             tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap)));
+            texts.add(new Text(fileName, new Keywords(tempMap), "Fairytale"));
         }
-        for (int i = 1; i < 8; i++) {
+        for (int i = 1; i < 5; i++) {
             String fileName = "Medical" + i;
             System.out.println("Processing: " + fileName);
             //Sentence result
             System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
             tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap)));
+            texts.add(new Text(fileName, new Keywords(tempMap), "Medical"));
         }
 
         System.out.println("Processing Done\n");
@@ -359,6 +387,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JList clustersList;
     private javax.swing.JButton findBtn;
     private javax.swing.JTextArea inputTextArea;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
