@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *
@@ -42,7 +41,7 @@ public class SentenceFileReader {
 //                        sentenceLength++;
 //                    }
                 } else {
-                    //If char is . set newSentence to true and check is next char is ' '
+                    //If char is . set newSentence to true
                     if (ch == '.') {
                         newSentence = true;
                         sentenceLength++;

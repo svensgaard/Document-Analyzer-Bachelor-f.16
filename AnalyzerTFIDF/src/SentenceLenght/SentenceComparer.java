@@ -9,6 +9,9 @@ package SentenceLenght;
  *
  * @author Mads
  */
-public class SentenceWrapper {
-    
+public class SentenceComparer {
+    public Double findSentenceSimilarity(double clusterLength, int textLength) {
+        double result = clusterLength / (double) textLength;
+        return result;
+    }
 }

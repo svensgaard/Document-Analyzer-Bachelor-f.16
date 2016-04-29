@@ -18,6 +18,7 @@ public class Text {
     public Double[] vectorSpace;
     public Keywords keywords;
     public String type;
+    public int averageSentenceLength;
 
     public double getDistanceToCentroid(Centroid centroid) {
         SimilarityMatrics similarity = new SimilarityMatrics();
@@ -43,7 +44,12 @@ public class Text {
         this.keywords = keywords;
         this.type = type;
     }
-    
+    public Text(String fileName, Keywords keywords, String type, int averageSentenceLength) {
+        this.fileName = fileName;
+        this.keywords = keywords;
+        this.type = type;
+        this.averageSentenceLength = averageSentenceLength;
+    }
     
     
 }

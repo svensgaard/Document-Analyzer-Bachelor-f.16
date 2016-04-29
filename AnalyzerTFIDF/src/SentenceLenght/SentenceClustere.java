@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Kmeans;
+package SentenceLenght;
 
+import Kmeans.Centroid;
+import Kmeans.SimilarityMatrics;
 import analyzertfidf.Text;
-import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Random;
 
 /**
  *
  * @author Mads
  */
-public class Clustering {
+public class SentenceClustere {
 
     private int globalCounter = 0;
     private int counter;
@@ -48,7 +48,7 @@ public class Clustering {
                 result.get(i).GroupedDocument.add(t);
             }
 //            centroids = InitializeClusterCentroid(centroids.size());
-            centroids = CalculateMeanPoints(result);
+//           centroids = CalculateMeanPoints(result);
             stop = CheckStop(previousClusterCenter, centroids);
             if (!stop) {
                 result = InitializeClusterCentroid(centroids.size());
@@ -63,7 +63,7 @@ public class Clustering {
         HashSet<Integer> uniqRandom = new HashSet<>();
         ArrayList<Integer> randomNumbers = new ArrayList<>();
         for (int i = 1; i < size; i++) {
-            randomNumbers.add(new Integer(i));
+            randomNumbers.add(i);
         }
         Collections.shuffle(randomNumbers);
         for (int i = 0; i < k; i++) {
@@ -86,12 +86,12 @@ public class Clustering {
     }
 
     public int FindClosestClusterCenter(ArrayList<Centroid> centroids, Text t) {
-        SimilarityMatrics similarityMatrics = new SimilarityMatrics();
+        SentenceComparer sentenceComparer = new SentenceComparer();
         Double[] tfdif = new Double[centroids.size()];
         for (int i = 0; i < centroids.size(); i++) {
-            
-//            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).GroupedDocument.get(0).getVectorSpace(), t.getVectorSpace());
-              tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace()); //BEST RESULTS
+//            tfdif[i] = sentenceComparer.findCosineSimilarity(centroids.get(i).GroupedDocument.get(0).getVectorSpace(), t.getVectorSpace());
+            tfdif[i] = sentenceComparer.findSentenceSimilarity(centroids.get(i).getAverageSentenceLength(), t.averageSentenceLength);
+
         }
 
         int index = 0;
@@ -105,58 +105,56 @@ public class Clustering {
         return index;
     }
 
-    private ArrayList<Centroid> CalculateMeanPoints(ArrayList<Centroid> result) {
-        for (int i = 0; i < result.size(); i++) {
-            if (result.get(i).GroupedDocument.size() > 0) {
+//    private ArrayList<Centroid> CalculateMeanPoints(ArrayList<Centroid> result) {
+//        for (Centroid centroid : result) {
+//            if (result.get(i).GroupedDocument.size() > 0) {
 //                for (int k = 0; k < result.get(i).GroupedDocument.get(0).getVectorSpace().length; k++) {
-                 for (int k = 0; k < result.get(i).getAverageVector().length; k++) {
-                    Double total = 0.0;
-
-                    for (Text t : result.get(i).GroupedDocument) {
-                        total += t.getVectorSpace()[k];
-                    }
+//                    Double total = 0.0;
+//
+//                    for (Text t : result.get(i).GroupedDocument) {
+//                        total += t.getVectorSpace()[k];
+//                    }
 //                    result.get(i).GroupedDocument.get(0).getVectorSpace()[k] = total / result.get(i).GroupedDocument.size();
-                    result.get(i).getAverageVector()[k] = total / result.get(i).GroupedDocument.size();
-
-                }
-            }
-        }
-        return result;
-    }
+//                }
+//               
+//            }
+//            centroid.
+//        }
+//        return result;
+//    }
 
     private Boolean CheckStop(ArrayList<Centroid> previousClusterCenter, ArrayList<Centroid> centroids) {
         globalCounter++;
         counter = globalCounter;
         Boolean stop = false;
         if (globalCounter > 1000) {
+
             return true;
         } else {
-
             Integer[] changeIndex = new Integer[centroids.size()];
             int index = 0;
 
             do {
+
+                
                 if (centroids.get(index).GroupedDocument.isEmpty() && previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
+                    changeIndex[index] = 0;
                     index++;
-                } else if (!centroids.get(index).GroupedDocument.isEmpty() && !previousClusterCenter.get(index).GroupedDocument.isEmpty()) {                   
-                    for (int k = 0; k < centroids.get(index).getAverageVector().length; k++) {
-//                        if (centroids.get(index).GroupedDocument.get(0).getVectorSpace()[k].equals(previousClusterCenter.get(index).GroupedDocument.get(0).getVectorSpace()[k])) {
-                        if (!centroids.get(index).getAverageVector()[k].equals(previousClusterCenter.get(index).getAverageVector()[k])) { //Change back to document[0].getvectorspace if bad results.
-                            changeIndex[index] = 1;
-                        }
+                } else if (!centroids.get(index).GroupedDocument.isEmpty() && !previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
+                  
+                    //If change in averageSentenceLength something changed.
+                    if(!centroids.get(index).getAverageSentenceLength().equals(previousClusterCenter.get(index).getAverageSentenceLength())) {
+                        changeIndex[index] = 1;
+                    } else {
+                        changeIndex[index] = 0;
                     }
-//                    if (count == centroids.get(index).GroupedDocument.get(0).getVectorSpace().length) {
-//                    if (count == centroids.get(index).getAverageVector().length) {
-//                        changeIndex[index] = 0;
-//                    } else {
-//                        changeIndex[index] = 1;
-//                    }
-                    index++;                   
+                    index++;
                 } else {
+                    //Set change to one if one is empty and the other is not
                     changeIndex[index] = 1;
                     index++;
                 }
-                
+
             } while (index < centroids.size());
 //            If any index contains 1
             for (int i : changeIndex) {
@@ -169,12 +167,11 @@ public class Clustering {
     }
 
     //Uses the average vectorspacemodel instead of the centroids.
-
     public int findClosestClusterAverage(ArrayList<Centroid> centroids, Text t) {
-        SimilarityMatrics similarityMatrics = new SimilarityMatrics();
+        SentenceComparer sentenceComparer = new SentenceComparer();
         Double[] tfdif = new Double[centroids.size()];
         for (int i = 0; i < centroids.size(); i++) {
-            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace());
+            tfdif[i] = sentenceComparer.findSentenceSimilarity(centroids.get(i).getAverageSentenceLength(), t.averageSentenceLength);
         }
 
         int index = 0;
@@ -188,5 +185,4 @@ public class Clustering {
         }
         return index;
     }
-
 }

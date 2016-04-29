@@ -8,11 +8,14 @@ package GUI;
 import Kmeans.Centroid;
 import Kmeans.Clustering;
 import Kmeans.Comparer;
+import SentenceLenght.SentenceClustere;
 import SentenceLenght.SentenceFileReader;
 import analyzertfidf.Keywords;
 import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
 import analyzertfidf.TextProcessor;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,15 +31,22 @@ public class MainWindow extends javax.swing.JFrame {
 
     ArrayList<Text> texts = new ArrayList<>();
     ArrayList<String> distinctTerms;
-    ArrayList<Centroid> result;
+    ArrayList<Centroid> freqResult;
+    ArrayList<Centroid> sentenceResult;
 
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
         initComponents();
-        texts = new ArrayList<>();
+        //Set UI components
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 25));
+        jLabel2.setFont(new Font("Arial", Font.BOLD, 25));
+        jLabel3.setFont(new Font("Arial", Font.BOLD, 25));
+        jLabel4.setFont(new Font("Arial", Font.BOLD, 25));
         
+        texts = new ArrayList<>();
+
         //Read textfiles
         readTexts();
         //Calculate IDIDF scores
@@ -55,76 +65,80 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        clustersList = new javax.swing.JList();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        freqList = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         inputTextArea = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        sentenceList = new javax.swing.JList();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        outputTextArea = new javax.swing.JScrollPane();
+        outputArea = new javax.swing.JTextArea();
         reClusterBtn = new javax.swing.JButton();
         findBtn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        accuracyBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Clusters");
-
-        clustersList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(clustersList);
+        setPreferredSize(new java.awt.Dimension(1920, 900));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 22, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+            .addGap(0, 577, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+            .addGap(0, 348, Short.MAX_VALUE)
         );
-
-        jLabel2.setText("Input");
-
-        inputTextArea.setColumns(20);
-        inputTextArea.setRows(5);
-        jScrollPane2.setViewportView(inputTextArea);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
+            .addGap(0, 1323, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 29, Short.MAX_VALUE))
+            .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane3.setMaximumSize(new java.awt.Dimension(500, 500));
+
+        freqList.setMaximumSize(new java.awt.Dimension(1500, 150));
+        freqList.setMinimumSize(new java.awt.Dimension(1500, 150));
+        freqList.setPreferredSize(new java.awt.Dimension(1500, 150));
+        jScrollPane3.setViewportView(freqList);
+
+        jLabel2.setText("Input");
+
+        inputTextArea.setColumns(20);
+        inputTextArea.setRows(5);
+        inputTextArea.setMaximumSize(new java.awt.Dimension(200, 400));
+        inputTextArea.setMinimumSize(new java.awt.Dimension(200, 400));
+        inputTextArea.setPreferredSize(new java.awt.Dimension(200, 200));
+        jScrollPane2.setViewportView(inputTextArea);
+
+        jLabel1.setText("Word frequency");
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(500, 500));
+
+        sentenceList.setPreferredSize(new java.awt.Dimension(1500, 150));
+        jScrollPane1.setViewportView(sentenceList);
+
+        jLabel3.setText("Average sentence length");
+
+        jLabel4.setText("Output");
+
+        outputArea.setColumns(20);
+        outputArea.setRows(5);
+        outputTextArea.setViewportView(outputArea);
 
         reClusterBtn.setText("Re cluster");
         reClusterBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -140,10 +154,10 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Show accuracy");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        accuracyBtn.setText("Show accuracy");
+        accuracyBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                accuracyBtnActionPerformed(evt);
             }
         });
 
@@ -154,28 +168,66 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(reClusterBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(findBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1500, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(reClusterBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(findBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(accuracyBtn)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(outputTextArea))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(reClusterBtn)
-                    .addComponent(findBtn)
-                    .addComponent(jButton1))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(outputTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(121, 121, 121)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(reClusterBtn)
+                            .addComponent(findBtn)
+                            .addComponent(accuracyBtn))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(168, 168, 168)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(40, 40, 40))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         pack();
@@ -196,7 +248,7 @@ public class MainWindow extends javax.swing.JFrame {
         for (HashMap.Entry<String, Integer> entry : inputText.keywords.keywordMap.entrySet()) {
             termWeightMap.put(entry.getKey(), calculator.calculateTFIDF(entry.getKey(), inputText, texts));
         }
-
+        //TODO Find average sentence length of input
         inputText.keywords.keywordTFIDFMap = termWeightMap;
         //Calculate vectorspace
         inputText.vectorSpace = new Double[distinctTerms.size()];
@@ -214,22 +266,18 @@ public class MainWindow extends javax.swing.JFrame {
         displayBelongingCorpus(inputText);
     }//GEN-LAST:event_findBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void accuracyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accuracyBtnActionPerformed
         int count = 1;
+        outputArea.append("----- Results -----\n");
+        for (Centroid centroid : freqResult) {
+//            System.out.println("Results for cluster " + count + " :");
+//            System.out.println(centroid.getPurity());
+            outputArea.append("Cluster" + count + " purity = " + centroid.getPurity() + "\n");
+            outputArea.append("Cluster" + count + " average distance to centroid = " + centroid.getAverageDistance() + "\n");
+            count++;
+        }
         
-        for (Centroid centroid : result) {
-           System.out.println("Results for cluster "+count+" :");
-           for(Text text : centroid.GroupedDocument) {
-               System.out.println(text.fileName);
-               if(text.type.equals(centroid.GroupedDocument.get(0).type)) {
-                   System.out.println("True");
-               } else {
-                   System.out.println("False");
-               }
-           }
-           count++;
-       }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_accuracyBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,10 +317,18 @@ public class MainWindow extends javax.swing.JFrame {
     private void clusterTexts() {
         System.out.println("Clustering...");
         //Cluster texts
+        //Cluster frequency
         Clustering clustering = new Clustering();
-        result = clustering.prepareCluster(3, texts);
+        freqResult = clustering.prepareCluster(3, texts);
         //Add texts to List
-        setListItems(result);
+        setFreqListItems(freqResult);
+        //Cluster sentence length
+        SentenceClustere sentenceClustering = new SentenceClustere();
+        sentenceResult = sentenceClustering.prepareCluster(3, texts);
+
+        //Add to list
+        setSentenceListItems(sentenceResult);
+        pack();
     }
 
     private void displayBelongingCorpus(Text input) {
@@ -281,7 +337,7 @@ public class MainWindow extends javax.swing.JFrame {
         Double maxFound = 0.0;
         int index = 0;
         int count = 0;
-        for (Double d : kmeansComparer.getSimilarities(result, input)) {
+        for (Double d : kmeansComparer.getSimilarities(freqResult, input)) {
             if (d > maxFound) {
                 maxFound = d;
                 index = count;
@@ -291,24 +347,34 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }
         //Set the isTheOne bool to true for the right index and false for all others
-        for (Centroid c : result) {
-            if (c == result.get(index)) {
+        for (Centroid c : freqResult) {
+            if (c == freqResult.get(index)) {
                 c.isTheOne = true;
             } else {
                 c.isTheOne = false;
             }
         }
-        setListItems(result);
+        setFreqListItems(freqResult);
     }
 
-    private void setListItems(ArrayList<Centroid> items) {
-        clustersList.setCellRenderer(new ClusterCellRenderer());
+    private void setFreqListItems(ArrayList<Centroid> items) {
+        freqList.setCellRenderer(new ClusterCellRenderer());
         DefaultListModel listModel = new DefaultListModel();
         for (Centroid c : items) {
             listModel.addElement(c);
         }
-        clustersList.setModel(listModel);
+        freqList.setModel(listModel);
     }
+
+    private void setSentenceListItems(ArrayList<Centroid> items) {
+        sentenceList.setCellRenderer(new ClusterCellRenderer());
+        DefaultListModel listModel = new DefaultListModel();
+        for (Centroid c : items) {
+            listModel.addElement(c);
+        }
+        sentenceList.setModel(listModel);
+    }
+
     private void readTexts() {
         //Initialize classes and maps
         TextProcessor tp = new TextProcessor();
@@ -318,31 +384,32 @@ public class MainWindow extends javax.swing.JFrame {
         //Read corpus files
         HashMap<String, Integer> tempMap;
 
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 8; i++) {
             String fileName = "EuroparlDaEn" + i;
             System.out.println("Processing: " + fileName);
             System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
             tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap), "Politic"));
+            texts.add(new Text(fileName, new Keywords(tempMap), "Politic", sentenceReader.readFile(fileName)));
         }
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 8; i++) {
             String fileName = "fairytale" + i;
             System.out.println("Processing: " + fileName);
             System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
             tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap), "Fairytale"));
+            texts.add(new Text(fileName, new Keywords(tempMap), "Fairytale", sentenceReader.readFile(fileName)));
         }
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 8; i++) {
             String fileName = "Medical" + i;
             System.out.println("Processing: " + fileName);
             //Sentence result
             System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
             tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap), "Medical"));
+            texts.add(new Text(fileName, new Keywords(tempMap), "Medical", sentenceReader.readFile(fileName)));
         }
 
-        System.out.println("Processing Done\n");
+        System.out.println("Processing Done");
     }
+
     private void calculateTFDIF() {
         TFIDF calculator = new TFIDF();
         HashMap<String, Double> termWeightMap;
@@ -384,16 +451,22 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList clustersList;
+    private javax.swing.JButton accuracyBtn;
     private javax.swing.JButton findBtn;
+    private javax.swing.JList freqList;
     private javax.swing.JTextArea inputTextArea;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea outputArea;
+    private javax.swing.JScrollPane outputTextArea;
     private javax.swing.JButton reClusterBtn;
+    private javax.swing.JList sentenceList;
     // End of variables declaration//GEN-END:variables
 }
