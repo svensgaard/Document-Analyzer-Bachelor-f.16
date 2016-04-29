@@ -16,7 +16,6 @@ public class SimilarityMatrics {
         Double magnitude1 = magnitude(vector1);
         Double magnitude2 = magnitude(vector2);
         Double result = dotProduct / (magnitude1 * magnitude2);
-        
         return result;
     }
 

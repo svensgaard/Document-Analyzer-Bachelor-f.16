@@ -7,10 +7,12 @@ package analyzertfidf;
 
 import Kmeans.Centroid;
 import Kmeans.Clustering;
+import Kmeans.Comparer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  *
@@ -31,7 +33,7 @@ public class AnalyzerTFIDF {
         HashMap<String, Double> termWeightMap;
         HashMap<String, Integer> tempMap = new HashMap<>();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 44; i < 53; i++) {
             String fileName = "EuroparlDaEn" + i;
             System.out.println("Processing: " + fileName);
             tempMap = tp.readFile(fileName);
@@ -40,6 +42,12 @@ public class AnalyzerTFIDF {
 
         for (int i = 1; i < 8; i++) {
             String fileName = "Physics" + i;
+            System.out.println("Processing: " + fileName);
+            tempMap = tp.readFile(fileName);
+            texts.add(new Text(fileName, new Keywords(tempMap)));
+        }
+        for (int i = 1; i < 8; i++) {
+            String fileName = "Dino" + i;
             System.out.println("Processing: " + fileName);
             tempMap = tp.readFile(fileName);
             texts.add(new Text(fileName, new Keywords(tempMap)));
@@ -66,7 +74,7 @@ public class AnalyzerTFIDF {
         ArrayList<String> distinctTerms = new ArrayList<>();
         for (Text t : texts) {
             Iterator it = t.keywords.keywordMap.entrySet().iterator();
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < t.keywords.size(); i++) {
                 Map.Entry<String, Integer> pair = (Map.Entry) it.next();
                 if (!distinctTerms.contains(pair.getKey())) {
                     distinctTerms.add(pair.getKey());
@@ -96,7 +104,40 @@ public class AnalyzerTFIDF {
                 System.out.println(t.fileName);
             }
         }
+        
+        
+        //Compare input to clusters
+        System.out.println("Waiting for input...");
+        Scanner scan = new Scanner(System.in);
+        Text inputText = tp.readInput(scan.nextLine());
+        //Calculate tfdif for input
+        termWeightMap = new HashMap<>();
 
+        for (HashMap.Entry<String, Integer> entry : inputText.keywords.keywordMap.entrySet()) {
+            termWeightMap.put(entry.getKey(), calculator.calculateTFIDF(entry.getKey(), inputText, texts));
+        }
+
+        inputText.keywords.keywordTFIDFMap = termWeightMap;
+        //Calculate vectorspace
+        inputText.vectorSpace = new Double[distinctTerms.size()];
+        int count = 0;
+        for (String s : distinctTerms) {
+            if (inputText.keywords.keywordTFIDFMap.containsKey(s)) {
+                inputText.vectorSpace[count] = inputText.keywords.keywordTFIDFMap.get(s);
+            } else {
+                inputText.vectorSpace[count] = 0.0;
+            }
+            count++;
+        }
+        
+        //Results of input
+        Kmeans.Comparer kmeansComparer = new Comparer();
+
+        int count2 = 1;
+        for(Double d : kmeansComparer.getSimilarities(result, inputText)) {
+            System.out.println("Similarity " + d + " with cluster "+ count2);
+            count2++;
+        }
 //        for (Text t : texts) {
 //            comparer.compareText(t);
 //        }

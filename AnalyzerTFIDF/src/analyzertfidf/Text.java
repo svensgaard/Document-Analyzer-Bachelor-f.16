@@ -5,15 +5,27 @@
  */
 package analyzertfidf;
 
+import Kmeans.Centroid;
+import Kmeans.SimilarityMatrics;
+
 
 /**
  *
  * @author Bryan
  */
 public class Text {
-    String fileName;
+    public String fileName;
     public Double[] vectorSpace;
+    public Keywords keywords;
+    public String type;
+    public int averageSentenceLength;
 
+    public double getDistanceToCentroid(Centroid centroid) {
+        SimilarityMatrics similarity = new SimilarityMatrics();
+        return similarity.findCosineSimilarity(centroid.getAverageVector(), vectorSpace);
+    }
+
+     
     public Double[] getVectorSpace() {
         return vectorSpace;
     }
@@ -21,13 +33,23 @@ public class Text {
     public void setVectorSpace(Double[] vectorSpace) {
         this.vectorSpace = vectorSpace;
     }
-    Keywords keywords;
+   
     
     public Text(String fileName, Keywords keywords) {
         this.fileName = fileName;
         this.keywords = keywords;
     }
-    
+    public Text(String fileName, Keywords keywords, String type) {
+        this.fileName = fileName;
+        this.keywords = keywords;
+        this.type = type;
+    }
+    public Text(String fileName, Keywords keywords, String type, int averageSentenceLength) {
+        this.fileName = fileName;
+        this.keywords = keywords;
+        this.type = type;
+        this.averageSentenceLength = averageSentenceLength;
+    }
     
     
 }
