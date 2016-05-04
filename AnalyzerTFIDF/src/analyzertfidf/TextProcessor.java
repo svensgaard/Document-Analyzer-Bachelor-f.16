@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class TextProcessor {
 
-    ArrayList<String> mostCommonWords;
+    ArrayList<String> mostCommon100Words;
     WordStemmer stemmer = new WordStemmer();
 
     public TextProcessor() {
@@ -37,17 +37,19 @@ public class TextProcessor {
     }
 
     private void readCommonWords() {
-        mostCommonWords = new ArrayList<>();
+        mostCommon100Words = new ArrayList<>();
         stemmer = new WordStemmer();
         stemmer.setLangugage("english");
-
+        
+        //Read 100 most common
         try {
-            FileReader fr = new FileReader(new File("100MostUsedWords.txt"));
+//            FileReader fr = new FileReader(new File("100MostUsedWords.txt"));
+            FileReader fr = new FileReader(new File("top200words.txt"));
             BufferedReader br = new BufferedReader(fr);
-            String line = "";
+            String line;
 
             while ((line = br.readLine()) != null) {
-                mostCommonWords.add(line.toLowerCase());
+                mostCommon100Words.add(stemmer.stem(line).toLowerCase());
             }
 
         } catch (FileNotFoundException ex) {
@@ -55,10 +57,24 @@ public class TextProcessor {
         } catch (IOException ex) {
             throw new Error(ex.getMessage());
         }
+        //Read 200 most common
+//         try {
+//            FileReader fr = new FileReader(new File("top200words.txt"));
+//            BufferedReader br = new BufferedReader(fr);
+//            String line = "";
+//
+//            while ((line = br.readLine()) != null) {
+//                mostCommon200Words.add(stemmer.stem(line).toLowerCase());
+//            }
+//
+//        } catch (FileNotFoundException ex) {
+//            throw new Error(ex.getMessage());
+//        } catch (IOException ex) {
+//            throw new Error(ex.getMessage());
+//        }
     }
 
-    public HashMap readFile(String fileName) {
-
+    public HashMap readFile(String fileName) {      
         // Read file
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName + ".txt"));
@@ -77,14 +93,60 @@ public class TextProcessor {
                     if (word.length() > 1) {
 
                         // Stem word
-                        stem = stemmer.stem(word);
+                        stem = stemmer.stem(word).toLowerCase();
+                        
+                            // Increment if word is known
+                            if (tempMap.containsKey(stem)) {
+                                tempMap.put(stem, tempMap.get(stem) + 1);
+                            } else {
+                                // Add new word and frequency to map
+                                tempMap.put(stem, 1);
+                            }
+                       
 
-                        // Increment if word is known
-                        if (tempMap.containsKey(stem)) {
-                            tempMap.put(stem, tempMap.get(stem) + 1);
-                        } else {
-                            // Add new word and frequency to map
-                            tempMap.put(stem, 1);
+                    }
+                }
+            }
+
+            return tempMap;
+
+        } catch (IOException e) {
+            throw new Error("Reading File Exception", e);
+        }
+    }
+     public HashMap readFileWith100MostCommon(String fileName) {
+        //Read common words
+        if(mostCommon100Words == null) {
+            readCommonWords();
+        }       
+        // Read file
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName + ".txt"));
+
+            HashMap<String, Integer> tempMap = new HashMap<>();
+            String line = "";
+            String stem = "";
+
+            // Split symbols
+            while ((line = reader.readLine()) != null) {
+                String[] wordArray = line.toLowerCase().split("[\\d\\p{Punct}\\s]+");
+
+                // Generate HashMap with keys and values
+                for (String word : wordArray) {
+                    // Remove letters
+                    if (word.length() > 1) {
+
+                        // Stem word
+                        stem = stemmer.stem(word).toLowerCase();
+                        //Check if word is common
+                        if (!mostCommon100Words.contains(stem)) {
+                            // Increment if word is known
+                            if (tempMap.containsKey(stem)) {
+                                tempMap.put(stem, tempMap.get(stem) + 1);
+                            } else {
+                                // Add new word and frequency to map
+                                tempMap.put(stem, 1);
+                            }
                         }
 
                     }
@@ -99,6 +161,7 @@ public class TextProcessor {
             throw new Error("Reading File Exception", e);
         }
     }
+      
 
     public void writeToFile(String fileName, HashMap<String, Integer> keywords) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File(fileName + "keywords.txt")));
@@ -125,7 +188,7 @@ public class TextProcessor {
                 // Remove letters
                 if (word.length() > 1) {
                     // Remove most common words
-                    if (!mostCommonWords.contains(word)) {
+                    if (!mostCommon100Words.contains(word)) {
 
                         // Stem word
                         stem = stemmer.stem(word);
