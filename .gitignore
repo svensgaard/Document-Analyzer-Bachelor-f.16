@@ -47,3 +47,5 @@ AnalyzerTFIDF/nbproject/project.xml
 AnalyzerTFIDF/nbproject/genfiles.properties
 AnalyzerTFIDF/nbproject/project.properties
 /AnalyzerTFIDF/dist/
+/AnalyzerTFIDF/TextAnalyzer/build/
+/AnalyzerTFIDF/TextAnalyzer/dist/
