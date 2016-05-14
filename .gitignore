@@ -1,3 +1,6 @@
+# Text documents
+*.txt
+
 # Compiled Object files
 *.slo
 *.lo
@@ -46,6 +49,9 @@ AnalyzerTFIDF/nbproject/project.xml
 /AnalyzerTFIDF/nbproject/
 AnalyzerTFIDF/nbproject/genfiles.properties
 AnalyzerTFIDF/nbproject/project.properties
+<<<<<<< HEAD
 /AnalyzerTFIDF/dist/
 /AnalyzerTFIDF/TextAnalyzer/build/
 /AnalyzerTFIDF/TextAnalyzer/dist/
+=======
+>>>>>>> 655b20fddf16ce82182d29ea7674f20e1e33b20e
