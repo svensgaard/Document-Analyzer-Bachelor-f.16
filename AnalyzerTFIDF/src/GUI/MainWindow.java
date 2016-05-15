@@ -5,9 +5,11 @@
  */
 package GUI;
 
+import Evaluation.EvaluationWrapper;
 import Kmeans.Centroid;
 import Kmeans.Clustering;
 import Kmeans.Comparer;
+import LIX.LIXCalculator;
 import SentenceLenght.SentenceClustere;
 import SentenceLenght.SentenceFileReader;
 import analyzertfidf.Keywords;
@@ -16,10 +18,28 @@ import analyzertfidf.Text;
 import analyzertfidf.TextProcessor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import static java.nio.file.Files.lines;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
@@ -30,29 +50,54 @@ import javax.swing.JList;
 public class MainWindow extends javax.swing.JFrame {
 
     ArrayList<Text> texts = new ArrayList<>();
+    ArrayList<Text> textsWithout100Common = new ArrayList<>();
+
     ArrayList<String> distinctTerms;
+    ArrayList<String> distinctTermsWithoutCommon;
+    //Results
     ArrayList<Centroid> freqResult;
     ArrayList<Centroid> sentenceResult;
+    ArrayList<Centroid> freqWithout100CommonResult;
+
+    //ArrayLists for holding the true results
+    EvaluationWrapper evaluation = new EvaluationWrapper();
+    DecimalFormat df = new DecimalFormat("#.00");
+
+    //Map to hold results and their counts
+    TreeMap<String, Integer> countedResults = new TreeMap<String, Integer>();
 
     /**
      * Creates new form MainWindow
      */
-    public MainWindow() {
+    public MainWindow() throws FileNotFoundException, IOException {
         initComponents();
         //Set UI components
         jLabel1.setFont(new Font("Arial", Font.BOLD, 25));
         jLabel2.setFont(new Font("Arial", Font.BOLD, 25));
         jLabel3.setFont(new Font("Arial", Font.BOLD, 25));
         jLabel4.setFont(new Font("Arial", Font.BOLD, 25));
-        
+        jLabel5.setFont(new Font("Arial", Font.BOLD, 25));
+        outputArea.setLineWrap(true);
         texts = new ArrayList<>();
 
         //Read textfiles
         readTexts();
         //Calculate IDIDF scores
         calculateTFDIF();
-        //Cluster teh texts
-        clusterTexts();
+        calculateTFDIFWithoutMostCommon();
+        //Cluster the texts
+        for (int i = 0; i < 500; i++) {
+            clusterTexts();
+            //Count result
+            double result = evaluation.getAverageSimilarityToTrueMostCommonWordsResult(freqWithout100CommonResult);
+            if (countedResults.containsKey(df.format(result))) {
+                countedResults.put(df.format(result), countedResults.get(df.format(result)) + 1);
+            } else {
+                countedResults.put(df.format(result), 1);
+            }
+        }
+        writeSimilaritiesToFileCount();
+//        clusterTexts();
     }
 
     /**
@@ -81,9 +126,11 @@ public class MainWindow extends javax.swing.JFrame {
         reClusterBtn = new javax.swing.JButton();
         findBtn = new javax.swing.JButton();
         accuracyBtn = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        freqWithoutCommonList = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1920, 900));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -100,7 +147,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1323, Short.MAX_VALUE)
+            .addGap(0, 1337, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,6 +208,14 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Word frequency without most common words");
+
+        jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane4.setMaximumSize(new java.awt.Dimension(500, 500));
+
+        freqWithoutCommonList.setPreferredSize(new java.awt.Dimension(1500, 150));
+        jScrollPane4.setViewportView(freqWithoutCommonList);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -176,17 +231,19 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1500, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(reClusterBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(findBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(accuracyBtn)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                                .addComponent(accuracyBtn))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,7 +255,7 @@ public class MainWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -215,11 +272,16 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(121, 121, 121)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(reClusterBtn)
                             .addComponent(findBtn)
-                            .addComponent(accuracyBtn))))
+                            .addComponent(accuracyBtn))
+                        .addGap(120, 120, 120)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(168, 168, 168)
@@ -268,15 +330,26 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void accuracyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accuracyBtnActionPerformed
         int count = 1;
-        outputArea.append("----- Results -----\n");
+        outputArea.append("\n>>>>> frequency <<<<<<\n");
         for (Centroid centroid : freqResult) {
-//            System.out.println("Results for cluster " + count + " :");
-//            System.out.println(centroid.getPurity());
-            outputArea.append("Cluster" + count + " purity = " + centroid.getPurity() + "\n");
-            outputArea.append("Cluster" + count + " average distance to centroid = " + centroid.getAverageDistance() + "\n");
+
+            outputArea.append("Cluster " + count + "\n");
+            outputArea.append("Purity = " + centroid.getPurity() + "\n");
+            outputArea.append("Average similarity of documents to average vector = " + df.format(centroid.getAverageDistance()) + "\n");
             count++;
         }
-        
+        outputArea.append("\n>>>>> frequency without most common words <<<<<<\n");
+        for (Centroid centroid : freqWithout100CommonResult) {
+
+            outputArea.append("Cluster " + count + "\n");
+            outputArea.append("Purity = " + centroid.getPurity() + "\n");
+            outputArea.append("Average similarity of documents to average vector = " + df.format(centroid.getAverageDistance()) + "\n");
+            count++;
+        }
+
+        outputArea.append("Average similarity in frequency = " + evaluation.getAverageSimilarityToTrueFreqResult(freqResult) + "\n");
+        outputArea.append("Average similarity in frequency without most common words = " + evaluation.getAverageSimilarityToTrueMostCommonWordsResult(freqWithout100CommonResult) + "\n");
+
     }//GEN-LAST:event_accuracyBtnActionPerformed
 
     /**
@@ -309,7 +382,11 @@ public class MainWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWindow().setVisible(true);
+                try {
+                    new MainWindow().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -319,19 +396,23 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private void clusterTexts() {
         System.out.println("Clustering...");
-        //Cluster texts
-        //Cluster frequency
         Clustering clustering = new Clustering();
+        SentenceClustere sentenceClustering = new SentenceClustere();
+
+        //Cluster frequency  
         freqResult = clustering.prepareCluster(3, texts);
         //Add texts to List
         setFreqListItems(freqResult);
-        //Cluster sentence length
-        SentenceClustere sentenceClustering = new SentenceClustere();
-        sentenceResult = sentenceClustering.prepareCluster(3, texts);
 
+        //Cluster sentence length
+        sentenceResult = sentenceClustering.prepareCluster(3, texts);
         //Add to list
         setSentenceListItems(sentenceResult);
-        pack();
+
+        //Cluster frequecny without most common words
+        freqWithout100CommonResult = clustering.prepareCluster(3, textsWithout100Common);
+        //Add to list
+        setFreqWithout100MostCommonListItems(freqWithout100CommonResult);
     }
 
     private void displayBelongingCorpus(Text input) {
@@ -369,6 +450,15 @@ public class MainWindow extends javax.swing.JFrame {
         freqList.setModel(listModel);
     }
 
+    private void setFreqWithout100MostCommonListItems(ArrayList<Centroid> items) {
+        freqWithoutCommonList.setCellRenderer(new ClusterCellRenderer());
+        DefaultListModel listModel = new DefaultListModel();
+        for (Centroid c : items) {
+            listModel.addElement(c);
+        }
+        freqWithoutCommonList.setModel(listModel);
+    }
+
     private void setSentenceListItems(ArrayList<Centroid> items) {
         sentenceList.setCellRenderer(new ClusterCellRenderer());
         DefaultListModel listModel = new DefaultListModel();
@@ -378,41 +468,90 @@ public class MainWindow extends javax.swing.JFrame {
         sentenceList.setModel(listModel);
     }
 
+
     /**
      * 1
      */
+    //MCW = most commonwords
     private void readTexts() {
         //Initialize classes and maps
+        LIXCalculator lixCalculator = new LIXCalculator();
         TextProcessor tp = new TextProcessor();
         texts = new ArrayList<>();
+        textsWithout100Common = new ArrayList<>();
+        ArrayList<Centroid> trueFreqResultHolder = new ArrayList<>();
+        ArrayList<Centroid> trueMCWResultHolder = new ArrayList<>();
         SentenceFileReader sentenceReader = new SentenceFileReader();
 
         //Read corpus files
         HashMap<String, Integer> tempMap;
-
+        Centroid trueFreqEuroparl = new Centroid();
+        Centroid trueMCWEuroparl = new Centroid();
         for (int i = 1; i < 8; i++) {
             String fileName = "EuroparlDaEn" + i;
             System.out.println("Processing: " + fileName);
-            System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
+            System.out.println("Lix number: " + lixCalculator.calculateLix(fileName));
+            //Text with most common words
             tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap), "Politic", sentenceReader.readFile(fileName)));
+            Text freqText = new Text(fileName, new Keywords(tempMap), "Politic", sentenceReader.readFile(fileName));
+            texts.add(freqText);
+            //Add to true centroid
+            trueFreqEuroparl.GroupedDocument.add(freqText);
+            //Text without 100 most common words
+            tempMap = tp.readFileWith100MostCommon(fileName);
+            Text MCWText = new Text(fileName, new Keywords(tempMap), "Politic");
+            textsWithout100Common.add(MCWText);
+            trueMCWEuroparl.GroupedDocument.add(MCWText);
+
         }
+        Centroid trueFreqFairytale = new Centroid();
+        Centroid trueMCWFairytale = new Centroid();
+
         for (int i = 1; i < 8; i++) {
             String fileName = "fairytale" + i;
             System.out.println("Processing: " + fileName);
-            System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
+            System.out.println("Lix number: " + lixCalculator.calculateLix(fileName));
+
+            //Texts with the most common words
             tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap), "Fairytale", sentenceReader.readFile(fileName)));
+            Text freqText = new Text(fileName, new Keywords(tempMap), "Fairytale", sentenceReader.readFile(fileName));
+            texts.add(freqText);
+            //Add to true centroid
+            trueFreqFairytale.GroupedDocument.add(freqText);
+            //Text without 100 most common words
+            tempMap = tp.readFileWith100MostCommon(fileName);
+            Text MCWText = new Text(fileName, new Keywords(tempMap), "Fairytale");
+            textsWithout100Common.add(MCWText);
+            trueMCWFairytale.GroupedDocument.add(MCWText);
         }
+        Centroid trueFreqMedical = new Centroid();
+        Centroid trueMCWMedical = new Centroid();
         for (int i = 1; i < 8; i++) {
             String fileName = "Medical" + i;
             System.out.println("Processing: " + fileName);
-            //Sentence result
-            System.out.println("Average sentence length = " + sentenceReader.readFile(fileName));
-            tempMap = tp.readFile(fileName);
-            texts.add(new Text(fileName, new Keywords(tempMap), "Medical", sentenceReader.readFile(fileName)));
-        }
+            System.out.println("Lix number: " + lixCalculator.calculateLix(fileName));
 
+            //Text with the most common words
+            tempMap = tp.readFile(fileName);
+            Text freqText = new Text(fileName, new Keywords(tempMap), "Medical", sentenceReader.readFile(fileName));
+            texts.add(freqText);
+            //Add to true centroid
+            trueFreqMedical.GroupedDocument.add(freqText);
+            //Text without the 100 most common words
+            tempMap = tp.readFileWith100MostCommon(fileName);
+            Text MCWText = new Text(fileName, new Keywords(tempMap), "Medical");
+            textsWithout100Common.add(MCWText);
+            trueMCWMedical.GroupedDocument.add(MCWText);
+        }
+        //Add to array and then add the evaluation wrapper.
+        trueFreqResultHolder.add(trueFreqEuroparl);
+        trueFreqResultHolder.add(trueFreqFairytale);
+        trueFreqResultHolder.add(trueFreqMedical);
+        trueMCWResultHolder.add(trueMCWEuroparl);
+        trueMCWResultHolder.add(trueMCWFairytale);
+        trueMCWResultHolder.add(trueMCWMedical);
+        evaluation.setTrueFreqResult(trueFreqResultHolder);
+        evaluation.setTrueMostCommonWordsResult(trueMCWResultHolder);
         System.out.println("Processing Done");
     }
 
@@ -423,7 +562,7 @@ public class MainWindow extends javax.swing.JFrame {
         TFIDF calculator = new TFIDF();
         HashMap<String, Double> termWeightMap;
         System.out.println("-- IF-IDF weight processing --");
-
+        //Calculate tfidf
         for (Text t : texts) {
             termWeightMap = new HashMap<>();
 
@@ -433,7 +572,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             t.keywords.keywordTFIDFMap = termWeightMap;
         }
-
+        
         //Make a list of all distinct terms in the corpus
         distinctTerms = new ArrayList<>();
         for (Text t : texts) {
@@ -459,23 +598,95 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }
     }
+
+    private void calculateTFDIFWithoutMostCommon() {
+        TFIDF calculator = new TFIDF();
+        HashMap<String, Double> termWeightMap;
+        System.out.println("-- IF-IDF weight without most common words--");
+
+        for (Text t : textsWithout100Common) {
+            termWeightMap = new HashMap<>();
+
+            for (HashMap.Entry<String, Integer> entry : t.keywords.keywordMap.entrySet()) {
+                termWeightMap.put(entry.getKey(), calculator.calculateTFIDF(entry.getKey(), t, textsWithout100Common));
+            }
+
+            t.keywords.keywordTFIDFMap = termWeightMap;
+        }
+
+        //Make a list of all distinct terms in the corpus
+        distinctTermsWithoutCommon = new ArrayList<>();
+        for (Text t : textsWithout100Common) {
+            Iterator it = t.keywords.keywordMap.entrySet().iterator();
+            for (int i = 0; i < t.keywords.size(); i++) {
+                Map.Entry<String, Integer> pair = (Map.Entry) it.next();
+                if (!distinctTermsWithoutCommon.contains(pair.getKey())) {
+                    distinctTermsWithoutCommon.add(pair.getKey());
+                }
+            }
+        }
+        //Initialize vectorspace in all texts
+        for (Text t : textsWithout100Common) {
+            t.vectorSpace = new Double[distinctTermsWithoutCommon.size()];
+            int count = 0;
+            for (String s : distinctTermsWithoutCommon) {
+                if (t.keywords.keywordTFIDFMap.containsKey(s)) {
+                    t.vectorSpace[count] = t.keywords.keywordTFIDFMap.get(s);
+                } else {
+                    t.vectorSpace[count] = 0.0;
+                }
+                count++;
+            }
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accuracyBtn;
     private javax.swing.JButton findBtn;
     private javax.swing.JList freqList;
+    private javax.swing.JList freqWithoutCommonList;
     private javax.swing.JTextArea inputTextArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea outputArea;
     private javax.swing.JScrollPane outputTextArea;
     private javax.swing.JButton reClusterBtn;
     private javax.swing.JList sentenceList;
     // End of variables declaration//GEN-END:variables
+
+    //Write to file
+    private void writeSimilaritiesToFile() throws UnsupportedEncodingException, FileNotFoundException, IOException {
+        String stringToWrite = "0" + df.format(evaluation.getAverageSimilarityToTrueFreqResult(freqResult)) + "\t";
+        try {
+            Files.write(Paths.get("resultsFreq.txt"), stringToWrite.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+
+        }
+    }
+
+    private void writeSimilaritiesToFileCount() throws UnsupportedEncodingException, FileNotFoundException, IOException {
+        FileWriter fileWriter = new FileWriter("resultsMCW100Counted++.txt");
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        
+        for (Map.Entry<String, Integer> entry : countedResults.entrySet()) {
+            String stringToWrite = entry.getKey() + "\t" + entry.getValue();
+            try {
+                bufferedWriter.newLine();
+                bufferedWriter.write(stringToWrite);
+
+            } catch (IOException ex) {
+            }
+        }
+        bufferedWriter.close();
+
+    }
 }

@@ -6,6 +6,7 @@
 package Kmeans;
 
 import analyzertfidf.Text;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,11 +17,10 @@ import java.util.Map;
  */
 public class Centroid {
 
-    public ArrayList<Text> GroupedDocument;
+    public ArrayList<Text> GroupedDocument = new ArrayList<>();
     public boolean isTheOne = false;
     private Double[] averageVector;
     
-
     public ArrayList<Text> getGroupedDocument() {
         return GroupedDocument;
     }
@@ -57,8 +57,17 @@ public class Centroid {
         return averageVector;
     }
 
-    //Calculate the accuracy
+    //Calculate the purity
     public double getPurity() {
+       Map.Entry<String, Integer> dominantType = getClusterType();
+        //return purity 
+        if (dominantType != null) {
+            return (double) dominantType.getValue() / (double) GroupedDocument.size();
+        } else {
+            return 1;
+        }
+    }
+    public Map.Entry<String, Integer> getClusterType() {
         //Find what type of cluster this is, by counting the types in the cluster
         HashMap<String, Integer> types = new HashMap<>();
 
@@ -82,11 +91,10 @@ public class Centroid {
                 maxType = entry;
             }
         }
-        //return purity 
-        if (maxType != null) {
-            return (double) maxType.getValue() / (double) GroupedDocument.size();
+        if(maxType == null) {
+            return new AbstractMap.SimpleEntry<String, Integer>("None",0);
         } else {
-            return 1;
+            return maxType;
         }
     }
 

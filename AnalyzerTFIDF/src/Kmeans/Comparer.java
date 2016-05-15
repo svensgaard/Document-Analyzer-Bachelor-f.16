@@ -53,7 +53,6 @@ public class Comparer {
         }
         return result;
     }
-    //TODO do it with non avereagevectors'
     
     
 }
