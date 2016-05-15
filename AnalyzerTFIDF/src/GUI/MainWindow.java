@@ -314,6 +314,9 @@ public class MainWindow extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * 3
+     */
     private void clusterTexts() {
         System.out.println("Clustering...");
         //Cluster texts
@@ -375,6 +378,9 @@ public class MainWindow extends javax.swing.JFrame {
         sentenceList.setModel(listModel);
     }
 
+    /**
+     * 1
+     */
     private void readTexts() {
         //Initialize classes and maps
         TextProcessor tp = new TextProcessor();
@@ -410,6 +416,9 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println("Processing Done");
     }
 
+    /**
+     * 2
+     */
     private void calculateTFDIF() {
         TFIDF calculator = new TFIDF();
         HashMap<String, Double> termWeightMap;

@@ -57,6 +57,48 @@ public class TextProcessor {
         }
     }
 
+    public HashMap readFileActual(String path) {
+        // Read file
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(path));
+
+            HashMap<String, Integer> tempMap = new HashMap<>();
+            String line = "";
+            String stem = "";
+
+            // Split symbols
+            while ((line = reader.readLine()) != null) {
+                String[] wordArray = line.toLowerCase().split("[\\d\\p{Punct}\\s]+");
+
+                // Generate HashMap with keys and values
+                for (String word : wordArray) {
+                    // Remove letters
+                    if (word.length() > 1) {
+
+                        // Stem word
+                        stem = stemmer.stem(word);
+
+                        // Increment if word is known
+                        if (tempMap.containsKey(stem)) {
+                            tempMap.put(stem, tempMap.get(stem) + 1);
+                        } else {
+                            // Add new word and frequency to map
+                            tempMap.put(stem, 1);
+                        }
+
+                    }
+                }
+            }
+
+//            writeToFile(fileName, sorted);
+            // Sort HashMap and return a LinkedHashMap
+            return tempMap;
+
+        } catch (IOException e) {
+            throw new Error("Reading File Exception", e);
+        }
+    }
+    
     public HashMap readFile(String fileName) {
 
         // Read file

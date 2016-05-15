@@ -10,12 +10,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 
 /**
  *
  * @author Bryan
  */
 public class StartFrame extends javax.swing.JFrame {
+
+    JFileChooser chooser;
+    String choosertitle;
 
     /**
      * Creates new form StartFrame
@@ -77,8 +81,30 @@ public class StartFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void readFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readFilesActionPerformed
-        // TODO add your handling code here:
+        int result;
+
+        chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle(choosertitle);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //    
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+//            System.out.println("getCurrentDirectory(): "
+//                    + chooser.getCurrentDirectory());
+//            System.out.println("getSelectedFile() : "
+//                    + chooser.getSelectedFile());
+            
+            new MainFrame(chooser.getSelectedFile().getPath()).setVisible(true);
+            this.dispose();
+        } else {
+            System.out.println("No Selection ");
+        }
     }//GEN-LAST:event_readFilesActionPerformed
+
 
     private void startTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTestActionPerformed
         new MainFrame().setVisible(true);
@@ -118,21 +144,6 @@ public class StartFrame extends javax.swing.JFrame {
                 new StartFrame().setVisible(true);
             }
         });
-    }
-
-    /**
-     * Read every file in folder
-     */
-    public void walkFiles() {
-        try {
-            Files.walk(Paths.get("/home/you/Desktop")).forEach(filePath -> {
-                if (Files.isRegularFile(filePath)) {
-                    // TODO
-                }
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
 

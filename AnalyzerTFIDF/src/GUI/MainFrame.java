@@ -5,11 +5,23 @@
  */
 package GUI;
 
+import Kmeans.Centroid;
+import Kmeans.Clustering;
+import SentenceLenght.SentenceClustere;
+import analyzertfidf.Keywords;
+import analyzertfidf.TFIDF;
+import analyzertfidf.Text;
+import analyzertfidf.TextProcessor;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -17,10 +29,24 @@ import java.util.logging.Logger;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    String filePath;
+    ArrayList<Text> texts;
+    ArrayList<String> distinctTerms;
+    private ArrayList<Centroid> freqResult;
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
+        texts = new ArrayList<>();
+        walkFilesActual();
+        initComponents();
+    }
+
+    public MainFrame(String filePath) {
+        texts = new ArrayList<>();
+        this.filePath = filePath;
+        walkFilesActual();
         initComponents();
     }
 
@@ -33,14 +59,30 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        corpora_scroll = new javax.swing.JScrollPane();
+        list_corpus = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        texts_scroll = new javax.swing.JScrollPane();
+        list_texts = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        list_corpus.setModel(new javax.swing.AbstractListModel() {
+            ArrayList<String> strings = clusterTexts();
+            public int getSize() { return strings.size(); }
+            public Object getElementAt(int i) { return strings.get(i); }
+        });
+        corpora_scroll.setViewportView(list_corpus);
+
         jLabel1.setText("Corpora");
+
+        list_texts.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        texts_scroll.setViewportView(list_texts);
 
         jLabel2.setText("Texts");
 
@@ -49,17 +91,18 @@ public class MainFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel1)
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabel2)))
                 .addContainerGap(95, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(102, 102, 102))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -70,8 +113,8 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(texts_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(corpora_scroll))
                 .addGap(45, 45, 45))
         );
 
@@ -112,30 +155,132 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
-    
-        /**
-     * Read every file in folder
+
+    /**
+     * TEST Read every file in folder
      */
-    public void walkFiles() {
+    public ArrayList<String> walkFiles() {
+        ArrayList<String> files = new ArrayList<>();
+        if (filePath == null) {
+            filePath = "/Users/Bryan/NetBeansProjects/Bachelor/BachelorProgram/Document-Analyzer-Bachelor-f.16/AnalyzerTFIDF/resources/documents";
+        }
         try {
-            Files.walk(Paths.get("/home/you/Desktop")).forEach(filePath -> {
+            Files.walk(Paths.get(filePath)).forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
-                    System.out.println(filePath);
+                    files.add(filePath.getFileName().toString());
                 }
             });
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return files;
     }
-    
-    private void readTestFilesBtnActionPerformed() {
-        walkFiles();
-        
+
+    /**
+     * ACTUAL USE
+     *
+     * @param path
+     * @param files
+     * @return
+     */
+    public void walkFilesActual() {
+
+        //Initialize classes and maps
+        final TextProcessor tp = new TextProcessor();
+
+        if (filePath == null) {
+            filePath = "/Users/Bryan/NetBeansProjects/Bachelor/BachelorProgram/Document-Analyzer-Bachelor-f.16/AnalyzerTFIDF/resources/documents";
+        }
+        try {
+            Files.walk(Paths.get(filePath)).forEach(fp -> {
+                if (Files.isRegularFile(fp)) {
+                    //Read corpus files
+                    final HashMap<String, Integer> tempMap;
+                    tempMap = tp.readFileActual(fp.getFileName().toString());
+                    texts.add(new Text(fp.getFileName().toString(), new Keywords(tempMap)));
+                }
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println("Processing Done");
     }
+
+    /**
+     * ACTUAL USE
+     *
+     */
+    private void calculateTFDIF() {
+        TFIDF calculator = new TFIDF();
+        HashMap<String, Double> termWeightMap;
+        System.out.println("-- IF-IDF weight processing --");
+
+        for (Text t : texts) {
+            termWeightMap = new HashMap<>();
+
+            for (HashMap.Entry<String, Integer> entry : t.keywords.keywordMap.entrySet()) {
+                termWeightMap.put(entry.getKey(), calculator.calculateTFIDF(entry.getKey(), t, texts));
+            }
+
+            t.keywords.keywordTFIDFMap = termWeightMap;
+        }
+
+        //Make a list of all distinct terms in the corpus
+        distinctTerms = new ArrayList<>();
+        for (Text t : texts) {
+            Iterator it = t.keywords.keywordMap.entrySet().iterator();
+            for (int i = 0; i < t.keywords.size(); i++) {
+                Map.Entry<String, Integer> pair = (Map.Entry) it.next();
+                if (!distinctTerms.contains(pair.getKey())) {
+                    distinctTerms.add(pair.getKey());
+                }
+            }
+        }
+        //Initialize vectorspace in all texts
+        for (Text t : texts) {
+            t.vectorSpace = new Double[distinctTerms.size()];
+            int count = 0;
+            for (String s : distinctTerms) {
+                if (t.keywords.keywordTFIDFMap.containsKey(s)) {
+                    t.vectorSpace[count] = t.keywords.keywordTFIDFMap.get(s);
+                } else {
+                    t.vectorSpace[count] = 0.0;
+                }
+                count++;
+            }
+        }
+    }
+
+    /**
+     * ACTUAL USE RETURN A STRING ARRAY TO REPRESENT CLUSTERS
+     */
+    private ArrayList<String> clusterTexts() {
+        ArrayList<String> cluster_list = new ArrayList<>();
+        System.out.println("Clustering...");
+        System.out.println("Texts size: " + texts.size());
+        //Cluster texts
+        //Cluster frequency
+        Clustering clustering = new Clustering();
+        freqResult = clustering.prepareCluster(3, texts);
+        //Add texts to List
+
+        for (Centroid c : freqResult) {
+            cluster_list.add(c.toString());
+        }
+
+        pack();
+
+        return cluster_list;
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane corpora_scroll;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList list_corpus;
+    private javax.swing.JList list_texts;
+    private javax.swing.JScrollPane texts_scroll;
     // End of variables declaration//GEN-END:variables
 }
