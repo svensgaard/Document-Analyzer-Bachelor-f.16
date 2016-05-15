@@ -1,0 +1,1210 @@
+Is concordance with World Cancer Research Fund/American Institute
+for Cancer Research guidelines for cancer prevention related to
+subsequent risk of cancer? Results from the EPIC study1–4
+Dora Romaguera, Anne-Claire Vergnaud, Petra H Peeters, Carla H van Gils, Doris SM Chan, Pietro Ferrari,
+Isabelle Romieu, Mazda Jenab, Nadia Slimani, Franc¸oise Clavel-Chapelon, Guy Fagherazzi, Florence Perquier,
+Rudolf Kaaks, Birgit Teucher, Heiner Boeing, Anne von Ru¨sten, Anne Tjønneland, Anja Olsen, Christina C Dahm,
+Kim Overvad, Jose´ Ramo´n Quiro´s, Carlos A Gonzalez, Marı´a Jose´ Sa´nchez, Carmen Navarro, Aurelio Barricarte,
+Miren Dorronsoro, Kay-Tee Khaw, Nicholas J Wareham, Francesca L Crowe, Timothy J Key, Antonia Trichopoulou,
+Pagona Lagiou, Christina Bamia, Giovanna Masala, Paolo Vineis, Rosario Tumino, Sabina Sieri, Salvatore Panico,
+Anne M May, H Bas Bueno-de-Mesquita, Frederike L Bu¨chner, Elisabet Wirfa¨lt, Jonas Manjer, Ingegerd Johansson,
+Go¨ran Hallmans, Guri Skeie, Kristin Benjaminsen Borch, Christine L Parr, Elio Riboli, and Teresa Norat
+ABSTRACT
+Background: In 2007 the World Cancer Research Fund (WCRF)
+and the American Institute of Cancer Research (AICR) issued 8
+recommendations (plus 2 special recommendations) on diet, physical
+activity, and weight management for cancer prevention on the
+basis of the most comprehensive collection of available evidence.
+Objective: We aimed to investigate whether concordance with the
+WCRF/AICR recommendations was related to cancer risk in the
+European Prospective Investigation into Cancer and Nutrition
+(EPIC) study.
+Design: The present study included 386,355 EPIC participants from
+9 European countries. At recruitment, dietary, anthropometric, and
+lifestyle information was collected. A score was constructed based
+on the WCRF/AICR recommendations on weight management,
+physical activity, foods and drinks that promote weight gain, plant
+foods, animal foods, alcoholic drinks, and breastfeeding for women;
+the score range was 0–6 for men and 0–7 for women. Higher scores
+indicated greater concordance with WCRF/AICR recommendations.
+The association between the score and cancer risk was estimated
+by using multivariable Cox regression models.
+Results: Concordance with the score was significantly associated
+with decreased risk of cancer. A 1-point increment in the score was
+associated with a risk reduction of 5% (95% CI: 3%, 7%) for total
+cancer, 12% (95% CI: 9%, 16%) for colorectal cancer, and 16%
+(95% CI: 9%, 22%) for stomach cancer. Significant associations
+were also observed for cancers of the breast, endometrium, lung,
+kidney, upper aerodigestive tract, liver, and esophagus but not for
+prostate, ovarian, pancreatic, and bladder cancers.
+Conclusion: Adherence to the WCRF/AICR recommendations for
+cancer prevention may lower the risk of developing most types of
+cancer. Am J Clin Nutr 2012;96:150–63.
+INTRODUCTION
+Dietary and lifestyle guidelines for the prevention of cardiovascular
+diseases and health maintenance have been the basis for
+the development of several index scores. Results from several
+studies have shown that some of the well-known index scores—
+such as the Healthy Eating Index, the Diet Quality Index, and the
+Recommended Food Score, and modifications of these index
+scores—have little or no association with overall cancer risk and/
+1 From the Department of Epidemiology and Biostatistics, School of Public
+Health, Imperial College London, London, United Kingdom (DR, A-CV,
+PHP, DSMC, PV, ER, and TN); the Julius Centre for Health Sciences and
+Primary Care, University Medical Centre Utrecht, Utrecht, Netherlands
+(PHP, CHvG, and AMM); the International Agency for Research of Cancer,
+Lyon, France (PF, IR, MJ, and NS); INSERM, Centre for Research in Epidemiology
+and Population Health, Institut Gustave Roussy, Villejuif, France
+(FC-C, GF, and FP); Paris South University, UMRS 1018, Villejuif, France
+(FC-C, GF, and FP); the Department of Cancer Epidemiology, German Cancer
+Research Centre, Heidelberg, Germany (RK and BT); the Department of
+Epidemiology, German Institute of Human Nutrition Potsdam-Rehbruecke,
+Nuthetal, Germany (HB and AvR); the Danish Cancer Society, Institute of
+Cancer Epidemiology, Diet, Cancer, and Health, Copenhagen, Denmark (A
+Tjønneland and AO); the Department of Cardiology, Aarhus University Hospital,
+Aalborg, Denmark (CCD and KO); the Department of Epidemiology,
+School of Public Health, Aarhus University, Aarhus, Denmark (KO); the
+Public Health and Health Planning Directorate, Asturias, Spain (JRQ); the
+Unit of Nutrition, Environment, and Cancer, Department of Epidemiology,
+Catalan Institute of Oncology (ICO-IDIBELL), Barcelona, Spain (CAG); the
+Andalusian School of Public Health, Granada, Spain (MJS); the Consortium
+for Biomedical Research in Epidemiology and Public Health (CIBERESP),
+Madrid, Spain (MJS, CN, and AB); the Murcia Regional Health Authority,
+Murcia, Spain (CN); the Preventive Medicine Unit, Murcia School of Medicine,
+Murcia, Spain (CN); the Navarre Public Health Institute, Pamplona,
+Spain (AB); the Public Health Division of Gipuzkoa, Basque Regional
+Health Department, San Sebastian, Spain (MD); the Department of Public
+Health and Primary Care, University of Cambridge Addenbrooke’s Hospital,
+Cambridge, United Kingdom (K-TK); the MRC Epidemiology Unit, Institute
+of Metabolic Science, Addenbrooke’s Hospital, Cambridge, United
+Kingdom (NJW); the Cancer Epidemiology Unit, Nuffield Department of
+Clinical Medicine, University of Oxford, Oxford, United Kingdom (FLC and
+TJK); the WHO Collaborating Center for Food and Nutrition Policies, Department
+of Hygiene, Epidemiology and Medical Statistics, University of
+Athens Medical School, Athens, Greece (A Trichopoulou, PL, and CB);
+the Hellenic Health Foundation, Athens, Greece (A Trichopoulou); the Department
+of Epidemiology, Harvard School of Public Health, Boston, MA
+150 Am J Clin Nutr 2012;96:150–63. Printed in USA.  2012 American Society for Nutrition
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+or mortality (1–7). On the other hand, some (8–15), but not all
+(16–18), studies have shown a stronger association with cancer
+incidence and mortality for dietary index scores that also incorporate
+other lifestyle factors such as weight management,
+physical activity, alcohol consumption, and smoking. Nevertheless,
+a few studies showed that the association of lifestyle
+scores with cancer risk was attenuated when the body fatness and
+physical activity components of the score were excluded, indicating
+that these 2 components probably explained most of the
+observed effect of the score on cancer risk (8, 14).
+One of the reasons why some indexes failed to show a predictive
+value for cancer risk and/or mortality could be that most
+indexes were based on recommendations for prevention of cardiovascular
+disease or general health. Only 2 previous studies
+have specifically tested indexes based on cancer prevention
+recommendations [the 1997 American Institute for Cancer
+Research Recommendations (14) and the American Cancer
+Society cancer prevention guidelines (15)]: in both studies,
+scores based on these recommendations showed significant associations
+with total cancer incidence (14) and mortality (14, 15);
+however, neither these nor other studies had enough power to
+examine the association of health recommendations with specific
+cancer types that might be more closely related to certain lifestyle
+factors than others.
+In 2007 the World Cancer Research Fund and the American
+Institute for Cancer Research (WCRF/AICR)5 issued 8 general
+and 2 special recommendations on diet, physical activity, and
+weight management for cancer prevention on the basis of the
+most comprehensive collection of available evidence (19). Previous
+research based on the European Prospective Investigation
+into Cancer and Nutrition (EPIC) has contributed to elucidate
+the associations between these lifestyle factors individually and
+cancer risk (20). In the present study, we assessed whether a
+composite measure of a healthy lifestyle based on the 2007
+WCRF/AICR recommendations for cancer prevention is related
+to the risk of developing total and specific types of cancer in
+EPIC.
+SUBJECTS AND METHODS
+Study population
+A total of 521,330 men and women, aged 25–70 y, were
+recruited between 1 January 1992 and 31 December 2000 from 23
+centers in 10 European countries: Denmark (Aarhus and
+Copenhagen), France, Germany (Heidelberg and Potsdam),
+Greece, Italy (Florence, Naples, Ragusa, Turin, and Varese), the
+Netherlands (Bilthoven and Utrecht), Norway, Spain (Asturias,
+Granada, Murcia, Navarra, and San Sebastian), Sweden (Malmo¨
+and Umea°), and the United Kingdom (Cambridge and Oxford).
+The French cohort encompassed members of a health insurance
+plan for school and university employees. Participants at the
+Spanish and Italian centers (except Florence) included blood
+donors, members of several health insurance programs, employees
+of several enterprises, civil servants, and the general
+population. In Utrecht and Florence, participants enrolled in
+mammographic screening programs were recruited for the study.
+In Oxford, most of the cohort consisted of “health-conscious”
+subjects from England, Wales, Scotland, and Northern Ireland,
+many of whom were vegetarians. Participants were recruited
+from the general population in other centers. The cohorts of
+France, Norway, Utrecht, and Naples included only women.
+Approval for this study was obtained from the ethical review
+boards of the International Agency for Research on Cancer and
+from all local institutions where subjects had been recruited for
+the EPIC study. Written informed consent was obtained from
+all participants before entry into the EPIC study. The details of
+the study design used in the EPIC study have been described
+elsewhere (21, 22).
+We excluded participants who did not complete the lifestyle
+(n = 1465) or dietary (n = 5437) questionnaires, participants
+within the lowest and highest 1% of the cohort distribution of
+the ratio of reported total energy intake to energy requirements
+(n = 10,241), participants who were diagnosed with cancer
+(excluding nonmelanoma skin cancer) before enrollment (n =
+22,860), participants with missing date of diagnosis (n = 13),
+and participants with incomplete follow-up information (n =
+4002). For the present study, we also excluded pregnant women
+(n = 535) and participants with missing data on the following
+variables: weight or height (n = 4271), physical activity [n =
+65,402, including all participants from Umea° (Sweden) and
+(PL); the Bureau of Epidemiologic Research, Academy of Athens, Athens,
+Greece (PL); the Molecular and Nutritional Epidemiology Unit, Cancer Research
+and Prevention Institute–ISPO, Florence, Italy (GM); the HuGeF
+Foundation, Turin, Italy (PV); the Cancer Registry and Histopathology Unit,
+Ragusa, Italy (RT); the Nutritional Epidemiology Unit, Fondazione IRCCS
+Institute Nazionale Tumori, Milan, Italy (SS); the Department of Clinical
+and Experimental Medicine, Federico II University, Naples, Italy (SP); the
+National Institute for Public Health and the Environment (RIVM), Bilthoven,
+Netherlands (HBB-d-M and FLB); the Department of Gastroenterology and
+Hepatology, University Medical Centre Utrecht (UMCU), Utrecht, Netherlands
+(HBB-d-M); the Department of Clinical Sciences in Malmo¨/Nutrition
+Epidemiology (EW) and the Department of Surgery, Malmo¨ University Hospital
+(JM), Lund University, Malmo¨ , Sweden; the Department of Odontology
+(IJ) and the Department of Public Health and Clinical Medicine, Nutritional
+Research (GH), Umea° University, Umea°, Sweden; the Institute of Community
+Medicine, University of Tromsø, Tromsø, Norway (GS and KBB); and
+the Institute of Basic Medical Sciences, Department of Biostatistics, University
+of Oslo, Oslo, Norway (CLP).
+2 The funders had no role in study design, data collection and analysis,
+decision to publish, or preparation of the manuscript.
+3 Supported by the World Cancer Research Fund (WCRF) International
+Regular Grant Programme (grant no. 2009/44). In addition, EPIC investigators
+acknowledge funding from the following agencies: Institut National de
+la Sante´ et de la Recherche Me´dicale (INSERM), Institut Gustave Roussy,
+French League against Cancer, and Mutuelle Ge´ne´rale de l’Education Nationale
+(France); the Health Research Fund (FIS) of the Spanish Ministry of
+Health; the CIBER en Epidemiologı´a y Salud Pu´blica (CIBERESP); Instituto
+de Salud Carlos III; Redes tematicas de investigacion cooperativa en Salud
+(RD06/0020); Spanish Regional Governments of Andalusia, Asturias, Basque
+Country, Murcia (no. 6236), and Navarra and the Catalan Institute of
+Oncology (Spain); the Italian Association for Research on Cancer (AIRC),
+Milan (Italy).
+4 Address correspondence to D Romaguera, Department of Epidemiology
+& Biostatistics, School of Public Health, Imperial College London, St
+Mary’s Campus, Norfolk Place, W2 1PG, London, United Kingdom. E-mail:
+d.romaguera-bosch@imperial.ac.uk.
+5 Abbreviations used: EPIC, European Prospective Investigation into Cancer
+and Nutrition; PAF%, population attributable fraction; WCRF/AICR,
+World Cancer Research Fund/American Institute for Cancer Research.
+Received November 29, 2011. Accepted for publication April 5, 2012.
+First published online May 16, 2012; doi: 10.3945/ajcn.111.031674.
+WCRF/AICR GUIDELINES AND CANCER RISK IN EPIC 151
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+TABLE 1
+WCRF/AICR recommendations for cancer prevention and operationalization of the WCRF/AICR score in the EPIC study1
+Personal
+recommendations Operationalization2 Scoring Percentage3
+WCRF/AICR recommendations
+1) Body fatness. Be as lean as possible
+without becoming underweight.
+1a) Ensure that body weight throughout childhood
+and adolescent growth projects toward the lower
+end of the normal BMI range at age 21 y.
+Insufficient data available NA
+1b) Maintain body weight within the normal range
+from age 21 y.
+BMI (in kg/m2): 18.5–24.9 1 48.0
+BMI: 25–29.9 0.5 36.0
+BMI: ,18.5 or 30 0 16.0
+1c) Avoid weight gain and increases in waist
+circumference throughout adulthood.
+Insufficient data available NA
+2) Physical activity. Be physically active
+as part of your everyday life.
+2a) Be moderately physically active, equivalent
+to brisk walking, for 30 min every day.
+Manual/heavy manual job, or .2 h/wk of
+vigorous PA, or .30 min/d of cycling/sports
+1 23.9
+15–30 min/d of cycling/sports 0.5 20.7
+,15 min/d of cycling/sports 0 55.4
+2b) As fitness improves, aim for 60 min of
+moderate or for 30 min of vigorous physical
+activity every day.
+Insufficient data available NA
+2c) Limit sedentary habits such as watching
+television.
+Insufficient data available NA
+3) Foods and drinks that promote weight
+gain. Limit consumption of energy-dense
+foods; avoid sugary drinks.4,5
+3a) Consume energy-dense foods sparingly. ED: 125 kcal  100 g21  d21 1 23.0
+ED: .125 to ,175 kcal  100 g21  d21 0.5 59.1
+ED: .175 kcal  100 g21  d21 0 17.9
+3b) Avoid sugary drinks. Sugary drink intake: 0 g/d 1 21.2
+Sugary drink intake: 250 g/d 0.5 61.4
+Sugary drink intake: .250 g/d 0 17.4
+3c) Consume fast foods sparingly, if at all. Insufficient data available NA
+4) Plant foods. Eat mostly foods of plant origin.4,5 4a) Eat 5 portions/servings (400 g) of a
+variety of nonstarchy vegetables and of
+fruit every day.
+F&V intake: 400 g/d 1 42.5
+F&V intake: 200 to ,400 g/d 0.5 38.4
+F&V intake: ,200 g/d 0 19.1
+4b) Eat relatively unprocessed cereals (grains)
+and/or pulses (legumes) with every meal.
+Dietary fiber intake: 25 g/d 1 27.3
+Dietary fiber intake: 12.5 to ,25 g/d 0.5 60.5
+Dietary fiber intake: ,12.5 g/d 0 12.2
+4c) Limit refined starchy foods. Insufficient data available NA
+4d) People who consume starchy roots or tubers
+as staples should also ensure sufficient intake
+of nonstarchy vegetables, fruit, and
+pulses (legumes).
+Not applicable to this population NA
+5) Animal foods. Limit intake of red meat
+and avoid processed meat.5
+5a) People who eat red meat should consume
+<500 g/wk and very few, if any, processed meats.
+Red and processed meat ,500 g/wk
+and processed meat intake ,3 g/d
+1 15.0
+Red and processed meat ,500 g/wk and
+processed meat intake 3 to ,50 g/d
+0.5 35.8
+Red and processed meat 500 g/wk or
+processed meat intake 50 g/d
+0 49.2
+(Continued)
+152 ROMAGUERA ET AL
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+TABLE 1 (Continued )
+Personal
+recommendations Operationalization2 Scoring Percentage3
+6) Alcoholic drinks. Limit alcoholic drinks. 6a) If alcoholic drinks are consumed, limit
+consumption to 2 drinks/d for men and
+1 drink/d for women.
+Ethanol intake: 20 g/d (men) 1 66.3
+Ethanol intake: 10 g/d (women)
+Ethanol intake: .20–30 g/d (men) 0.5 16.0
+Ethanol intake: .10–20 g/d (women)
+Ethanol intake: .30 g/d (men) 0 17.7
+Ethanol intake: .20 g/d (women)
+7) Preservation, processing, preparation. Limit
+consumption of salt. Avoid moldy cereals (grains)
+or pulses (legumes).
+7a) Avoid salt-preserved, salted, or salty foods;
+preserve foods without using salt.
+Insufficient data available NA
+7b) Limit consumption of processed foods with
+added salt to ensure an intake of <6 g
+(2.4 g sodium)/d.
+Insufficient data available NA
+7c) Do not eat moldy cereals (grains) or pulses
+(legumes).
+Insufficient data available NA
+8) Dietary supplements. Aim to meet
+nutritional needs through diet alone.
+8a) Dietary supplements are not recommended
+for cancer prevention.
+Not applicable to this population NA
+WCRF/AICR special recommendations
+S1) Breastfeeding. Mothers to breastfeed; children
+need to be breastfed.
+S1a) Aim to breastfeed infants exclusively up
+to 6 mo and continue with complementary
+feeding thereafter.
+Cumulative breastfeeding: 6 mo 1 35.3
+Cumulative breastfeeding: .0 to ,6 mo 0.5 34.9
+No breastfeeding 0 29.8
+S2) Cancer survivors. Follow the recommendations
+for cancer prevention.
+S2a) All cancer survivors should receive nutritional
+care from an appropriately trained professional.
+Not applicable to this population NA
+S2b) If able to do so, and unless otherwise advised,
+aim to follow the recommendations for diet,
+healthy weight, and physical activity.
+Not applicable to this population NA
+1 ED, energy density; EPIC, European Prospective Investigation into Cancer and Nutrition; F&V, fruit and vegetables; NA, not available; PA, physical activity; WCRF/AICR, World Cancer Research Fund/
+American Institute for Cancer Research.
+2 ED was calculated as energy (kcal) from foods (solid foods and semi-solid or liquid foods such as soups) divided by the weights (g) of these foods. Drinks (including water, tea, coffee, juice, soft drinks,
+alcoholic drinks, and milk) were not included in the calculation (27). Sugary drinks included both soft drinks and fruit and vegetable juices. Variables selected to operationalize the recommendation on physical
+activity are those included in the Cambridge physical activity index (except for vigorous physical activity), which has been validated for use in epidemiologic studies (26).
+3 Percentages show the distribution of the population by each component categorization of the WCRF/AIRC score.
+4 The score for recommendations 3 and 4 was the result of averaging the scores of each subrecommendation.
+5 All dietary variables used for the construction of the WCRF/AIRC score were calibrated by using additive calibration (except for alcohol and ED).
+WCRF/AICR GUIDELINES AND CANCER RISK IN EPIC 153
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+Norway where this information was not collected in sufficient
+detail], and women with no information on breastfeeding or duration
+of breastfeeding (n = 20,479, including all female participants
+from Bilthoven, Netherlands, where this information was
+not collected). Therefore, 386,355 participants (126,257 men and
+260,098 women) were included in the present study.
+Data collection and dietary questionnaires
+At baseline, participants filled out extensive medical, dietary,
+and lifestyle questionnaires, including questions on alcohol use,
+smoking status, physical activity, education, reproductive history,
+breastfeeding, exogenous hormone use, and previous illnesses.
+Body weight and height were measured in all centers except for
+Oxford (health-conscious population) and France where anthropometric
+measurements were self-reported (23). Usual food
+intakes were measured by using country-specific validated dietary
+questionnaires (24), and individual nutrient intakes were
+derived from foods included in the dietary questionnaires through
+the standardized EPIC Nutrient Database (25). To correct for any
+systematic under- or overestimation of dietary intake between
+the study centers, a dietary calibration study was conducted. A
+random sample of 36,308 men and women (7.4% of the sample)
+completed a detailed computerized 24-h dietary recall, and nutrient
+intake was calculated by using the standardized EPIC
+Nutrient Database (26). Dietary exposures across centers were
+scaled by using an additive calibration model (24). Briefly, the
+differences between the sex- and center-specific means of the
+values from the dietary questionnaire and the means of the 24-h
+recall values were calculated and added to the questionnaire
+values. All dietary variables used in the present study were calibrated
+by using additive calibration.
+WCRF/AICR score construction
+An index score reflecting concordance with the WCRF/
+AICR recommendations for cancer prevention was constructed
+(WCRF/AICR score). Of 10 recommendations (components),
+the following 7 in women (and 6 in men) could be used for
+the construction of the score: body fatness, physical activity,
+consumption of foods and drinks that promote weight gain,
+consumption of plant foods, consumption of animal foods, consumption
+of alcoholic drinks, and breastfeeding in women. The
+recommendation on preservation, processing, and preparation of
+foods was not included in this score because sufficient data were
+not available. The special recommendation related to cancer
+survivors was excluded because the index was derived from
+recommendations for cancer prevention. The recommendation
+“Don’t use supplements to protect against cancer” was excluded
+because it could not be operationalized in terms of cancer prevention
+without further assumptions about type or dose of supplementation.
+The score assigned for each component was 1 when
+the recommendation was met. An intermediate category (0.5
+points) was created to appraise a higher proportion of the variability
+in the population. All other individuals received 0 points.
+Some recommendations had several subrecommendations: each
+subrecommendation was scored and the component score was the
+average of the subrecommendation scores. The score was constructed
+by using as cutoffs quantitative criteria provided in the
+WCRF/AICR recommendations. In some cases, arbitrary a priori
+cutoffs (not based on the distribution of the variable in our sample)
+were defined for intermediate categories. The scoring system was
+based in the premise that each major recommendation should
+contribute equally to the total WCRF/AICR score. The scores
+obtained for each component were added to calculate a single score
+for each study participant. The maximum score was 7 points in
+women and 6 points inmen (the recommendation on breastfeeding
+is applicable only to women). Higher scores indicated greater
+concordance with the WCRF/AICR recommendations. The score
+was further categorized into 5 categories according to predefined
+cutoffs: category 1 (0–2 points in men; 0–3 points in women),
+category 2 (.2 to ,3 in men; .3 to ,4 in women), category 3
+(3 to ,4 in men; 4 to ,5 in women), category 4 (4 to ,5 in men;
+5 to ,6 in women), and category 5 (5–6 in men; 6–7 in women).
+With this categorization, the minimal score difference between the
+first and fifth categories was 3 points for both men and women.
+Detailed information on the operationalization of the score can
+be found in Table 1 (27–29).
+Case ascertainment
+Cancer cases were identified through population cancer registries
+in Denmark, Italy, the Netherlands, Spain, Sweden, and the
+United Kingdom. In France, Germany, and Greece, a combination
+of methods was used including health insurance records,
+cancer pathology registries, and active follow-up of study participants
+and their next of kin. Follow-up began at the date of
+enrollment and ended at the date of diagnosis of cancer, death, or
+last complete follow-up. Cancer incidence data were coded
+according to the 10th revision of the International Statistical
+Classification of Diseases, Injuries and Causes of Death (30) and
+the second revision of the International Classification of Diseases
+for Oncology (31). Only the first primary neoplasm was included
+in the analysis. Nonmelanoma skin cancer was excluded from the
+analysis.
+Statistical analyses
+Descriptive statistics relied on cross-tabulations, showing
+percentages within groups for categorical variables as well as
+group means and SDs for continuous variables.
+Cox proportional hazards regression was used to estimate the
+association between the WCRF/AICR score and total cancer
+risk. Age was used as the primary time variable, with entry time
+defined as the subject’s age at recruitment and exit time as age at
+diagnosis of cancer, censoring, or death (whichever came first).
+All analyses were stratified by age at recruitment to control for
+length of follow-up, by center to control for center effects such as
+follow-up procedures and questionnaire design, and by sex
+(except in sex-specific analyses). The WCRF/AICR score was
+assessed as a continuous variable (1-point increment) and as a
+categorical variable (using the 5 predefined categories). The
+WCRF/AICR categorical variable was scored from 1 to 5, and
+trend tests were calculated on these scores. All models were
+adjusted for educational level (as a categorical variable: no education,
+primary school, technical school, secondary school, and
+university degree), presence of chronic diseases at baseline
+[including type 2 diabetes, heart disease, and stroke (yes, no)],
+smoking status and intensity of smoking (never; former: quit
+smoking .20 y ago, quit 11–20 y ago, quit 10 y ago; smoker:
+154 ROMAGUERA ET AL
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+1–15 cigarettes/d, 16–25 cigarettes/d, .25 cigarettes/d; smoker,
+pipe or cigar), menopausal status (postmenopausal, perimenopausal,
+premenopausal, surgical postmenopausal), ever use of
+hormone replacement therapy (yes, no), ever use of contraception
+pills (yes, no), age at menarche (,12, 12–15, .15 y), parity
+(yes, no), age at first full-time pregnancy (,21 y, 21–30 y, .30 y,
+nulliparous), and total energy intake (continuous). We included
+participants with missing data for the confounding variables as
+a separate category for these variables.
+We calculated the population attributable fraction (PAF%) and
+95% CIs to estimate the proportion of total cancer in this cohort
+that hypothetically would not have occurred if all participants
+were in the highest category of the score, with the assumption of
+a causal relation. We compared participants in the highest category
+of the score with the rest of the study participants. For these
+analyses, we estimated HRs from multivariate Cox regression
+models (32).
+The association between the WCRF/AICR score and risk of
+developing specific cancer types was also calculated by using
+Cox regression models with the same level of adjustment as
+specified above. The specific cancer types considered were breast,
+ovarian, endometrial, prostate, colorectal, lung, bladder, pancreas,
+kidney, stomach, upper aerodigestive tract, liver, and esophageal
+cancers. In thesemodels, theWCRF/AICR score was assessed both
+continuously (per 1-point increment) and categorically (using 4
+predefined categories; categories 4 and 5 were combined into
+a single category because of the low number of cases in the
+highest category).
+Potential effect modifications by baseline BMI category (BMI,
+in kg/m2: ,25, 25 to ,30, and 30) and smoking status (former
+smokers, current smokers, and never smokers) were explored by
+modeling interaction terms (cross-products) between these variables
+(categorically) and the WCRF/AICR score (continuous)
+and by conducting stratified analyses. The effect modification by
+smoking status was assessed for both smoking-related cancers
+(lung, bladder, upper aerodigestive tract, kidney, stomach, esophagus,
+pancreas, liver, and colorectal) and non-smoking-related
+cancers (ie, cancer risk is not increased by smoking: breast and
+endometrial cancer in women and prostate cancer in men) (29).
+Sensitivity analyses were performed after excluding participants
+with presence of chronic diseases at baseline (type 2 diabetes,
+heart disease, and stroke) and after excluding the first 2 y of
+follow-up. Potential heterogeneity between countries in the association
+between the WCRF/AICR score and total cancer risk
+was assessed by calculating country-specific estimates and using
+random-effects meta-analyses (I2).
+We estimated the individual association of each component of
+the WCRF/AICR score with total cancer risk, after adjustment for
+all other components of the score. Also, we evaluated the relative
+importance of each of the components of the WCRF/AICR score
+on total cancer risk by subtracting alternately one component at
+a time from the original score and including this component as
+a covariate in the model. We also assessed the association of the
+WCRF/AICR score with total cancer risk after excluding simultaneously
+the body fatness and physical activity components.
+To be able to compare the risk estimates of the different scores,
+the total WCRF/AICR score and the alternative scores were
+assessed as continuous variables by increments of 1 SD.
+All statistical analyses were performed with STATA 10.0
+(StataCorp) and SAS software (version 9.1; SAS Institute Inc).
+RESULTS
+After a median follow-up time of 11.0 y (follow-up of
+4,243,586 person-years), 36,994 cancer cases were identified in
+the EPIC cohort (13,838 in men and 23,156 in women). The
+distribution and characteristics of the study population by the 5
+predefined categories of the WCRF/AICR score can be found in
+Table 2. Men and women within the highest categories of the
+score were more likely to be younger and to have a higher educational
+level and less likely to be current smokers and to have
+a chronic disease at baseline. Women within the highest categories
+of the score were more likely to have ever used contraceptive
+pills and to be premenopausal and less likely to have
+ever used hormonal replacement therapy and to be nulliparous.
+The results of the association between the WCRF/AICR score
+and risk of total cancer and specific cancer types are shown in
+Table 3 and Figure 1. Overall, a 1-point increment in the score
+was associated with a 5% (95% CI: 3%, 7%) lower risk of developing
+any cancer. Compared with the first category of the
+score, the multiple adjusted HRs (95% CI) for total cancer risk
+observed in the second, third, fourth, and fifth categories of the
+score were 0.94 (0.89, 0.98), 0.88 (0.84, 0.92), 0.91 (0.85, 0.97),
+and 0.84 (0.72, 0.99) in men; the corresponding HRs (95% CI)
+in women were 0.95 (0.92, 0.98), 0.91 (0.88, 0.94), 0.89 (0.85,
+0.93), and 0.81 (0.72, 0.91) (P-trend , 0.0001 in both men and
+women). The risk reduction in participants within the fourth and
+fifth categories of the score compared with those within the first
+category was 16% for breast, 27% for colorectal, 14% for lung,
+23% for endometrial, 29% for kidney, 38% for stomach, 31% for
+upper aerodigestive tract, 15% for liver, and 42% for esophageal
+cancer (P-trend , 0.05). Higher scores were not significantly associated
+with lower risk of ovarian, prostate, bladder, or pancreas
+cancer. Overall, 12.6% (95% CI of the PAF%: 3.6%, 21.4%) of all
+cancers could have been prevented if the whole study population
+was classified within the fifth category of the score (5–6 points in
+men and 6–7 points in women; data not shown).
+No evidence of effect modification by smoking status (Pinteraction
+= 0.261 in men and 0.692 in women) was observed
+(Table 4); however, among men, no significant association between
+the WCRF/AICR score and total cancer risk was observed
+among never smokers. This potential effect modification by
+smoking status was further assessed for smoking-related and
+non-smoking-related cancers. In men, the score was significantly
+associated with a lower risk of smoking-related cancers (lung,
+bladder, upper aerodigestive tract, kidney, stomach, esophagus,
+pancreas, liver, and colorectal) in never, former, and current
+smokers; for non-smoking-related cancers (mainly prostate
+cancer), no significant association with the score was observed
+in any of the categories of smoking status. Among women, the
+score was associated with lower risk of both smoking-related
+and non-smoking-related (mainly breast and endometrial) cancers
+in all categories of smoking status, although the association
+was slightly stronger for smoking-related cancers.
+No evidence of effect modification by BMI category was
+observed (P-interaction = 0.234 in men and 0.596 in women).
+The HRs for total cancer risk did not change when persons with
+chronic diseases at baseline were excluded [HR (95% CI) per
+1-point increment in the score: 0.95 (0.93, 0.97) in men and 0.96
+(0.95, 0.97) in women] or when the first 2 y of follow-up were
+excluded [HR (95% CI) per 1-point increment in the score: 0.95
+WCRF/AICR GUIDELINES AND CANCER RISK IN EPIC 155
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+(0.93, 0.97) in men and 0.96 (0.95, 0.97) in women; data not
+shown]. No heterogeneity in the association between the WCRF/
+AICR score and cancer risk among countries was observed in
+men (P-heterogeneity = 0.724) (Figure 2A). Among women,
+P-heterogeneity was 0.014 (Figure 2B); however, in all countries
+inverse associations between the score and cancer risk were
+observed, indicating that heterogeneity was due to differences in
+the strength of the association rather than the direction.
+The mutually adjusted HRs for total cancer incidence associated
+with the individual components of the WCRF/AICR score
+are shown in Table 5. In the overall sample (men and women
+combined), all of the components of the score were significantly
+associated with cancer risk, except for the component “foods
+that promote weight gain.” In sex-specific analyses, total cancer
+risk was inversely associated with the components “plant foods,”
+“red and processed meat,” and “alcohol intake” in men and with
+TABLE 2
+Characteristics of participants in the EPIC study according to categories of the WCRF/AICR score by sex1
+WCRF/AICR score categories
+All Category 1 Category 2 Category 3 Category 4 Category 5
+Men
+Score range 0–6 0–2 .2 to ,3 3to ,4 4to ,5 5–6
+No. of participants [n (%)] 126,257 (100.0) 26,777 (21.2) 36,073 (28.6) 43,727 (34.6) 16,854 (13.4) 2826 (2.2)
+Age (y) 53.0 6 9.82 53.6 6 8.0 53.6 6 9.1 53.1 6 10.1 51.3 6 11.7 46.7 6 12.7
+Level of education (%)3
+None/primary school 34.8 41.2 38.3 33.7 24.4 9.1
+Technical/secondary school 35.5 35.3 35.4 36.0 34.5 36.0
+University degree 27.4 22.0 24.4 28.0 37.2 48.0
+Smoking status (%)3
+Never smokers 30.8 21.7 27.4 33.6 41.5 53.3
+Former smokers 37.8 37.1 38.2 38.3 37.6 33.0
+Current smokers 30.5 40.9 33.6 27.1 19.4 12.1
+Baseline chronic diseases (%)4
+Yes 7.4 7.6 7.5 7.6 6.8 3.9
+Women
+Score range 0–7 0–3 .3 to ,4 4to ,5 5to ,6 6–7
+No. of participants [n (%)] 260,098 (100.0) 57,800 (22.2) 71,922 (27.7) 92,027 (35.4) 34,048 (13.1) 4301 (1.7)
+Age (y) 51.7 6 9.9 51.8 6 9.2 51.8 6 9.7 51.8 6 10.1 51.0 6 10.6 50.9 6 10.1
+Level of education (%)3
+None/primary school 30.4 31.6 33.0 31.2 22.6 15.1
+Technical/secondary school 41.7 42.3 41.1 40.9 43.8 43.7
+University degree 23.7 21.7 22.0 23.8 28.9 34.7
+Smoking status (%)3
+Never smokers 59.1 52.6 58.8 62.1 62.5 61.0
+Former smokers 21.8 22.0 20.9 21.4 23.8 27.2
+Current smokers 17.5 23.9 18.6 15.0 12.2 10.1
+Baseline chronic diseases (%)4
+Yes 3.6 4.1 3.9 3.5 2.6 2.0
+Ever use of contraceptive pills (%)
+Yes 56.7 57.5 55.9 55.6 59.5 62.0
+Ever use of HRT (%)
+Yes 24.7 26.2 24.9 24.0 23.6 22.8
+Age at first menarche (%)3
+,12 y 15.6 17.1 15.9 15.1 14.3 15.1
+12 to 15 y 77.1 75.9 77.1 77.6 77.9 77.5
+.15 y 6.2 5.8 6.1 6.4 6.6 6.4
+Age at first pregnancy (%)3
+Nulliparous 13.5 20.8 14.7 10.6 8.0 0.2
+,21 y 11.7 11.3 12.1 12.0 11.0 10.1
+21 to 30 y 63.9 56.5 62.6 67.0 69.5 76.5
+.30 y 8.6 7.9 8.1 8.7 10.1 13.0
+Menopausal status (%)
+Premenopausal 33.4 31.5 32.5 33.6 36.8 39.9
+Postmenopausal 49.9 49.2 50.0 50.8 48.8 46.7
+Perimenopausal 16.8 19.3 17.5 15.6 14.5 13.4
+1 EPIC, European Prospective Investigation into Cancer and Nutrition; HRT, hormone replacement therapy; WCRF/AICR, World Cancer Research Fund/
+American Institute for Cancer Research.
+2 Mean 6 SD (all such values).
+3 Percentages do not add to 100% because of missing values.
+4 Chronic diseases include type 2 diabetes, heart disease, and stroke.
+156 ROMAGUERA ET AL
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+TABLE 3
+HRs (95% CIs) for total cancer and specific cancer types according to categories of the WCRF/AICR score1
+WCRF/AICR score category2
+1 2 3 4 5 P-trend
+Score range (men/women) 0–2/0–3 .2 to ,3/.3 to ,4 3to,4/4 to ,5 4to,5/5 to ,6 5–6/6–7
+Total cancer
+All (no. of cases) 9224 10,778 12,276 4237 479
+HR (95% CI) 1.00 (reference) 0.94 (0.92, 0.97) 0.90 (0.87, 0.92) 0.89 (0.86, 0.93) 0.82 (0.75, 0.90) ,0.0001
+Men (no. of cases) 3431 4272 4497 1473 165
+HR (95% CI) 1.00 (reference) 0.94 (0.89, 0.98) 0.88 (0.84, 0.92) 0.91 (0.85, 0.97) 0.84 (0.72, 0.99) ,0.0001
+Women (no. of cases) 5793 6506 7779 2764 314
+HR (95% CI) 1.00 (reference) 0.95 (0.92, 0.98) 0.91 (0.88, 0.94) 0.89 (0.85, 0.93) 0.81 (0.72, 0.91) ,0.0001
+Breast cancer
+Women (no. of cases) 2361 2597 3199 1201
+HR (95% CI) 1.00 (reference) 0.93 (0.88, 0.99) 0.92 (0.87, 0.98) 0.84 (0.78, 0.90) ,0.0001
+Endometrial cancer
+Women (no. of cases) 306 328 370 144
+HR (95% CI) 1.00 (reference) 0.88 (0.75, 1.04) 0.79 (0.68, 0.93) 0.77 (0.62, 0.94) 0.002
+Ovarian cancer
+Women (no. of cases) 212 258 307 129
+HR (95% CI) 1.00 (reference) 1.01 (0.84, 1.21) 0.95 (0.79, 1.14) 0.99 (0.79, 0.25) 0.681
+Prostate cancer
+Men (no. of cases) 883 1231 1414 511
+HR (95% CI) 1.00 (reference) 0.99 (0.91, 1.08) 0.99 (0.91, 1.08) 1.02 (0.91, 1.14) 0.841
+Colorectal cancer
+All (no. of cases) 1003 1198 1223 456
+HR (95% CI) 1.00 (reference) 0.91 (0.84, 1.00) 0.77 (0.70, 0.84) 0.73 (0.65, 0.81) ,0.0001
+Lung cancer
+All (no. of cases) 769 749 703 241
+HR (95% CI) 1.00 (reference) 0.89 (0.80, 0.99) 0.81 (0.73, 0.91) 0.86 (0.74, 1.00) 0.001
+Bladder cancer
+All (no. of cases) 380 473 508 153
+HR (95% CI) 1.00 (reference) 1.02 (0.89, 1.17) 0.99 (0.86, 1.13) 0.84 (0.69, 1.02) 0.161
+Pancreatic cancer
+All (no. of cases) 192 224 258 109
+HR (95% CI) 1.00 (reference) 0.94 (0.77, 1.14) 0.91 (0.75, 1.10) 1.00 (0.78, 1.28) 0.684
+Kidney cancer
+All (no. of cases) 202 210 255 78
+HR (95% CI) 1.00 (reference) 0.83 (0.68, 1.01) 0.87 (0.72, 1.05) 0.71 (0.54, 0.93) 0.030
+Stomach cancer
+All (no. of cases) 185 214 229 68
+HR (95% CI) 1.00 (reference) 0.87 (0.72, 1.07) 0.77 (0.63, 0.95) 0.62 (0.46, 0.83) ,0.0001
+UADT cancer
+All (no. of cases) 207 195 149 51
+HR (95% CI) 1.00 (reference) 0.88 (0.72, 1.08) 0.67 (0.54, 0.84) 0.69 (0.50, 0.95) ,0.0001
+Liver cancer
+All (no. of cases) 130 181 147 64
+HR (95% CI) 1.00 (reference) 1.08 (0.86, 1.36) 0.71 (0.56, 0.91) 0.85 (0.62, 1.16) 0.011
+Esophageal cancer
+All (no. of cases) 99 90 94 29
+HR (95% CI) 1.00 (reference) 0.77 (0.57, 1.03) 0.73 (0.54, 0.98) 0.58 (0.38, 0.90) 0.008
+1 Analyses were performed by using a Cox regression model stratified by center, age (1-y increments), and sex in the model of both sexes combined and
+adjusted for energy intake (kcal), level of education (none, primary school, technical/professional school, secondary school, university degree, unknown/
+missing), smoking status and intensity of smoking (never; former: quit smoking .20 y ago, quit 11–20 y ago, quit 10 y ago; smoker: 1–15 cigarettes/d, 16–
+25 cigarettes/d, .25 cigarettes/d; smoker, pipe or cigar; missing current or former status; unknown/missing), and presence of chronic diseases at baseline (no,
+yes, missing). Models for women were further adjusted for ever use of contraceptive pills (no, yes, missing), ever use of hormone replacement therapy (no,
+yes, missing), age at first menarche (,12 y, 12 to 15 y, .15 y, missing), age at first pregnancy (,21 y, 21 to 30 y, .30 y, nulliparous), and menopausal
+status (premenopausal, postmenopausal, perimenopausal, and surgical postmenopausal). UADT, upper aerodigestive tract; WCRF/AICR, World Cancer
+Research Fund/American Institute for Cancer Research.
+2 WCRF/AICR score category 1: 0–2 in men and 0–3 in women; category 2: .2 to ,3 in men and .3 to ,4 in women; category 3: 3 to ,4 in men and 4
+to ,5 in women; category 4: 4 to ,5 in men and 5 to ,6 in women; category 5: 5–6 in men and 6–7 in women. In analyses of specific cancer types, categories
+4 and 5 were combined into a single category (score range: 4–6 in men and 5–7 in women) because of the low number of cases in the highest category.
+WCRF/AICR GUIDELINES AND CANCER RISK IN EPIC 157
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+the components “body fatness,” “physical activity,” “plant foods,”
+and “alcohol intake” in women. No change in HRs was observed
+when individual components of the WCRF/AICR score
+were excluded alternatively from the overall score or when the
+“body fatness” and “physical activity” components were simultaneously
+excluded from the overall score (data not shown in tables).
+TABLE 4
+HRs (95% CIs) for total cancer and smoking-related and non-smoking-related cancers associated with a 1-point increment in the WCRF/AICR score, by
+smoking status1
+Men Women
+No. of cases HR (95% CI) P-heterogeneity No. of cases HR (95% CI) P-heterogeneity
+All cancers 13,838 0.95 (0.93, 0.97) 0.261 23,156 0.96 (0.94, 0.97) 0.692
+Never smoker 3322 0.99 (0.95, 1.03) 12,662 0.96 (0.94, 0.98)
+Former smoker 5695 0.95 (0.92, 0.98) 5467 0.95 (0.93, 0.98)
+Current smoker 4749 0.93 (0.90, 0.96) 4672 0.95 (0.92, 0.98)
+Smoking-related cancers2 6330 0.90 (0.87, 0.93) 0.918 5172 0.91 (0.88, 0.93) 0.170
+Never smoker 1010 0.91 (0.84, 0.98) 2365 0.93 (0.89, 0.98)
+Former smoker 2439 0.88 (0.84, 0.93) 1158 0.90 (0.84, 0.95)
+Current smoker 2843 0.91 (0.87, 0.95) 1607 0.89 (0.84, 0.94)
+Non-smoking-related cancers3 4039 1.00 (0.97, 1.04) 0.108 10,505 0.94 (0.92, 0.96) 0.845
+Never smoker 1312 1.06 (0.99, 1.13) 6088 0.93 (0.91, 0.96)
+Former smoker 1768 1.00 (0.94, 1.05) 2484 0.95 (0.91, 0.99)
+Current smoker 943 0.94 (0.87, 1.01) 1741 0.96 (0.91, 1.01)
+1 The WCRF/AICR score range was 0–6 in men and 0–7 in women. Analyses were performed by using a Cox regression model stratified by center and
+age (1-y increments) and adjusted for energy intake (kcal), level of education (none, primary school, technical/professional school, secondary school,
+university degree, unknown/missing), duration of smoking in former smokers (.20 y ago, 11–20 y ago, 10 y ago, unknown/missing), number of cigarettes
+per day among smokers (1–15 cigarettes/d, 16–25 cigarettes/d, .25 cigarettes/d, pipe or cigar, unknown/missing), and presence of chronic diseases at baseline
+(no, yes, missing). Models for women were further adjusted for ever use of contraceptive pills (no, yes, missing), ever use of hormone replacement therapy
+(no, yes, missing), age at first menarche (,12 y, 12 to 15 y, .15 y, missing), age at first pregnancy (,21 y, 21 to 30 y, .30 y, nulliparous), and
+menopausal status (premenopausal, postmenopausal, perimenopausal, and surgical postmenopausal). P values for heterogeneity were calculated by modeling
+interaction terms (cross-products) between smoking status (categorical) and the WCRF/AICR score (continuous). WCRF/AICR, World Cancer Research
+Fund/American Institute for Cancer Research.
+2 Smoking-related cancers included cancers of the lung, bladder, upper aerodigestive tract, kidney, stomach, esophagus, pancreas, liver, and colon (28).
+3 Non-smoking-related cancers included breast and endometrial cancer in women and prostate cancer in men (28).
+FIGURE 1. HRs (95% CIs) for total cancer and specific cancer types associated with a 1-point increment in WCRF/AICR score (range: 0–6 in men, 0–7 in
+women). Cox regression models were stratified by center, age (1-y increments), and sex and adjusted for energy intake (kcal), level of education (none,
+primary school, technical/professional school, secondary school, university degree, unknown/missing), duration of smoking in former smokers (.20 y ago,
+11–20 y ago, 10 y ago, unknown/missing), number of cigarettes per day among smokers (1–15 cigarettes, 16–25 cigarettes, .25 cigarettes, pipe or cigar,
+unknown/missing), and presence of chronic diseases at baseline (no, yes, missing). Models for women were further adjusted for ever use of contraceptive pills
+(no, yes, missing), ever use of hormone replacement therapy (no, yes, missing), age at first menarche (,12 y, 12 to 15 y, .15 y, missing), age at first
+pregnancy (,21 y, 21 to 30 y, .30 y, nulliparous), and menopausal status (premenopausal, postmenopausal, perimenopausal, and surgical
+postmenopausal). UADT, upper aerodigestive tract; WCRF/AICR, World Cancer Research Fund/American Institute for Cancer Research.
+158 ROMAGUERA ET AL
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+DISCUSSION
+In this European population, individuals with a lifestyle in
+concordance with the WCRF/AICR recommendations on diet,
+physical activity, and body fatness for cancer prevention were
+less likely to develop most types of cancers. Overall, participants
+within the highest category of the WCRF/AICR score (5 points
+in men and 6 points in women) were 18% less likely to develop
+any cancer compared with those in the first category of the
+score (2 points in men and 3 points in women), and there
+was a significantly lower cancer risk observed even in the second
+category of the score.
+Advantages of the present study include its very large sample
+size and the large number of incident cancers included, which
+provided enough power to study the association of the WCRF/
+AICR score with total cancer as well as specific cancer-type risks
+and allowed us to perform several sensitivity analyses. Second,
+we constructed an easily replicable index score that reflected
+most of the WCRF/AICR recommendations for cancer prevention
+by using objective cutoffs to operationalize each recommendation
+and by including intermediate categories to
+increase the discriminatory power of the score. Participants with
+higher WCRF/AICR scores were more likely to be nonsmokers,
+FIGURE 2. HRs (95% CIs) for total cancer associated with a 1-point increment in the WCRF/AICR score (range: 0–6 in men, 0–7 in women) by country in
+men (A) and women (B). Cox regression models were stratified by center (in countries with more than one center) and age (1-y increments) and adjusted for
+energy intake (kcal), level of education (none, primary school, technical/professional school, secondary school, university degree, unknown/missing), duration
+of smoking in former smokers (.20 y ago, 11–20 y ago, 10 y ago, unknown/missing), number of cigarettes per day among smokers (1–15 cigarettes, 16–25
+cigarettes, .25 cigarettes, pipe or cigar, unknown/missing), and presence of chronic diseases at baseline (no, yes, missing). Models for women were further
+adjusted for ever use of contraceptive pills (no, yes, missing), ever use of hormone replacement therapy (no, yes, missing), age at first menarche (,12 y, 12
+to 15 y, .15 y, missing), age at first pregnancy (,21 y, 21 to 30 y, .30 y, nulliparous), and menopausal status (premenopausal, postmenopausal,
+perimenopausal, and surgical postmenopausal). Gral, general; UK, United Kingdom; WCRF/AICR, World Cancer Research Fund/American Institute for
+Cancer Research.
+WCRF/AICR GUIDELINES AND CANCER RISK IN EPIC 159
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+were more educated, and were generally chronic disease–free,
+indicating that the score reflected an overall healthy lifestyle.
+A significant association between the WCRF/AICR score and
+cancer risk was observed after excluding alternatively each
+component of the score at a time, even when both physical activity
+and BMI were excluded, indicating that the combination of
+all components was responsible of the observed association with
+cancer risk. In addition, all of the components of the score were
+significantly associated with cancer risk after mutual adjustment
+for each other, except for the component “foods that promote
+weight gain.” The lack of association of this component with
+cancer risk could be explained by the fact that the component
+“body fatness” was already included in the model, and BMI is
+likely to be in the etiologic pathway between this recommendation
+and cancer risk. Finally, an inverse association between the
+WCRF/AICR score and cancer risk was observed in all countries
+included in the EPIC study, and for most cancer types.
+The main limitation of this study is related to the use of
+a simple score index based on the sum of several risk factors that
+are not associated with the risk of developing all cancer types,
+which may have attenuated the association of the score in cancerspecific
+analyses. In addition, the inclusion of cancer types that
+are unrelated to lifestyle factors may dilute the effect of the risk
+factor–specific analyses. Several other limitations should also be
+mentioned: EPIC, like many other cohorts, is not a populationbased
+cohort and the consequence of this is that there is a “healthy
+effect.” Therefore, the preventable fraction in the general population
+is likely to be higher than the one reported here.We could
+TABLE 5
+Mutually adjusted HRs (95% CIs) for total cancer incidence associated with the components of the WCRF/AICR score1
+Men Women All
+WCRF/AICR score HR (95% CI) P-trend HR (95% CI) P-trend HR (95% CI) P-trend
+Body fatness
+0 1.00 (ref) 0.248 1.00 (ref) 0.002 1.00 (ref) 0.002
+0.5 0.92 (0.88, 0.97) 0.95 (0.91, 0.99) 0.94 (0.91, 0.96)
+1 0.95 (0.91, 1.00) 0.93 (0.90, 0.97) 0.94 (0.91, 0.97)
+Physical activity
+0 1.00 (ref) 0.276 1.00 (ref) 0.009 1.00 (ref) 0.004
+0.5 0.99 (0.94, 1.03) 0.98 (0.95, 1.01) 0.98 (0.95, 1.01)
+1 0.98 (0.94, 1.02) 0.96 (0.92, 0.99) 0.96 (0.94, 0.99)
+Foods that promote weight gain
+0 1.00 (ref) 0.376 1.00 (ref) 0.829 1.00 (ref) 0.408
+0.25 1.02 (0.95, 1.10) 0.98 (0.90, 1.08) 1.00 (0.95, 1.06)
+0.5 1.03 (0.96, 1.11) 1.01 (0.92, 1.11) 1.02 (0.96, 1.08)
+0.75 1.04 (0.96, 1.13) 1.01 (0.91, 1.11) 1.03 (0.96, 1.09)
+1 1.05 (0.92, 1.20) 0.98 (0.87, 1.09) 1.00 (0.93, 1.09)
+Plant foods
+0 1.00 (ref) ,0.0001 1.00 (ref) 0.002 1.00 (ref) ,0.0001
+0.25 0.92 (0.85, 1.00) 0.97 (0.92, 1.02) 0.96 (0.92, 1.00)
+0.5 0.91 (0.84, 0.98) 0.96 (0.91, 1.01) 0.94 (0.90, 0.98)
+0.75 0.89 (0.82, 0.96) 0.92 (0.87, 0.97) 0.91 (0.87, 0.95)
+1 0.84 (0.77, 0.92) 0.92 (0.86, 0.98) 0.89 (0.84, 0.94)
+Red and processed meat
+0 1.00 (ref) 0.003 1.00 (ref) 0.458 1.00 (ref) 0.031
+0.5 0.98 (0.93, 1.03) 1.00 (0.97, 1.03) 0.99 (0.96, 1.01)
+1 0.85 (0.77, 0.93) 0.98 (0.93, 1.03) 0.94 (0.90, 0.99)
+Alcohol intake
+0 1.00 (ref) 0.009 1.00 (ref) 0.002 1.00 (ref) ,0.0001
+0.5 0.94 (0.88, 0.99) 0.94 (0.90, 0.99) 0.94 (0.91, 0.97)
+1 0.94 (0.90, 0.98) 0.94 (0.90, 0.97) 0.94 (0.90, 0.96)
+Breastfeeding
+0 1.00 (ref) 0.145
+0.5 1.02 (0.98, 1.06)
+1 0.98 (0.94, 1.02)
+1 Analyses were performed by using a Cox regression model stratified by center, age (1-y increments), and sex in the
+model of both sexes combined and adjusted for energy intake (kcal), level of education (none, primary school, technical/
+professional school, secondary school, university degree, unknown/missing), smoking status and intensity of smoking
+(never; former: quit smoking .20 y ago, quit 11–20 y ago, quit 10 y ago; smoker: 1–15 cigarettes/d, 16–25 cigarettes/
+d, .25 cigarettes/d; smoker, pipe or cigar; missing current or former status; unknown/missing), and presence of
+chronic diseases at baseline (no, yes, missing). Models for women were further adjusted for ever use of contraceptive pills
+(no, yes, missing), ever use of hormone replacement therapy (no, yes, missing), age at first menarche (,12 y, 12 to 15 y,
+.15 y, missing), age at first pregnancy (,21 y, 21 to 30 y, .30 y, nulliparous), and menopausal status (premenopausal,
+postmenopausal, perimenopausal, and surgical postmenopausal). All components were mutually adjusted for each other. P
+values for trend were calculated by modeling components of the WCRF/AICR score as continuous variables. ref, reference;
+WCRF/AICR, World Cancer Research Fund/American Institute for Cancer Research.
+160 ROMAGUERA ET AL
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+not include all WCRF/AICR recommendations in our score,
+because either there were not enough data available or they were
+not applicable to the objectives of this study; therefore, the
+WCRF/AICR score constructed by us may underestimate the
+potential impact of adhering to these recommendations. In addition,
+some lifestyle factors related to diet, physical activity, and
+body fatness that have been associated with cancer risk were not
+included in the score because they were not part of the WCRF/
+AICR recommendations; for example, abdominal adiposity measurements,
+such as waist circumference, may be better predictors
+of some cancer types [eg, colorectal (33) or pancreatic (34)]
+compared with measurements of general obesity such as BMI. On
+the other hand, the score incorporates risk factors that are not
+directly associated with cancer risk, such as “foods that promote
+weight gain” or “being underweight.” Although very standardized
+and detailed dietary and lifestyle questionnaires were used in the
+EPIC study, measurement error and misclassification may have
+biased the estimates toward the null. The multivariate analyses
+were adjusted for lifestyle factors that were associated with both
+the score and cancer risk; however, we cannot rule out the possibility
+of residual confounding associated with exposure measurement
+errors. No evidence of effect modification by smoking
+status or BMI was detected, and the association did not change
+after excluding those with chronic diseases at baseline; nevertheless,
+a null association between the score and total cancer risk
+was observed among men who had never smoked. This could
+either be a chance finding, be due to residual confounding by
+smoking status, or indicate a stronger protection among those
+exposed to tobacco smoking, as previously reported (35, 36);
+nevertheless, we should bear in mind that a large percentage of the
+cancers among never-smoking men were prostate cancer (a nonsmoking-
+related cancer), which has very weak ties to diet and
+lifestyle factors, and so could partly explain the lack of association
+in never smokers with non-smoking-related cancers as well.
+In 1981 Doll and Peto (37) estimated that 35% (95% CI: 10%,
+70%) of all cancer deaths could be prevented through diet. More
+recently, the WCRF/AICR estimated that diet, nutrition, physical
+activity, and body fatness accounted for 26% (95% CI: 6%, 42%)
+of all cancers (excluding nonmelanoma skin cancer) in the United
+Kingdom. The corresponding PAF% (95% CI) calculated for
+the United States, Brazil, and China were 24% (7%, 40%), 19%
+(3%, 31%), and 20% (5%, 37%) (38). In a previous observational
+prospective study conducted in women (the Iowa Women’s
+Health Study), it was estimated that the PAF% for not following
+6–9 of the 1997 AICR recommendations for cancer prevention
+was 22% (95% CI: 12%, 30%) (14). Other epidemiologic studies
+have calculated the PAF% for cancer incidence and/or cancer
+mortality associated with combinations of several lifestyle factors—
+ie, diet, physical activity, obesity, and smoking—and observed
+a PAF% within the 19–60% range (9, 10, 12, 13, 18, 39, 40). In the
+present study we estimated that lack of adherence to the WCRF/
+AICR recommendations was associated with a PAF% of 13% (95%
+CI: 4%, 21%) for total cancer incidence. The corresponding PAF%
+observed when avoidance of smoking was considered together with
+theWCRF/AICR recommendations was 23% (95% CI: 14%, 32%;
+data not shown). These values are somehow lower than previously
+reported. Themain reason for that could be related to the distribution
+of the exposure in the present population, given that it mostly
+comprised volunteers participating in the EPIC study and was
+hence more likely to be healthier than the general population; in
+addition, the use of an overall score incorporating most WCRF/
+AICR recommendations for cancer prevention with equal weight
+given to each recommendation, and the inclusion of all cancer
+types in the calculation independently of their association with
+lifestyle factors, may have resulted in a conservative estimate.
+The WCRF/AICR score did not predict the risk of cancers of
+the prostate, ovary, pancreas, and bladder. These null associations
+are consistent with what was reported in the WCRF/AICR 2007
+report (19) as well as what was found in previous studies conducted
+within EPIC. In EPIC, no clear associations were observed
+between the risk of prostate cancer and physical activity
+(41), BMI (42), fiber intake (43), alcohol intake (44), red and
+processed meat consumption (45), and fruit and vegetable consumption
+(46). According to the WCRF/AICR 2007 report, there
+is convincing evidence for an association between body fatness
+and probably abdominal fatness with pancreatic cancer risk.
+In EPIC, BMI was not significantly associated with risk of
+pancreatic cancer, but significant associations were observed
+for waist circumference and waist-to-hip ratio (34), which are
+markers of abdominal adiposity that are not directly incorporated
+as part of the WCRF/AICR score. No significant association
+between physical activity (34), ethanol intake (47), or fruit and
+vegetable consumption (48) and pancreatic cancer risk has been
+observed in EPIC. The WCRF/AICR 2007 report concluded that
+there is very limited evidence to link any aspect of diet, nutrition,
+physical activity, and body fatness to risks of either bladder or
+ovarian cancer. Null results have been mostly reported in EPIC
+regarding the association of these lifestyle factors and bladder
+cancer (49, 50) or ovarian cancer risk (51, 52), except for a
+positive association between obesity (BMI .30) and ovarian
+cancer risk in postmenopausal women (53).
+In conclusion, results of this study suggest that following the
+WCRF/AICR recommendations on diet, nutrition, physical activity,
+and weight management for cancer prevention is associated
+with a lower risk of developing most types of cancer in
+European populations. More research is needed to elucidate other
+potential lifestyle risk factors for cancer and how modification of
+these lifestyle factors could prevent cancer.
+We thank all EPIC participants and staff for their contributions to the study.
+The authors’ responsibilities were as follows—TN: is the principal investigator
+of this project and had primary responsibility for final content; ER:
+is the overall coordinator of the EPIC study, which was conceptualized,
+designed, and implemented in collaboration with the main investigators in
+the collaborating countries; TN and ER: contributed to the study design, subject
+recruitment, and data collection/acquisition and are also responsible for
+the ongoing follow-up and management of the EPIC cohort; TN, PHP, CHvG,
+and ER: conceived the present study; and DR: was responsible of the study
+design, analyzing the data, interpreting the results, and drafting the manuscript,
+with close assistance from TN, A-CV, PHP, CHvG, DSMC, PF, and
+ER, and taking into account the comments and suggestions of the co-authors.
+All authors contributed to data interpretation and critical reading of the manuscript
+and have seen and approved the final version of the manuscript. None
+of the authors declared a conflict of interest.
+REFERENCES
+1. McCullough ML, Feskanich D, Rimm EB, Giovannucci EL, Ascherio
+A, Variyam JN, Spiegelman D, Stampfer MJ, Willett WC. Adherence
+to the Dietary Guidelines for Americans and risk of major chronic
+disease in men. Am J Clin Nutr 2000;72:1223–31.
+2. McCullough ML, Feskanich D, Stampfer MJ, Giovannucci EL, Rimm
+EB, Hu FB, Spiegelman D, Hunter DJ, Colditz GA, Willett WC. Diet
+WCRF/AICR GUIDELINES AND CANCER RISK IN EPIC 161
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+quality and major chronic disease risk in men and women: moving
+toward improved dietary guidance. Am J Clin Nutr 2002;76:1261–71.
+3. McCullough ML, Feskanich D, Stampfer MJ, Rosner BA, Hu FB,
+Hunter DJ, Variyam JN, Colditz GA, Willett WC. Adherence to the
+Dietary Guidelines for Americans and risk of major chronic disease in
+women. Am J Clin Nutr 2000;72:1214–22.
+4. Kant AK, Schatzkin A, Graubard BI, Schairer C. A prospective study
+of diet quality and mortality in women. JAMA 2000;283:2109–15.
+5. Seymour JD, Calle EE, Flagg EW, Coates RJ, Ford ES, Thun MJ. Diet
+Quality Index as a predictor of short-term mortality in the American
+Cancer Society Cancer Prevention Study II Nutrition Cohort. Am J
+Epidemiol 2003;157:980–8.
+6. Mai V, Kant AK, Flood A, Lacey JV Jr, Schairer C, Schatzkin A. Diet
+quality and subsequent cancer incidence and mortality in a prospective
+cohort of women. Int J Epidemiol 2005;34:54–60.
+7. von Ruesten A, Illner AK, Buijsse B, Heidemann C, Boeing H. Adherence
+to recommendations of the German food pyramid and risk of
+chronic diseases: results from the EPIC-Potsdam study. Eur J Clin Nutr
+2010;64:1251–9.
+8. Harnack L, Nicodemus K, Jacobs DR Jr, Folsom AR. An evaluation of
+the Dietary Guidelines for Americans in relation to cancer occurrence.
+Am J Clin Nutr 2002;76:889–96.
+9. Knoops KT, de Groot LC, Kromhout D, Perrin AE, Moreiras-Varela O,
+Menotti A, van Staveren WA. Mediterranean diet, lifestyle factors, and
+10-year mortality in elderly European men and women: the HALE
+project. JAMA 2004;292:1433–9.
+10. van Dam RM, Li T, Spiegelman D, Franco OH, Hu FB. Combined
+impact of lifestyle factors on mortality: prospective cohort study in US
+women. BMJ 2008;337:a1440.
+11. Khaw KT, Wareham N, Bingham S, Welch A, Luben R, Day N.
+Combined impact of health behaviours and mortality in men and
+women: the EPIC-Norfolk prospective population study. PLoS Med
+2008;5:e12.
+12. Ford ES, Bergmann MM, Kroger J, Schienkiewitz A, Weikert C,
+Boeing H. Healthy living is the best revenge: findings from the European
+Prospective Investigation into Cancer and Nutrition-Potsdam
+study. Arch Intern Med 2009;169:1355–62.
+13. Kvaavik E, Batty GD, Ursin G, Huxley R, Gale CR. Influence of individual
+and combined health behaviors on total and cause-specific
+mortality in men and women: the United Kingdom health and lifestyle
+survey. Arch Intern Med 2010;170:711–8.
+14. Cerhan JR, Potter JD, Gilmore JM, Janney CA, Kushi LH, Lazovich D,
+Anderson KE, Sellers TA, Folsom AR. Adherence to the AICR cancer
+prevention recommendations and subsequent morbidity and mortality
+in the Iowa Women’s Health Study cohort. Cancer Epidemiol Biomarkers
+Prev 2004;13:1114–20.
+15. McCullough ML, Patel AV, Kushi LH, Patel R, Willett WC, Doyle C,
+Thun MJ, Gapstur SM. Following cancer prevention guidelines reduces
+risk of cancer, cardiovascular disease and all-cause mortality. Cancer
+Epidemiol Biomarkers Prev 2011;20:1089–97.
+16. Estaquio C, Castetbon K, Kesse-Guyot E, Bertrais S, Deschamps V,
+Dauchet L, Peneau S, Galan P, Hercberg S. The French National Nutrition
+and Health Program score is associated with nutritional status
+and risk of major chronic diseases. J Nutr 2008;138:946–53.
+17. Heidemann C, Boeing H, Pischon T, Nothlings U, Joost HG, Schulze
+MB. Association of a diabetes risk score with risk of myocardial infarction,
+stroke, specific types of cancer, and mortality: a prospective
+study in the European Prospective Investigation into Cancer and Nutrition
+(EPIC)-Potsdam cohort. Eur J Epidemiol 2009;24:281–8.
+18. Nechuta SJ, Shu XO, Li HL, Yang G, Xiang YB, Cai H, Chow WH, Ji
+B, Zhang X, Wen W, et al. Combined impact of lifestyle-related factors
+on total and cause-specific mortality among Chinese women: prospective
+cohort study. PLoS Med 2010;7:e1000339.
+19. World Cancer Research Fund. Food, nutrition, physical activity, and
+the prevention of cancer: a global perspective. Washington, DC: World
+Cancer Research Fund / American Institute of Cancer Research, 2007.
+20. Gonzalez CA, Riboli E. Diet and cancer prevention: contributions from
+the European Prospective Investigation into Cancer and Nutrition
+(EPIC) study. Eur J Cancer 2010;46:2555–62.
+21. Riboli E, Hunt KJ, Slimani N, Ferrari P, Norat T, Fahey M, Charrondiere
+UR, Hemon B, Casagrande C, Vignat J, et al. European Prospective
+Investigation into Cancer and Nutrition (EPIC): study populations and
+data collection. Public Health Nutr 2002;5:1113–24.
+22. Riboli E, Kaaks R. The EPIC project: rationale and study design.
+European Prospective Investigation into Cancer and Nutrition. Int J
+Epidemiol 1997;26(suppl 1):S6–14.
+23. Haftenberger M, Lahmann PH, Panico S, Gonzalez CA, Seidell JC,
+Boeing H, Giurdanella MC, Krogh V, Bueno-de-Mesquita HB, Peeters
+PH, et al. Overweight, obesity and fat distribution in 50- to 64-year-old
+participants in the European Prospective Investigation into Cancer and
+Nutrition (EPIC). Public Health Nutr 2002;5:1147–62.
+24. Kaaks R, Riboli E. Validation and calibration of dietary intake
+measurements in the EPIC project: methodological considerations.
+European Prospective Investigation into Cancer and Nutrition. Int J
+Epidemiol 1997;26(suppl 1):S15–25.
+25. Slimani N, Deharveng G, Unwin I, Southgate DA, Vignat J, Skeie G,
+Salvini S, Parpinel M, Moller A, Ireland J, et al. The EPIC nutrient
+database project (ENDB): a first attempt to standardize nutrient databases
+across the 10 European countries participating in the EPIC study.
+Eur J Clin Nutr 2007;61:1037–56.
+26. Slimani N, Kaaks R, Ferrari P, Casagrande C, Clavel-Chapelon F,
+Lotze G, Kroke A, Trichopoulos D, Trichopoulou A, Lauria C, et al.
+European Prospective Investigation into Cancer and Nutrition (EPIC)
+calibration study: rationale, design and population characteristics.
+Public Health Nutr 2002;5:1125–45.
+27. Ledikwe JH, Blanck HM, Khan LK, Serdula MK, Seymour JD, Tohill
+BC, Rolls BJ. Dietary energy density determined by eight calculation
+methods in a nationally representative United States population. J Nutr
+2005;135:273–8.
+28. Wareham NJ, Jakes RW, Rennie KL, Schuit J, Mitchell J, Hennings S,
+Day NE. Validity and repeatability of a simple index derived from the
+short physical activity questionnaire used in the European Prospective
+Investigation into Cancer and Nutrition (EPIC) study. Public Health
+Nutr 2003;6:407–13.
+29. International Agency for Research on Cancer. Tobacco smoking and
+involuntary smoking. International Agency for Research on Cancer
+Monographs on the Evaluation of Carcinogenic Risks to Humans.
+Lyon, France: International Agency for Research on Cancer, 2004.
+30. WHO. International statistical classification of diseases and related
+health problems. 10th revision. Available from: http://apps.who.int/
+classifications/icd10/browse/2010/en (cited 31 January 2011).
+31. WHO. International classification of diseases for oncology. 2nd ed.
+Geneva, Switzerland: WHO, 1990.
+32. Spiegelman D, Hertzmark E, Wand HC. Point and interval estimates of
+partial population attributable risks in cohort studies: examples and
+software. Cancer Causes Control 2007;18:571–9.
+33. Pischon T, Lahmann PH, Boeing H, Friedenreich C, Norat T, Tjonneland
+A, Halkjaer J, Overvad K, Clavel-Chapelon F, Boutron-Ruault MC, et al.
+Body size and risk of colon and rectal cancer in the European Prospective
+Investigation Into Cancer and Nutrition (EPIC). J Natl Cancer Inst 2006;
+98:920–31.
+34. Berrington de Gonza´lez A, Spencer EA, Bueno-de-Mesquita HB,
+Roddam A, Stolzenberg-Solomon R, Halkjaer J, Tjonneland A,
+Overvad K, Clavel-Chapelon F, Boutron-Ruault MC, et al. Anthropometry,
+physical activity, and the risk of pancreatic cancer in the
+European prospective investigation into cancer and nutrition. Cancer
+Epidemiol Biomarkers Prev 2006;15:879–85.
+35. Boffetta P, Couto E, Wichmann J, Ferrari P, Trichopoulos D, Buenode-
+Mesquita HB, van Duijnhoven FJ, Buchner FL, Key T, Boeing H,
+et al. Fruit and vegetable intake and overall cancer risk in the European
+Prospective Investigation into Cancer and Nutrition (EPIC). J Natl
+Cancer Inst 2010;102:529–37.
+36. Couto E, Boffetta P, Lagiou P, Ferrari P, Buckland G, Overvad K,
+Dahm CC, Tjonneland A, Olsen A, Clavel-Chapelon F, et al. Mediterranean
+dietary pattern and cancer risk in the EPIC cohort. Br J
+Cancer 2011;104:1493–9.
+37. Doll R, Peto R. The causes of cancer: quantitative estimates of
+avoidable risks of cancer in the United States today. J Natl Cancer Inst
+1981;66:1191–308.
+38. WCRF/AIRC. Policy and action for cancer prevention. In: Food, nutrition,
+and physical activity: a global perspective. Washington, DC:
+AICR, 2009.
+39. Jiao L, Mitrou PN, Reedy J, Graubard BI, Hollenbeck AR, Schatzkin
+A, Stolzenberg-Solomon R. A combined healthy lifestyle score and
+risk of pancreatic cancer in a large cohort study. Arch Intern Med 2009;
+169:764–70.
+162 ROMAGUERA ET AL
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016
+40. Kirkegaard H, Johnsen NF, Christensen J, Frederiksen K, Overvad K,
+Tjonneland A. Association of adherence to lifestyle recommendations
+and risk of colorectal cancer: a prospective Danish cohort study. BMJ
+2010;341:c5504.
+41. Johnsen NF, Tjonneland A, Thomsen BL, Christensen J, Loft S,
+Friedenreich C, Key TJ, Allen NE, Lahmann PH, Mejlvig L, et al.
+Physical activity and risk of prostate cancer in the European Prospective
+Investigation into Cancer and Nutrition (EPIC) cohort. Int J
+Cancer 2009;125:902–8.
+42. Pischon T, Boeing H, Weikert S, Allen N, Key T, Johnsen NF,
+Tjonneland A, Severinsen MT, Overvad K, Rohrmann S, et al. Body
+size and risk of prostate cancer in the European prospective investigation
+into cancer and nutrition. Cancer Epidemiol Biomarkers
+Prev 2008;17:3252–61.
+43. Suzuki R, Allen NE, Key TJ, Appleby PN, Tjonneland A, Johnsen NF,
+Jensen MK, Overvad K, Boeing H, Pischon T, et al. A prospective
+analysis of the association between dietary fiber intake and prostate
+cancer risk in EPIC. Int J Cancer 2009;124:245–9.
+44. Rohrmann S, Linseisen J, Key TJ, Jensen MK, Overvad K, Johnsen NF,
+Tjonneland A, Kaaks R, Bergmann MM, Weikert C, et al. Alcohol
+consumption and the risk for prostate cancer in the European Prospective
+Investigation into Cancer and Nutrition. Cancer Epidemiol
+Biomarkers Prev 2008;17:1282–7.
+45. Allen NE, Key TJ, Appleby PN, Travis RC, Roddam AW, Tjonneland
+A, Johnsen NF, Overvad K, Linseisen J, Rohrmann S, et al. Animal
+foods, protein, calcium and prostate cancer risk: the European Prospective
+Investigation into Cancer and Nutrition. Br J Cancer 2008;98:
+1574–81.
+46. Key TJ, Allen N, Appleby P, Overvad K, Tjonneland A, Miller A,
+Boeing H, Karalis D, Psaltopoulou T, Berrino F, et al. Fruits and
+vegetables and prostate cancer: no association among 1104 cases in a
+prospective study of 130544 men in the European Prospective Investigation
+into Cancer and Nutrition (EPIC). Int J Cancer 2004;109:119–24.
+47. Rohrmann S, Linseisen J, Vrieling A, Boffetta P, Stolzenberg-Solomon
+RZ, Lowenfels AB, Jensen MK, Overvad K, Olsen A, Tjonneland A,
+et al. Ethanol intake and the risk of pancreatic cancer in the European
+Prospective Investigation into Cancer and Nutrition (EPIC). Cancer
+Causes Control 2009;20:785–94.
+48. Vrieling A, Verhage BA, van Duijnhoven FJ, Jenab M, Overvad K,
+Tjonneland A, Olsen A, Clavel-Chapelon F, Boutron-Ruault MC,
+Kaaks R, et al. Fruit and vegetable consumption and pancreatic cancer
+risk in the European Prospective Investigation into Cancer and Nutrition.
+Int J Cancer 2009;124:1926–34.
+49. Jakszyn P, Gonzalez CA, Lujan-Barroso L, Ros MM, Bueno-de-
+Mesquita HB, Roswall N, Tjonneland AM, Buchner FL, Egevad L,
+Overvad K, et al. Red meat, dietary nitrosamines, and heme iron and
+risk of bladder cancer in the European Prospective Investigation into
+Cancer and Nutrition (EPIC). Cancer Epidemiol Biomarkers Prev
+2011;20:555–9.
+50. Bu¨chner FL, Bueno-de-Mesquita HB, Ros MM, Kampman E, Egevad
+L, Overvad K, Raaschou-Nielsen O, Tjonneland A, Roswall N, Clavel-
+Chapelon F, et al. Consumption of vegetables and fruit and the risk of
+bladder cancer in the European Prospective Investigation into Cancer
+and Nutrition. Int J Cancer 2009;125:2643–51.
+51. Lahmann PH, Friedenreich C, Schulz M, Cust AE, Lukanova A, Kaaks
+R, Tjonneland A, Johnsen NF, Overvad K, Fournier A, et al. Physical
+activity and ovarian cancer risk: the European Prospective Investigation
+into Cancer and Nutrition. Cancer Epidemiol Biomarkers Prev
+2009;18:351–4.
+52. Schulz M, Nothlings U, Allen N, Onland-Moret NC, Agnoli C, Engeset
+D, Galasso R, Wirfalt E, Tjonneland A, Olsen A, et al. No association
+of consumption of animal foods with risk of ovarian cancer. Cancer
+Epidemiol Biomarkers Prev 2007;16:852–5.
+53. Lahmann PH, Cust AE, Friedenreich CM, Schulz M, Lukanova A,
+Kaaks R, Lundin E, Tjonneland A, Halkjaer J, Severinsen MT, et al.
+Anthropometric measures and epithelial ovarian cancer risk in the
+European Prospective Investigation into Cancer and Nutrition. Int J
+Cancer 2010;126:2404–15.
+WCRF/AICR GUIDELINES AND CANCER RISK IN EPIC 163
+Downloaded from ajcn.nutrition.org at DANISH ELECTRONIC RESEARCH (DEFF) on March 31, 2016

@@ -1,3 +1,6 @@
+# Text documents
+*.txt
+
 # Compiled Object files
 *.slo
 *.lo
@@ -43,3 +46,6 @@ hs_err_pid*
 AnalyzerTFIDF/nbproject/genfiles.properties
 *.xml
 AnalyzerTFIDF/nbproject/project.xml
+/AnalyzerTFIDF/nbproject/
+AnalyzerTFIDF/nbproject/genfiles.properties
+AnalyzerTFIDF/nbproject/project.properties

@@ -17,8 +17,8 @@ import java.util.Map;
  */
 public class Keywords {
 
-    HashMap<String, Integer> keywordMap;
-    HashMap<String, Double> keywordTFIDFMap;
+    public HashMap<String, Integer> keywordMap;
+    public HashMap<String, Double> keywordTFIDFMap;
 
     public Keywords(HashMap<String, Integer> keywords) {
         this.keywordMap = keywords;
