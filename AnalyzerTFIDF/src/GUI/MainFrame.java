@@ -7,7 +7,6 @@ package GUI;
 
 import Kmeans.Centroid;
 import Kmeans.Clustering;
-import SentenceLenght.SentenceClustere;
 import analyzertfidf.Keywords;
 import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
@@ -21,7 +20,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -30,23 +30,32 @@ import javax.swing.DefaultListModel;
 public class MainFrame extends javax.swing.JFrame {
 
     String filePath;
-    ArrayList<Text> texts;
+    ArrayList<Text> texts, texts_list;
     ArrayList<String> distinctTerms;
     private ArrayList<Centroid> freqResult;
+    private ArrayList<String> cluster_list;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         texts = new ArrayList<>();
+        cluster_list = new ArrayList<>();
+        texts_list = new ArrayList<>();
+        
         walkFilesActual();
+        calculateTFDIF();
         initComponents();
     }
 
     public MainFrame(String filePath) {
         texts = new ArrayList<>();
+        cluster_list = new ArrayList<>();
+        texts_list = new ArrayList<>();
+
         this.filePath = filePath;
         walkFilesActual();
+        calculateTFDIF();
         initComponents();
     }
 
@@ -65,26 +74,52 @@ public class MainFrame extends javax.swing.JFrame {
         texts_scroll = new javax.swing.JScrollPane();
         list_texts = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
+        button_recluster = new javax.swing.JButton();
+        button_back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        cluster_list = clusterTexts();
         list_corpus.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<String> strings = clusterTexts();
-            public int getSize() { return strings.size(); }
-            public Object getElementAt(int i) { return strings.get(i); }
+            public int getSize() { return cluster_list.size(); }
+            public Object getElementAt(int i) { return cluster_list.get(i); }
+        });
+        list_corpus.setSelectedIndex(0);
+
+        list_corpus.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    getTexts(list_corpus.getSelectedIndex());
+                }
+            }
         });
         corpora_scroll.setViewportView(list_corpus);
 
         jLabel1.setText("Corpora");
 
         list_texts.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+
+            public int getSize() { return texts_list.size(); }
+            public Object getElementAt(int i) { return texts_list.get(i).fileName; }
         });
         texts_scroll.setViewportView(list_texts);
+        getTexts(list_corpus.getSelectedIndex());
 
         jLabel2.setText("Texts");
+
+        button_recluster.setText("Recluster");
+        button_recluster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_reclusterActionPerformed(evt);
+            }
+        });
+
+        button_back.setText("Back");
+        button_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_backActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,21 +128,32 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel1)
                         .addGap(120, 120, 120)
-                        .addComponent(jLabel2)))
-                .addContainerGap(95, Short.MAX_VALUE))
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(button_back)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 45, Short.MAX_VALUE)
+                                .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(127, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(button_recluster)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(button_back)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -115,11 +161,24 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(texts_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                     .addComponent(corpora_scroll))
-                .addGap(45, 45, 45))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_recluster)
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void button_reclusterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_reclusterActionPerformed
+        cluster_list = clusterTexts();
+        list_corpus.setSelectedIndex(0);
+        getTexts(0);
+    }//GEN-LAST:event_button_reclusterActionPerformed
+
+    private void button_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_backActionPerformed
+        new StartFrame().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_button_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,8 +324,10 @@ public class MainFrame extends javax.swing.JFrame {
         freqResult = clustering.prepareCluster(3, texts);
         //Add texts to List
 
+        int count = 0;
         for (Centroid c : freqResult) {
-            cluster_list.add(c.toString());
+            cluster_list.add("Centroid" + count);
+            count++;
         }
 
         pack();
@@ -274,8 +335,24 @@ public class MainFrame extends javax.swing.JFrame {
         return cluster_list;
     }
 
+    public void getTexts(int index) {
+        texts_list = freqResult.get(index).GroupedDocument;
+
+        list_texts.setModel(new javax.swing.AbstractListModel() {
+            public int getSize() {
+                return texts_list.size();
+            }
+
+            public Object getElementAt(int i) {
+                return texts_list.get(i).fileName;
+            }
+        });
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_back;
+    private javax.swing.JButton button_recluster;
     private javax.swing.JScrollPane corpora_scroll;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -283,4 +360,5 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JList list_texts;
     private javax.swing.JScrollPane texts_scroll;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -67,19 +67,19 @@ public class Clustering {
 
     }
 
-    private HashSet<Integer> generateRandomNumbers(int k, int size) {
-        HashSet<Integer> uniqRandom = new HashSet<>();
-        ArrayList<Integer> randomNumbers = new ArrayList<>();
-        for (int i = 1; i < size; i++) {
-            randomNumbers.add(new Integer(i));
-        }
-        Collections.shuffle(randomNumbers);
-        for (int i = 0; i < k; i++) {
-            uniqRandom.add(randomNumbers.get(i));
-        }
-
-        return uniqRandom;
-    }
+//    private HashSet<Integer> generateRandomNumbers(int k, int size) {
+//        HashSet<Integer> uniqRandom = new HashSet<>();
+//        ArrayList<Integer> randomNumbers = new ArrayList<>();
+//        for (int i = 1; i < size; i++) {
+//            randomNumbers.add(new Integer(i));
+//        }
+//        Collections.shuffle(randomNumbers);
+//        for (int i = 0; i < k; i++) {
+//            uniqRandom.add(randomNumbers.get(i));
+//        }
+//
+//        return uniqRandom;
+//    }
 
     private ArrayList<Centroid> InitializeClusterCentroid(int size) {
         Centroid c;

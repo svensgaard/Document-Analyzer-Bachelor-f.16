@@ -25,27 +25,42 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                      <Component id="corpora_scroll" min="-2" pref="137" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="texts_scroll" min="-2" pref="133" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="button_back" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="corpora_scroll" min="-2" pref="137" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" pref="45" max="32767" attributes="0"/>
+                              <Component id="texts_scroll" min="-2" pref="133" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace pref="95" max="32767" attributes="0"/>
+              <EmptySpace pref="127" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
+              <Component id="button_recluster" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="button_back" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="115" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -55,7 +70,9 @@
                   <Component id="texts_scroll" pref="205" max="32767" attributes="0"/>
                   <Component id="corpora_scroll" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="button_recluster" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="68" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -68,9 +85,13 @@
         <Component class="javax.swing.JList" name="list_corpus">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.AbstractListModel() {&#xa;    ArrayList&lt;String&gt; strings = clusterTexts();&#xa;    public int getSize() { return strings.size(); }&#xa;    public Object getElementAt(int i) { return strings.get(i); }&#xa;}" type="code"/>
+              <Connection code="new javax.swing.AbstractListModel() {&#xa;    public int getSize() { return cluster_list.size(); }&#xa;    public Object getElementAt(int i) { return cluster_list.get(i); }&#xa;}" type="code"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="list_corpus.setSelectedIndex(0);&#xa;&#xa;list_corpus.addListSelectionListener(new ListSelectionListener() {&#xa;public void valueChanged(ListSelectionEvent event) {&#xa;if (!event.getValueIsAdjusting()) {&#xa;getTexts(list_corpus.getSelectedIndex());&#xa;}&#xa;}&#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="cluster_list = clusterTexts();"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -85,16 +106,13 @@
       <SubComponents>
         <Component class="javax.swing.JList" name="list_texts">
           <Properties>
-            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.AbstractListModel() {&#xa;&#xa;    public int getSize() { return texts_list.size(); }&#xa;    public Object getElementAt(int i) { return texts_list.get(i).fileName; }&#xa;}" type="code"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="getTexts(list_corpus.getSelectedIndex());"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -102,6 +120,22 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Texts"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="button_recluster">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Recluster"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_reclusterActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="button_back">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Back"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_backActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
