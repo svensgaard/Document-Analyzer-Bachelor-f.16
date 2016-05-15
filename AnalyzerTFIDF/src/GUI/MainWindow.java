@@ -409,7 +409,7 @@ public class MainWindow extends javax.swing.JFrame {
         //Cluster frequecny without most common words
         freqWithout100CommonResult = clustering.prepareCluster(3, textsWithout100Common);
         //Add to list
-        setFreqWithoutMostCommonListItems(freqWithout100CommonResult);
+        setFreqWithout100MostCommonListItems(freqWithout100CommonResult);
     }
 
     private void displayBelongingCorpus(Text input) {
@@ -447,7 +447,7 @@ public class MainWindow extends javax.swing.JFrame {
         freqList.setModel(listModel);
     }
 
-    private void setFreqWithoutMostCommonListItems(ArrayList<Centroid> items) {
+    private void setFreqWithout100MostCommonListItems(ArrayList<Centroid> items) {
         freqWithoutCommonList.setCellRenderer(new ClusterCellRenderer());
         DefaultListModel listModel = new DefaultListModel();
         for (Centroid c : items) {
@@ -491,7 +491,7 @@ public class MainWindow extends javax.swing.JFrame {
             //Add to true centroid
             trueFreqEuroparl.GroupedDocument.add(freqText);
             //Text without 100 most common words
-            tempMap = tp.readFileWith100MostCommon(fileName);
+            tempMap = tp.readFileWith100MostCommon(fileName, "100MostUsedWords.txt");
             Text MCWText = new Text(fileName, new Keywords(tempMap), "Politic");
             textsWithout100Common.add(MCWText);
             trueMCWEuroparl.GroupedDocument.add(MCWText);
@@ -512,7 +512,7 @@ public class MainWindow extends javax.swing.JFrame {
             //Add to true centroid
             trueFreqFairytale.GroupedDocument.add(freqText);
             //Text without 100 most common words
-            tempMap = tp.readFileWith100MostCommon(fileName);
+            tempMap = tp.readFileWith100MostCommon(fileName,"100MostUsedWords.txt");
             Text MCWText = new Text(fileName, new Keywords(tempMap), "Fairytale");
             textsWithout100Common.add(MCWText);
             trueMCWFairytale.GroupedDocument.add(MCWText);
@@ -531,7 +531,7 @@ public class MainWindow extends javax.swing.JFrame {
             //Add to true centroid
             trueFreqMedical.GroupedDocument.add(freqText);
             //Text without the 100 most common words
-            tempMap = tp.readFileWith100MostCommon(fileName);
+            tempMap = tp.readFileWith100MostCommon(fileName, "100MostUsedWords.txt");
             Text MCWText = new Text(fileName, new Keywords(tempMap), "Medical");
             textsWithout100Common.add(MCWText);
             trueMCWMedical.GroupedDocument.add(MCWText);
@@ -552,7 +552,7 @@ public class MainWindow extends javax.swing.JFrame {
         TFIDF calculator = new TFIDF();
         HashMap<String, Double> termWeightMap;
         System.out.println("-- IF-IDF weight processing --");
-
+        //Calculate tfidf
         for (Text t : texts) {
             termWeightMap = new HashMap<>();
 
@@ -562,7 +562,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             t.keywords.keywordTFIDFMap = termWeightMap;
         }
-
+        
         //Make a list of all distinct terms in the corpus
         distinctTerms = new ArrayList<>();
         for (Text t : texts) {
@@ -664,7 +664,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void writeSimilaritiesToFileCount() throws UnsupportedEncodingException, FileNotFoundException, IOException {
-        FileWriter fileWriter = new FileWriter("resultsMCW200Counted.txt");
+        FileWriter fileWriter = new FileWriter("resultsMCW100Counted++.txt");
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
         
         for (Map.Entry<String, Integer> entry : countedResults.entrySet()) {
