@@ -23,19 +23,20 @@ public class Centroid {
     public boolean isTheOne = false;
     private Double[] averageVector;
     public String name;
-    
+
     public Centroid() {
         //Empty constructor
     }
-    
+
     //Used for old implementation
     public Keywords keywords;
-    
+
     public Centroid(Text text) {
         GroupedDocument = new ArrayList<Text>();
         keywords = new Keywords(text.keywords.keywordMap);
         update(text);
     }
+
     public ArrayList<Text> getGroupedDocument() {
         return GroupedDocument;
     }
@@ -74,7 +75,7 @@ public class Centroid {
 
     //Calculate the purity
     public double getPurity() {
-       Map.Entry<String, Integer> dominantType = getClusterType();
+        Map.Entry<String, Integer> dominantType = getClusterType();
         //return purity 
         if (dominantType != null) {
             return (double) dominantType.getValue() / (double) GroupedDocument.size();
@@ -82,6 +83,7 @@ public class Centroid {
             return 1;
         }
     }
+
     public Map.Entry<String, Integer> getClusterType() {
         //Find what type of cluster this is, by counting the types in the cluster
         HashMap<String, Integer> types = new HashMap<>();
@@ -106,15 +108,14 @@ public class Centroid {
                 maxType = entry;
             }
         }
-        if(maxType == null) {
-            return new AbstractMap.SimpleEntry<String, Integer>("None",0);
+        if (maxType == null) {
+            return new AbstractMap.SimpleEntry<String, Integer>("None", 0);
         } else {
             return maxType;
         }
     }
 
     //Return the average sentence length for the cluster
-
     public Double getAverageSentenceLength() {
 
         double totalLength = 0;
@@ -124,14 +125,16 @@ public class Centroid {
         return totalLength / (double) GroupedDocument.size();
 
     }
+
     //Only works for frequency!
+
     public double getAverageDistance() {
         SimilarityMatrics simMatrics = new SimilarityMatrics();
         double totalDistance = 0;
-        for(Text t : GroupedDocument) {
+        for (Text t : GroupedDocument) {
             totalDistance += simMatrics.findCosineSimilarity(t.getVectorSpace(), averageVector);
         }
-        return totalDistance/GroupedDocument.size();
+        return totalDistance / GroupedDocument.size();
     }
 
     public void update(Text text) {
@@ -155,5 +158,13 @@ public class Centroid {
 
             }
 
-        }    }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+    
+    
 }

@@ -6,21 +6,10 @@
 package GUI;
 
 import Kmeans.Centroid;
-import Kmeans.Clustering;
 import analyzertfidf.BayesClassifier;
-import analyzertfidf.Keywords;
-import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
 import analyzertfidf.TextProcessor;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -31,9 +20,9 @@ import javax.swing.event.ListSelectionListener;
 public class MainFrame extends javax.swing.JFrame {
 
     String filePath;
-    ArrayList<Text> texts, texts_list;
+    ArrayList<Text> texts_list;
     ArrayList<String> distinctTerms;
-    private ArrayList<Centroid> freqResult;
+    private ArrayList<Centroid> result;
     private ArrayList<String> cluster_list;
     private BayesClassifier classifier;
     private final TextProcessor tp = new TextProcessor();
@@ -43,24 +32,36 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initFields();
-
-        walkFilesActual();
-        calculateTFDIF();
+        
         initComponents();
     }
-
-    public MainFrame(String filePath) {
+    
+    public MainFrame(ArrayList<Centroid> result) {
+        initFields();
+        this.result = result;
+        initComponents();
+    }
+    
+    public MainFrame(ArrayList<Centroid> result, String filePath, BayesClassifier classifier) {
         initFields();
 
         this.filePath = filePath;
-        walkFilesActual();
-        calculateTFDIF();
+        this.result = result;
+        this.classifier = classifier;
+        
+        initComponents();
+    }
+
+    public MainFrame(ArrayList<Centroid> result, BayesClassifier classifier) {
+        initFields();
+
+        this.result = result;
+        this.classifier = classifier;
+        
         initComponents();
     }
 
     private void initFields() {
-        texts = new ArrayList<>();
-        cluster_list = new ArrayList<>();
         texts_list = new ArrayList<>();
     }
 
@@ -79,7 +80,6 @@ public class MainFrame extends javax.swing.JFrame {
         texts_scroll = new javax.swing.JScrollPane();
         list_texts = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
-        button_recluster = new javax.swing.JButton();
         button_back = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         text_area_input = new javax.swing.JTextArea();
@@ -91,10 +91,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        cluster_list = clusterTexts();
         list_corpus.setModel(new javax.swing.AbstractListModel() {
-            public int getSize() { return cluster_list.size(); }
-            public Object getElementAt(int i) { return cluster_list.get(i); }
+            public int getSize() { return result.size(); }
+            public Object getElementAt(int i) { return result.get(i); }
         });
         list_corpus.setSelectedIndex(0);
 
@@ -118,13 +117,6 @@ public class MainFrame extends javax.swing.JFrame {
         getTexts(list_corpus.getSelectedIndex());
 
         jLabel2.setText("Texts");
-
-        button_recluster.setText("Recluster");
-        button_recluster.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_reclusterActionPerformed(evt);
-            }
-        });
 
         button_back.setText("Back");
         button_back.addActionListener(new java.awt.event.ActionListener() {
@@ -171,10 +163,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
-                                .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(button_recluster)))
+                                .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
@@ -217,20 +206,12 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(texts_scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                         .addComponent(corpora_scroll, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button_recluster)
-                    .addComponent(classify))
+                .addComponent(classify)
                 .addGap(151, 151, 151))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void button_reclusterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_reclusterActionPerformed
-        cluster_list = clusterTexts();
-        list_corpus.setSelectedIndex(0);
-        getTexts(0);
-    }//GEN-LAST:event_button_reclusterActionPerformed
 
     private void button_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_backActionPerformed
         new StartFrame().setVisible(true);
@@ -276,138 +257,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
     }
 
-    /**
-     * TEST Read every file in folder
-     */
-    public ArrayList<String> walkFiles() {
-        ArrayList<String> files = new ArrayList<>();
-        if (filePath == null) {
-            filePath = "/Users/Bryan/NetBeansProjects/Bachelor/BachelorProgram/Document-Analyzer-Bachelor-f.16/AnalyzerTFIDF/resources/documents";
-        }
-        try {
-            Files.walk(Paths.get(filePath)).forEach(filePath -> {
-                if (Files.isRegularFile(filePath)) {
-                    files.add(filePath.getFileName().toString());
-                }
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return files;
-    }
-
-    /**
-     * ACTUAL USE
-     *
-     * @param path
-     * @param files
-     * @return
-     */
-    public void walkFilesActual() {
-
-        if (filePath == null) {
-            filePath = "/Users/Bryan/NetBeansProjects/Bachelor/BachelorProgram/Document-Analyzer-Bachelor-f.16/AnalyzerTFIDF/resources/documents";
-        }
-        try {
-            Files.walk(Paths.get(filePath)).forEach(fp -> {
-                if (Files.isRegularFile(fp)) {
-                    //Read corpus files
-                    final HashMap<String, Integer> tempMap;
-                    tempMap = tp.readFileActual(fp.getFileName().toString());
-                    texts.add(new Text(fp.getFileName().toString(), new Keywords(tempMap)));
-                }
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        System.out.println("Processing Done");
-    }
-
-    /**
-     * ACTUAL USE
-     *
-     */
-    private void calculateTFDIF() {
-        TFIDF calculator = new TFIDF();
-        HashMap<String, Double> termWeightMap;
-        System.out.println("-- IF-IDF weight processing --");
-
-        for (Text t : texts) {
-            termWeightMap = new HashMap<>();
-
-            for (HashMap.Entry<String, Integer> entry : t.keywords.keywordMap.entrySet()) {
-                termWeightMap.put(entry.getKey(), calculator.calculateTFIDF(entry.getKey(), t, texts));
-            }
-
-            t.keywords.keywordTFIDFMap = termWeightMap;
-        }
-
-        //Make a list of all distinct terms in the corpus
-        distinctTerms = new ArrayList<>();
-        for (Text t : texts) {
-            Iterator it = t.keywords.keywordMap.entrySet().iterator();
-            for (int i = 0; i < t.keywords.size(); i++) {
-                Map.Entry<String, Integer> pair = (Map.Entry) it.next();
-                if (!distinctTerms.contains(pair.getKey())) {
-                    distinctTerms.add(pair.getKey());
-                }
-            }
-        }
-        //Initialize vectorspace in all texts
-        for (Text t : texts) {
-            t.vectorSpace = new Double[distinctTerms.size()];
-            int count = 0;
-            for (String s : distinctTerms) {
-                if (t.keywords.keywordTFIDFMap.containsKey(s)) {
-                    t.vectorSpace[count] = t.keywords.keywordTFIDFMap.get(s);
-                } else {
-                    t.vectorSpace[count] = 0.0;
-                }
-                count++;
-            }
-        }
-    }
-
-    /**
-     * ACTUAL USE RETURN A STRING ARRAY TO REPRESENT CLUSTERS
-     */
-    private ArrayList<String> clusterTexts() {
-        cluster_list = new ArrayList<>();
-        freqResult = new ArrayList<>();
-        System.out.println("Clustering...");
-        System.out.println("Texts size: " + texts.size());
-        //Cluster texts
-        //Cluster frequency
-        Clustering clustering = new Clustering();
-        freqResult = clustering.prepareCluster(3, texts);
-        //Add texts to List
-
-        int count = 1;
-        for (Centroid c : freqResult) {
-            System.out.println(c);
-            c.name = "Centroid" + count;
-            cluster_list.add(c.name);
-            count++;
-        }
-        
-        pack();
-
-        try {
-            // GENERATE TRAINING DATA
-            tp.generateTrainingData(freqResult, filePath);
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        // Initialize classifier
-        classifier = new BayesClassifier(freqResult.size(), filePath);
-        
-        return cluster_list;
-    }
-
     public void getTexts(int index) {
-        texts_list = freqResult.get(index).GroupedDocument;
+        texts_list = result.get(index).GroupedDocument;
 
         list_texts.setModel(new javax.swing.AbstractListModel() {
             public int getSize() {
@@ -423,7 +274,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_back;
-    private javax.swing.JButton button_recluster;
     private javax.swing.JButton classify;
     private javax.swing.JScrollPane corpora_scroll;
     private javax.swing.JLabel jLabel1;

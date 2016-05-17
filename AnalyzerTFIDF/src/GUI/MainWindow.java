@@ -400,7 +400,7 @@ public class MainWindow extends javax.swing.JFrame {
         SentenceClustere sentenceClustering = new SentenceClustere();
 
         //Cluster frequency  
-        freqResult = clustering.prepareCluster(3, texts);
+        freqResult = clustering.prepareCluster(3, texts, true);
         //Add texts to List
         setFreqListItems(freqResult);
 
@@ -410,7 +410,7 @@ public class MainWindow extends javax.swing.JFrame {
         setSentenceListItems(sentenceResult);
 
         //Cluster frequecny without most common words
-        freqWithout100CommonResult = clustering.prepareCluster(3, textsWithout100Common);
+        freqWithout100CommonResult = clustering.prepareCluster(3, textsWithout100Common, true);
         //Add to list
         setFreqWithout100MostCommonListItems(freqWithout100CommonResult);
     }

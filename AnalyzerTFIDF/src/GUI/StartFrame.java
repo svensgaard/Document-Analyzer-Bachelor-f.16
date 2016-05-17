@@ -8,11 +8,18 @@ package GUI;
 import GroupOnFrequency.Grouper;
 import Kmeans.Centroid;
 import Kmeans.Clustering;
+import analyzertfidf.BayesClassifier;
+import analyzertfidf.Keywords;
+import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
+import analyzertfidf.TextProcessor;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -28,10 +35,21 @@ public class StartFrame extends javax.swing.JFrame {
     Clustering clustering;
     Grouper grouper;
 
+    String filePath;
+    ArrayList<Text> texts_list;
+    ArrayList<String> distinctTerms;
+    private BayesClassifier classifier;
+    private final TextProcessor tp = new TextProcessor();
+
     /**
      * Creates new form StartFrame
      */
     public StartFrame() {
+        grouper = new Grouper();
+        filePath = null;
+        clustering = new Clustering();
+        updateFilePath();
+
         initComponents();
     }
 
@@ -233,7 +251,6 @@ public class StartFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void readFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readFilesActionPerformed
-        
 
         chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
@@ -245,21 +262,15 @@ public class StartFrame extends javax.swing.JFrame {
         chooser.setAcceptAllFileFilterUsed(false);
         //    
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-//            System.out.println("getCurrentDirectory(): "
-//                    + chooser.getCurrentDirectory());
-//            System.out.println("getSelectedFile() : "
-//                    + chooser.getSelectedFile());
-            
-            new MainFrame(chooser.getSelectedFile().getPath()).setVisible(true);
-            this.dispose();
+
+            filePath = chooser.getSelectedFile().getPath();
+            ArrayList<Text> texts = readFiles(filePath, false);
+            ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
+            initClassifier(result);
+            new MainFrame(result, classifier).setVisible(true);
         } else {
             System.out.println("No Selection ");
         }
-        
-        //TODO read files
-        ArrayList<Text> texts = readFiles(filePath, false);
-        ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
-        MainFrame mainFrame = new MainFrame(result, bayes);
     }//GEN-LAST:event_readFilesActionPerformed
 
     //Test kmeans plain
@@ -267,26 +278,29 @@ public class StartFrame extends javax.swing.JFrame {
         //TODO read test files
         ArrayList<Text> texts = readFiles(filePath, false);
         ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
-        MainFrame mainFrame = new MainFrame(result, bayes);
+        initClassifier(result);
+        new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_startTestActionPerformed
-    
+
     private void readFiles1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readFiles1ActionPerformed
         //Not used
     }//GEN-LAST:event_readFiles1ActionPerformed
-    
+
     //Our won implementation read files and cluster
     private void wordFrequencyReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyReadBtnActionPerformed
         // TODO read files
         ArrayList<Text> texts = readFiles(filePath, false);
         ArrayList<Centroid> result = grouper.group(texts);
-        MainFrame mainFrame = new MainFrame(result);
+        initClassifier(result);
+        new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_wordFrequencyReadBtnActionPerformed
     //Our own implementation test
     private void wordFrequencyTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyTestBtnActionPerformed
         // TODO read test files
         ArrayList<Text> texts = readFiles(filePath, false);
         ArrayList<Centroid> result = grouper.group(texts);
-        MainFrame mainFrame = new MainFrame(result);
+        initClassifier(result);
+        new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_wordFrequencyTestBtnActionPerformed
 
     //Our own immplementation without most common read files and cluster
@@ -294,14 +308,19 @@ public class StartFrame extends javax.swing.JFrame {
         // TODO read files without most frequent words
         ArrayList<Text> texts = readFiles(filePath, true);
         ArrayList<Centroid> result = grouper.group(texts);
-        MainFrame mainFrame = new MainFrame(result, bayes);
+        initClassifier(result);
+        new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_wordFrequencyMCWReadBtnActionPerformed
 
     //Our own immplementation without most common words test
     private void wordFrequencyMCWTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyMCWTestBtnActionPerformed
         // TODO read test files without most frequent words
+        ArrayList<Text> texts = readFiles(filePath, true);
         ArrayList<Centroid> result = grouper.group(texts);
-        MainFrame mainFrame = new MainFrame(result);
+
+        initClassifier(result);
+
+        new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_wordFrequencyMCWTestBtnActionPerformed
 
     //Kmeans with better start readfiles and cluster
@@ -309,7 +328,8 @@ public class StartFrame extends javax.swing.JFrame {
         //TODO read files
         ArrayList<Text> texts = readFiles(filePath, false);
         ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
-        MainFrame mainFrame = new MainFrame(result, bayes);
+        initClassifier(result);
+        new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_kmeansPlusReadBtnActionPerformed
 
     //Kmeans with better start test
@@ -317,7 +337,8 @@ public class StartFrame extends javax.swing.JFrame {
         //TODO read test files
         ArrayList<Text> texts = readFiles(filePath, false);
         ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
-        MainFrame mainFrame = new MainFrame(result, bayes);
+        initClassifier(result);
+        new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_kmeansPlusTestBtnActionPerformed
 
     //kmeans wihtout most common words read files and cluster
@@ -325,14 +346,18 @@ public class StartFrame extends javax.swing.JFrame {
         //TODO read files without most common words
         ArrayList<Text> texts = readFiles(filePath, true);
         ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
-        MainFrame mainFrame = new MainFrame(result, bayes);
+
+        initClassifier(result);
+        new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_kmeansMCWReadBtnActionPerformed
     //kmeans without most common words test
     private void kmeansMCWTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansMCWTestBtnActionPerformed
         //TODO read test files without most common words
         ArrayList<Text> texts = readFiles(filePath, true);
         ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
-        MainFrame mainFrame = new MainFrame(result, bayes);
+
+        initClassifier(result);
+        new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_kmeansMCWTestBtnActionPerformed
 
     /**
@@ -370,6 +395,68 @@ public class StartFrame extends javax.swing.JFrame {
         });
     }
 
+    private void updateFilePath() {
+        if (filePath == null) {
+            filePath = "/Users/Bryan/NetBeansProjects/Bachelor/BachelorProgram/Document-Analyzer-Bachelor-f.16/AnalyzerTFIDF/resources/documents";
+        }
+    }
+
+    /**
+     * ACTUAL USE
+     *
+     */
+    private ArrayList<Text> calculateTFDIF(ArrayList<Text> texts) {
+        TFIDF calculator = new TFIDF();
+        HashMap<String, Double> termWeightMap;
+        System.out.println("-- IF-IDF weight processing --");
+
+        for (Text t : texts) {
+            termWeightMap = new HashMap<>();
+
+            for (HashMap.Entry<String, Integer> entry : t.keywords.keywordMap.entrySet()) {
+                termWeightMap.put(entry.getKey(), calculator.calculateTFIDF(entry.getKey(), t, texts));
+            }
+
+            t.keywords.keywordTFIDFMap = termWeightMap;
+        }
+
+        //Make a list of all distinct terms in the corpus
+        distinctTerms = new ArrayList<>();
+        for (Text t : texts) {
+            Iterator it = t.keywords.keywordMap.entrySet().iterator();
+            for (int i = 0; i < t.keywords.size(); i++) {
+                Map.Entry<String, Integer> pair = (Map.Entry) it.next();
+                if (!distinctTerms.contains(pair.getKey())) {
+                    distinctTerms.add(pair.getKey());
+                }
+            }
+        }
+        //Initialize vectorspace in all texts
+        for (Text t : texts) {
+            t.vectorSpace = new Double[distinctTerms.size()];
+            int count = 0;
+            for (String s : distinctTerms) {
+                if (t.keywords.keywordTFIDFMap.containsKey(s)) {
+                    t.vectorSpace[count] = t.keywords.keywordTFIDFMap.get(s);
+                } else {
+                    t.vectorSpace[count] = 0.0;
+                }
+                count++;
+            }
+        }
+        return texts;
+    }
+
+    private void initClassifier(ArrayList<Centroid> result) {
+        try {
+            tp.generateTrainingData(result, filePath);
+        } catch (IOException ex) {
+            Logger.getLogger(StartFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // Initialize classifier
+        classifier = new BayesClassifier();
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -389,14 +476,51 @@ public class StartFrame extends javax.swing.JFrame {
     private javax.swing.JButton wordFrequencyReadBtn;
     private javax.swing.JButton wordFrequencyTestBtn;
     // End of variables declaration//GEN-END:variables
+
     private ArrayList<Text> readFiles(String filePath, boolean withoutMostCommon) {
-        //TODO read all files in filepath
-        if(withoutMostCommon) {
+
+        ArrayList<Text> tempTexts = new ArrayList<>();
+
+        if (withoutMostCommon) {
             //Read files without most common words
+
+            try {
+                Files.walk(Paths.get(filePath)).forEach(fp -> {
+                    if (Files.isRegularFile(fp)) {
+                        //Read corpus files
+                        final HashMap<String, Integer> tempMap;
+                        tempMap = tp.readFileWith100MostCommon(fp.getFileName().toString());
+                        tempTexts.add(new Text(fp.getFileName().toString(), new Keywords(tempMap)));
+                    }
+                });
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            System.out.println("Processing Done");
         } else {
             //Just read files
+            try {
+                System.out.println(filePath);
+                System.out.println(Paths.get(filePath));
+                Files.walk(Paths.get(filePath)).forEach(fp -> {
+                    if (Files.isRegularFile(fp)) {
+                        //Read corpus files
+                        final HashMap<String, Integer> tempMap;
+                        tempMap = tp.readFileActual(fp.getFileName().toString());
+                        tempTexts.add(new Text(fp.getFileName().toString(), new Keywords(tempMap)));
+                    }
+                });
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            System.out.println("Processing Done");
         }
-        
-        return new ArrayList<>();
+
+        ArrayList<Text> texts = calculateTFDIF(tempTexts);
+
+        return texts;
     }
+
 }

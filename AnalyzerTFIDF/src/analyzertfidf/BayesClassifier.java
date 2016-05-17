@@ -5,6 +5,7 @@
  */
 package analyzertfidf;
 
+import Kmeans.Centroid;
 import com.datumbox.opensource.classifiers.NaiveBayes;
 import com.datumbox.opensource.dataobjects.NaiveBayesKnowledgeBase;
 import java.io.BufferedReader;
@@ -33,17 +34,10 @@ public class BayesClassifier {
     public int datasetsCount = 0;
     public String[] datasetNames;
 
+
     public BayesClassifier() {
         try {
-            initializeClassifier();
-        } catch (IOException ex) {
-            Logger.getLogger(BayesClassifier.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public BayesClassifier(int sets, String path) {
-        try {
-            initFromClusters(sets, path);
+            initFromClusters();
         } catch (IOException ex) {
             Logger.getLogger(BayesClassifier.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -119,7 +113,7 @@ public class BayesClassifier {
      *
      * @throws IOException
      */
-    public void initFromClusters(int sets, String path) throws IOException {
+    public void initFromClusters() throws IOException {
         //map of dataset files
         Map<String, URL> trainingFiles = new HashMap<>();
 
@@ -168,6 +162,8 @@ public class BayesClassifier {
     }
 
     public String predictClassification(String text) {
+        System.out.println("NB: " + nb);
+        System.out.println("Text: " + text);
         return nb.predict(text);
     }
 

@@ -96,7 +96,7 @@ public class AnalyzerTFIDF {
         }
         //Cluster texts
         Clustering clustering = new Clustering();
-        ArrayList<Centroid> result = clustering.prepareCluster(3, texts);
+        ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
 
         for (Centroid c : result) {
             System.out.println("\nCluster: ");
