@@ -5,10 +5,12 @@
  */
 package Kmeans;
 
+import analyzertfidf.Keywords;
 import analyzertfidf.Text;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -21,6 +23,18 @@ public class Centroid {
     public boolean isTheOne = false;
     private Double[] averageVector;
     
+    public Centroid() {
+        //Empty constructor
+    }
+    
+    //Used for old implementation
+    public Keywords keywords;
+    
+    public Centroid(Text text) {
+        GroupedDocument = new ArrayList<Text>();
+        keywords = new Keywords(text.keywords.keywordMap);
+        update(text);
+    }
     public ArrayList<Text> getGroupedDocument() {
         return GroupedDocument;
     }
@@ -118,4 +132,27 @@ public class Centroid {
         }
         return totalDistance/GroupedDocument.size();
     }
+
+    public void update(Text text) {
+        // TODO update keywords
+        // Add text to corpus
+        GroupedDocument.add(text);
+
+        // compare text keywords with the rest of the corpus texts
+        for (Text t : GroupedDocument) {
+
+            Iterator it = t.keywords.keywordMap.entrySet().iterator();
+
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+
+                if (keywords.keywordMap.containsKey(pair.getKey())) {
+                    keywords.keywordMap.put(pair.getKey().toString(), keywords.keywordMap.get(pair.getKey()) + 1);
+                } else {
+                    keywords.keywordMap.put(pair.getKey().toString(), 1);
+                }
+
+            }
+
+        }    }
 }

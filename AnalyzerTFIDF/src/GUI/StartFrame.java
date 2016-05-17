@@ -5,9 +5,14 @@
  */
 package GUI;
 
+import GroupOnFrequency.Grouper;
+import Kmeans.Centroid;
+import Kmeans.Clustering;
+import analyzertfidf.Text;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -20,6 +25,8 @@ public class StartFrame extends javax.swing.JFrame {
 
     JFileChooser chooser;
     String choosertitle;
+    Clustering clustering;
+    Grouper grouper;
 
     /**
      * Creates new form StartFrame
@@ -37,8 +44,29 @@ public class StartFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        readFiles1 = new javax.swing.JButton();
         startTest = new javax.swing.JButton();
         readFiles = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        kmeansMCWReadBtn = new javax.swing.JButton();
+        kmeansMCWTestBtn = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        wordFrequencyReadBtn = new javax.swing.JButton();
+        wordFrequencyTestBtn = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        wordFrequencyMCWReadBtn = new javax.swing.JButton();
+        wordFrequencyMCWTestBtn = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        kmeansPlusReadBtn = new javax.swing.JButton();
+        kmeansPlusTestBtn = new javax.swing.JButton();
+
+        readFiles1.setText("Read files");
+        readFiles1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readFiles1ActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,32 +84,156 @@ public class StartFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("K means - plain");
+
+        jLabel2.setText("K means - without most common words");
+
+        kmeansMCWReadBtn.setText("Read files");
+        kmeansMCWReadBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kmeansMCWReadBtnActionPerformed(evt);
+            }
+        });
+
+        kmeansMCWTestBtn.setText("Start test");
+        kmeansMCWTestBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kmeansMCWTestBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Group  on word frequency - plain");
+
+        wordFrequencyReadBtn.setText("Read files");
+        wordFrequencyReadBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordFrequencyReadBtnActionPerformed(evt);
+            }
+        });
+
+        wordFrequencyTestBtn.setText("Start test");
+        wordFrequencyTestBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordFrequencyTestBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Group on word frequency - without most common words");
+
+        wordFrequencyMCWReadBtn.setText("Read files");
+        wordFrequencyMCWReadBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordFrequencyMCWReadBtnActionPerformed(evt);
+            }
+        });
+
+        wordFrequencyMCWTestBtn.setText("Start test");
+        wordFrequencyMCWTestBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordFrequencyMCWTestBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("K means - with better initialization");
+
+        kmeansPlusReadBtn.setText("Read files");
+        kmeansPlusReadBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kmeansPlusReadBtnActionPerformed(evt);
+            }
+        });
+
+        kmeansPlusTestBtn.setText("Start test");
+        kmeansPlusTestBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kmeansPlusTestBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(readFiles)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                .addComponent(startTest)
-                .addGap(47, 47, 47))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(readFiles)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(startTest))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(wordFrequencyReadBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(wordFrequencyTestBtn))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(kmeansMCWReadBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(kmeansMCWTestBtn))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(wordFrequencyMCWReadBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(kmeansPlusTestBtn)
+                                    .addComponent(wordFrequencyMCWTestBtn))))
+                        .addGap(61, 61, 61))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(kmeansPlusReadBtn))
+                        .addGap(0, 73, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(127, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(readFiles)
                     .addComponent(startTest))
-                .addGap(144, 144, 144))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(kmeansMCWReadBtn)
+                    .addComponent(kmeansMCWTestBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(wordFrequencyReadBtn)
+                    .addComponent(wordFrequencyTestBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(wordFrequencyMCWReadBtn)
+                    .addComponent(wordFrequencyMCWTestBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(kmeansPlusReadBtn)
+                    .addComponent(kmeansPlusTestBtn))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void readFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readFilesActionPerformed
-        int result;
+        
 
         chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
@@ -103,13 +255,85 @@ public class StartFrame extends javax.swing.JFrame {
         } else {
             System.out.println("No Selection ");
         }
+        
+        //TODO read files
+        ArrayList<Text> texts = readFiles(filePath, false);
+        ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
+        MainFrame mainFrame = new MainFrame(result, bayes);
     }//GEN-LAST:event_readFilesActionPerformed
 
-
+    //Test kmeans plain
     private void startTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTestActionPerformed
-        new MainFrame().setVisible(true);
-        this.dispose();
+        //TODO read test files
+        ArrayList<Text> texts = readFiles(filePath, false);
+        ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
+        MainFrame mainFrame = new MainFrame(result, bayes);
     }//GEN-LAST:event_startTestActionPerformed
+    
+    private void readFiles1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readFiles1ActionPerformed
+        //Not used
+    }//GEN-LAST:event_readFiles1ActionPerformed
+    
+    //Our won implementation read files and cluster
+    private void wordFrequencyReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyReadBtnActionPerformed
+        // TODO read files
+        ArrayList<Text> texts = readFiles(filePath, false);
+        ArrayList<Centroid> result = grouper.group(texts);
+        MainFrame mainFrame = new MainFrame(result);
+    }//GEN-LAST:event_wordFrequencyReadBtnActionPerformed
+    //Our own implementation test
+    private void wordFrequencyTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyTestBtnActionPerformed
+        // TODO read test files
+        ArrayList<Text> texts = readFiles(filePath, false);
+        ArrayList<Centroid> result = grouper.group(texts);
+        MainFrame mainFrame = new MainFrame(result);
+    }//GEN-LAST:event_wordFrequencyTestBtnActionPerformed
+
+    //Our own immplementation without most common read files and cluster
+    private void wordFrequencyMCWReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyMCWReadBtnActionPerformed
+        // TODO read files without most frequent words
+        ArrayList<Text> texts = readFiles(filePath, true);
+        ArrayList<Centroid> result = grouper.group(texts);
+        MainFrame mainFrame = new MainFrame(result, bayes);
+    }//GEN-LAST:event_wordFrequencyMCWReadBtnActionPerformed
+
+    //Our own immplementation without most common words test
+    private void wordFrequencyMCWTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyMCWTestBtnActionPerformed
+        // TODO read test files without most frequent words
+        ArrayList<Centroid> result = grouper.group(texts);
+        MainFrame mainFrame = new MainFrame(result);
+    }//GEN-LAST:event_wordFrequencyMCWTestBtnActionPerformed
+
+    //Kmeans with better start readfiles and cluster
+    private void kmeansPlusReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansPlusReadBtnActionPerformed
+        //TODO read files
+        ArrayList<Text> texts = readFiles(filePath, false);
+        ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
+        MainFrame mainFrame = new MainFrame(result, bayes);
+    }//GEN-LAST:event_kmeansPlusReadBtnActionPerformed
+
+    //Kmeans with better start test
+    private void kmeansPlusTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansPlusTestBtnActionPerformed
+        //TODO read test files
+        ArrayList<Text> texts = readFiles(filePath, false);
+        ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
+        MainFrame mainFrame = new MainFrame(result, bayes);
+    }//GEN-LAST:event_kmeansPlusTestBtnActionPerformed
+
+    //kmeans wihtout most common words read files and cluster
+    private void kmeansMCWReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansMCWReadBtnActionPerformed
+        //TODO read files without most common words
+        ArrayList<Text> texts = readFiles(filePath, true);
+        ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
+        MainFrame mainFrame = new MainFrame(result, bayes);
+    }//GEN-LAST:event_kmeansMCWReadBtnActionPerformed
+    //kmeans without most common words test
+    private void kmeansMCWTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansMCWTestBtnActionPerformed
+        //TODO read test files without most common words
+        ArrayList<Text> texts = readFiles(filePath, true);
+        ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
+        MainFrame mainFrame = new MainFrame(result, bayes);
+    }//GEN-LAST:event_kmeansMCWTestBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,7 +372,31 @@ public class StartFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton kmeansMCWReadBtn;
+    private javax.swing.JButton kmeansMCWTestBtn;
+    private javax.swing.JButton kmeansPlusReadBtn;
+    private javax.swing.JButton kmeansPlusTestBtn;
     private javax.swing.JButton readFiles;
+    private javax.swing.JButton readFiles1;
     private javax.swing.JButton startTest;
+    private javax.swing.JButton wordFrequencyMCWReadBtn;
+    private javax.swing.JButton wordFrequencyMCWTestBtn;
+    private javax.swing.JButton wordFrequencyReadBtn;
+    private javax.swing.JButton wordFrequencyTestBtn;
     // End of variables declaration//GEN-END:variables
+    private ArrayList<Text> readFiles(String filePath, boolean withoutMostCommon) {
+        //TODO read all files in filepath
+        if(withoutMostCommon) {
+            //Read files without most common words
+        } else {
+            //Just read files
+        }
+        
+        return new ArrayList<>();
+    }
 }

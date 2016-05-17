@@ -25,24 +25,30 @@ public class Clustering {
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
 
     //k is number of clusters.
-    public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts) {
+    public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {
         globalCounter = 0;
         ArrayList<Centroid> centroids = new ArrayList<>();
         Centroid x;
-        //Choose 3 centroids at random
-//        HashSet<Integer> uniqNumber = generateRandomNumbers(k, texts.size());
-//        for (Integer i : uniqNumber) {
-//            x = new Centroid();
-//            x.GroupedDocument = new ArrayList<>();
-//            x.GroupedDocument.add(texts.get(i));
-//            centroids.add(x);
-//        }
-        for(Text t : chooseInitialCenters(texts, k)) {
-            x = new Centroid();
-            x.GroupedDocument = new ArrayList<>();
-            x.GroupedDocument.add(t);
-            centroids.add(x);
+        if (betterStart) {
+            //Use chooseinitialCenters method which is not entirely random
+            for (Text t : chooseInitialCenters(texts, k)) {
+                x = new Centroid();
+                x.GroupedDocument = new ArrayList<>();
+                x.GroupedDocument.add(t);
+                centroids.add(x);
+
+            }
+        } else {
+            //Choose 3 centroids at random
+            HashSet<Integer> uniqNumber = generateRandomNumbers(k, texts.size());
+            for (Integer i : uniqNumber) {
+                x = new Centroid();
+                x.GroupedDocument = new ArrayList<>();
+                x.GroupedDocument.add(texts.get(i));
+                centroids.add(x);
+            }
         }
+
         Boolean stop;
         ArrayList<Centroid> result;
         ArrayList<Centroid> previousClusterCenter;
@@ -67,20 +73,19 @@ public class Clustering {
 
     }
 
-//    private HashSet<Integer> generateRandomNumbers(int k, int size) {
-//        HashSet<Integer> uniqRandom = new HashSet<>();
-//        ArrayList<Integer> randomNumbers = new ArrayList<>();
-//        for (int i = 1; i < size; i++) {
-//            randomNumbers.add(new Integer(i));
-//        }
-//        Collections.shuffle(randomNumbers);
-//        for (int i = 0; i < k; i++) {
-//            uniqRandom.add(randomNumbers.get(i));
-//        }
-//
-//        return uniqRandom;
-//    }
+    private HashSet<Integer> generateRandomNumbers(int k, int size) {
+        HashSet<Integer> uniqRandom = new HashSet<>();
+        ArrayList<Integer> randomNumbers = new ArrayList<>();
+        for (int i = 1; i < size; i++) {
+            randomNumbers.add(i);
+        }
+        Collections.shuffle(randomNumbers);
+        for (int i = 0; i < k; i++) {
+            uniqRandom.add(randomNumbers.get(i));
+        }
 
+        return uniqRandom;
+    }
     private ArrayList<Centroid> InitializeClusterCentroid(int size) {
         Centroid c;
         ArrayList<Centroid> centroid = new ArrayList<>();
@@ -97,9 +102,9 @@ public class Clustering {
         SimilarityMatrics similarityMatrics = new SimilarityMatrics();
         Double[] tfdif = new Double[centroids.size()];
         for (int i = 0; i < centroids.size(); i++) {
-            
+
 //            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).GroupedDocument.get(0).getVectorSpace(), t.getVectorSpace());
-              tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace()); //BEST RESULTS
+            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace()); //BEST RESULTS
         }
 
         int index = 0;
@@ -117,7 +122,7 @@ public class Clustering {
         for (int i = 0; i < result.size(); i++) {
             if (result.get(i).GroupedDocument.size() > 0) {
 //                for (int k = 0; k < result.get(i).GroupedDocument.get(0).getVectorSpace().length; k++) {
-                 for (int k = 0; k < result.get(i).getAverageVector().length; k++) {
+                for (int k = 0; k < result.get(i).getAverageVector().length; k++) {
                     Double total = 0.0;
 
                     for (Text t : result.get(i).GroupedDocument) {
@@ -146,7 +151,7 @@ public class Clustering {
             do {
                 if (centroids.get(index).GroupedDocument.isEmpty() && previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
                     index++;
-                } else if (!centroids.get(index).GroupedDocument.isEmpty() && !previousClusterCenter.get(index).GroupedDocument.isEmpty()) {                   
+                } else if (!centroids.get(index).GroupedDocument.isEmpty() && !previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
                     for (int k = 0; k < centroids.get(index).getAverageVector().length; k++) {
 //                        if (centroids.get(index).GroupedDocument.get(0).getVectorSpace()[k].equals(previousClusterCenter.get(index).GroupedDocument.get(0).getVectorSpace()[k])) {
                         if (!centroids.get(index).getAverageVector()[k].equals(previousClusterCenter.get(index).getAverageVector()[k])) { //Change back to document[0].getvectorspace if bad results.
@@ -159,12 +164,12 @@ public class Clustering {
 //                    } else {
 //                        changeIndex[index] = 1;
 //                    }
-                    index++;                   
+                    index++;
                 } else {
                     changeIndex[index] = 1;
                     index++;
                 }
-                
+
             } while (index < centroids.size());
 //            If any index contains 1
             for (int i : changeIndex) {
@@ -177,7 +182,6 @@ public class Clustering {
     }
 
     //Uses the average vectorspacemodel instead of the centroids.
-
     public int findClosestClusterAverage(ArrayList<Centroid> centroids, Text t) {
         SimilarityMatrics similarityMatrics = new SimilarityMatrics();
         Double[] tfdif = new Double[centroids.size()];
@@ -196,8 +200,10 @@ public class Clustering {
         }
         return index;
     }
+
     //Choose better inital centroids
-     private ArrayList<Text> chooseInitialCenters(ArrayList<Text> texts, int k) {
+
+    private ArrayList<Text> chooseInitialCenters(ArrayList<Text> texts, int k) {
 
         // Convert to list for indexed access. Make it unmodifiable, since removal of items
         // would screw up the logic of this method.
@@ -233,7 +239,7 @@ public class Clustering {
             if (i != firstPointIndex) { // That point isn't considered
 //                double d = firstPoint.distanceFrom(pointList.get(i));
                 double d = simMatrics.findCosineSimilarity(firstPoint.getVectorSpace(), pointList.get(i).getVectorSpace());
-                minDistSquared[i] = d*d;
+                minDistSquared[i] = d * d;
             }
         }
 
@@ -317,6 +323,5 @@ public class Clustering {
 
         return resultSet;
     }
-
 
 }
