@@ -47,7 +47,6 @@ public class MainFrame extends javax.swing.JFrame {
         walkFilesActual();
         calculateTFDIF();
         initComponents();
-        System.out.println("Filepath: " + filePath);
     }
 
     public MainFrame(String filePath) {
@@ -164,22 +163,18 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(50, 50, 50)
                         .addComponent(jLabel1)
                         .addGap(130, 130, 130)
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, 0))
+                        .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(button_back)
-                                .addGap(0, 0, 0))
+                            .addComponent(button_back)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
                                 .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(115, 115, 115)
-                        .addComponent(button_recluster)
-                        .addGap(0, 0, 0)))
+                        .addComponent(button_recluster)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
@@ -222,7 +217,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(texts_scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                         .addComponent(corpora_scroll, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button_recluster)
                     .addComponent(classify))
                 .addGap(151, 151, 151))
@@ -390,12 +385,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         int count = 1;
         for (Centroid c : freqResult) {
-            cluster_list.add("Centroid" + count);
+            System.out.println(c);
+            c.name = "Centroid" + count;
+            cluster_list.add(c.name);
             count++;
         }
-
-        pack();
         
+        pack();
+
         try {
             // GENERATE TRAINING DATA
             tp.generateTrainingData(freqResult, filePath);
@@ -405,7 +402,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         // Initialize classifier
         classifier = new BayesClassifier(freqResult.size(), filePath);
-
+        
         return cluster_list;
     }
 

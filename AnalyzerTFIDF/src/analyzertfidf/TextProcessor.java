@@ -366,6 +366,7 @@ public class TextProcessor {
                 // Write to dataset
                 bw.write("\n");
             }
+            bw.close();
             i++;
         }
     }

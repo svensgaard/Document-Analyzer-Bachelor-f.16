@@ -20,6 +20,7 @@ public class Centroid {
     public ArrayList<Text> GroupedDocument = new ArrayList<>();
     public boolean isTheOne = false;
     private Double[] averageVector;
+    public String name;
     
     public ArrayList<Text> getGroupedDocument() {
         return GroupedDocument;
