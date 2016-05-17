@@ -5,6 +5,7 @@
  */
 package analyzertfidf;
 
+import Kmeans.Centroid;
 import Stemming.WordStemmer;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -40,7 +41,7 @@ public class TextProcessor {
         mostCommon100Words = new ArrayList<>();
         stemmer = new WordStemmer();
         stemmer.setLangugage("english");
-        
+
         //Read 100 most common
         try {
 //            FileReader fr = new FileReader(new File("100MostUsedWords.txt"));
@@ -73,7 +74,7 @@ public class TextProcessor {
 //            throw new Error(ex.getMessage());
 //        }
     }
-    
+
     public HashMap readFileActual(String path) {
         // Read file
         try {
@@ -115,7 +116,7 @@ public class TextProcessor {
             throw new Error("Reading File Exception", e);
         }
     }
-    
+
     public HashMap readFile(String fileName) {
         // Read file
         try {
@@ -136,15 +137,14 @@ public class TextProcessor {
 
                         // Stem word
                         stem = stemmer.stem(word).toLowerCase();
-                        
-                            // Increment if word is known
-                            if (tempMap.containsKey(stem)) {
-                                tempMap.put(stem, tempMap.get(stem) + 1);
-                            } else {
-                                // Add new word and frequency to map
-                                tempMap.put(stem, 1);
-                            }
-                       
+
+                        // Increment if word is known
+                        if (tempMap.containsKey(stem)) {
+                            tempMap.put(stem, tempMap.get(stem) + 1);
+                        } else {
+                            // Add new word and frequency to map
+                            tempMap.put(stem, 1);
+                        }
 
                     }
                 }
@@ -156,11 +156,12 @@ public class TextProcessor {
             throw new Error("Reading File Exception", e);
         }
     }
-     public HashMap readFileWith100MostCommon(String fileName) {
+
+    public HashMap readFileWith100MostCommon(String fileName) {
         //Read common words
-        if(mostCommon100Words == null) {
+        if (mostCommon100Words == null) {
             readCommonWords();
-        }       
+        }
         // Read file
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName + ".txt"));
@@ -203,7 +204,6 @@ public class TextProcessor {
             throw new Error("Reading File Exception", e);
         }
     }
-      
 
     public void writeToFile(String fileName, HashMap<String, Integer> keywords) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File(fileName + "keywords.txt")));
@@ -327,6 +327,46 @@ public class TextProcessor {
 
         } catch (IOException e) {
             throw new Error("Reading File Exception", e);
+        }
+    }
+
+    /**
+     * Generates training data from clusters
+     *
+     * @throws IOException
+     */
+    public void generateTrainingData(ArrayList<Centroid> clusters, String path) throws IOException {
+
+        BufferedReader br;
+        BufferedWriter bw;
+
+        int i = 0;
+        System.out.println("CLUSTER SIZE: " + clusters.size());
+        // Iterate through all clusters
+        for (Centroid c : clusters) {
+            
+            // Create dataset for cluster
+            String fileName = "Centroid"+(i+1)+".txt";
+            bw = new BufferedWriter(new FileWriter(new File("/Users/Bryan/NetBeansProjects/Bachelor/BachelorProgram/Document-Analyzer-Bachelor-f.16/AnalyzerTFIDF/resources/datasets/"+fileName)));
+
+            // Iterate through all texts in clusters
+            for (Text t : c.GroupedDocument) {
+                br = new BufferedReader(new FileReader(path + "/" + t.fileName));
+
+                String line = "";
+
+                while ((line = br.readLine()) != null) {
+
+                    String[] s = line.toLowerCase().split("[\\p{Punct}\\s]+|\\d");
+                    for (String w : s) {
+                        bw.write(w + " ");
+                    }
+                }
+                
+                // Write to dataset
+                bw.write("\n");
+            }
+            i++;
         }
     }
 

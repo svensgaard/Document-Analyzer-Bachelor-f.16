@@ -7,6 +7,7 @@ package GUI;
 
 import Kmeans.Centroid;
 import Kmeans.Clustering;
+import analyzertfidf.BayesClassifier;
 import analyzertfidf.Keywords;
 import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
@@ -34,29 +35,34 @@ public class MainFrame extends javax.swing.JFrame {
     ArrayList<String> distinctTerms;
     private ArrayList<Centroid> freqResult;
     private ArrayList<String> cluster_list;
+    private BayesClassifier classifier;
+    private final TextProcessor tp = new TextProcessor();
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
-        texts = new ArrayList<>();
-        cluster_list = new ArrayList<>();
-        texts_list = new ArrayList<>();
-        
+        initFields();
+
         walkFilesActual();
         calculateTFDIF();
         initComponents();
+        System.out.println("Filepath: " + filePath);
     }
 
     public MainFrame(String filePath) {
-        texts = new ArrayList<>();
-        cluster_list = new ArrayList<>();
-        texts_list = new ArrayList<>();
+        initFields();
 
         this.filePath = filePath;
         walkFilesActual();
         calculateTFDIF();
         initComponents();
+    }
+
+    private void initFields() {
+        texts = new ArrayList<>();
+        cluster_list = new ArrayList<>();
+        texts_list = new ArrayList<>();
     }
 
     /**
@@ -76,6 +82,13 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         button_recluster = new javax.swing.JButton();
         button_back = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        text_area_input = new javax.swing.JTextArea();
+        classify = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        text_area_result = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +134,26 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        text_area_input.setColumns(20);
+        text_area_input.setRows(5);
+        jScrollPane1.setViewportView(text_area_input);
+
+        classify.setText("Classify");
+        classify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classifyActionPerformed(evt);
+            }
+        });
+
+        text_area_result.setEditable(false);
+        text_area_result.setColumns(20);
+        text_area_result.setRows(5);
+        jScrollPane2.setViewportView(text_area_result);
+
+        jLabel3.setText("Result");
+
+        jLabel4.setText("Input");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,40 +163,69 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel1)
-                        .addGap(120, 120, 120)
-                        .addComponent(jLabel2))
+                        .addGap(130, 130, 130)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, 0))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(button_back)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 0, 0))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 45, Short.MAX_VALUE)
-                                .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(127, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(button_recluster)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(30, 30, 30)
+                                .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(115, 115, 115)
+                        .addComponent(button_recluster)
+                        .addGap(0, 0, 0)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(143, 143, 143))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(152, 152, 152))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(classify)
+                                .addGap(118, 118, 118))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(button_back)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(texts_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-                    .addComponent(corpora_scroll))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(texts_scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                        .addComponent(corpora_scroll, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_recluster)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_recluster)
+                    .addComponent(classify))
+                .addGap(151, 151, 151))
         );
 
         pack();
@@ -179,6 +241,10 @@ public class MainFrame extends javax.swing.JFrame {
         new StartFrame().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_button_backActionPerformed
+
+    private void classifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classifyActionPerformed
+        text_area_result.setText("Your input belongs to cluster: " + classifier.predictClassification(text_area_input.getText()));
+    }//GEN-LAST:event_classifyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,9 +309,6 @@ public class MainFrame extends javax.swing.JFrame {
      * @return
      */
     public void walkFilesActual() {
-
-        //Initialize classes and maps
-        final TextProcessor tp = new TextProcessor();
 
         if (filePath == null) {
             filePath = "/Users/Bryan/NetBeansProjects/Bachelor/BachelorProgram/Document-Analyzer-Bachelor-f.16/AnalyzerTFIDF/resources/documents";
@@ -315,7 +378,8 @@ public class MainFrame extends javax.swing.JFrame {
      * ACTUAL USE RETURN A STRING ARRAY TO REPRESENT CLUSTERS
      */
     private ArrayList<String> clusterTexts() {
-        ArrayList<String> cluster_list = new ArrayList<>();
+        cluster_list = new ArrayList<>();
+        freqResult = new ArrayList<>();
         System.out.println("Clustering...");
         System.out.println("Texts size: " + texts.size());
         //Cluster texts
@@ -324,13 +388,23 @@ public class MainFrame extends javax.swing.JFrame {
         freqResult = clustering.prepareCluster(3, texts);
         //Add texts to List
 
-        int count = 0;
+        int count = 1;
         for (Centroid c : freqResult) {
             cluster_list.add("Centroid" + count);
             count++;
         }
 
         pack();
+        
+        try {
+            // GENERATE TRAINING DATA
+            tp.generateTrainingData(freqResult, filePath);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Initialize classifier
+        classifier = new BayesClassifier(freqResult.size(), filePath);
 
         return cluster_list;
     }
@@ -353,11 +427,18 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_back;
     private javax.swing.JButton button_recluster;
+    private javax.swing.JButton classify;
     private javax.swing.JScrollPane corpora_scroll;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList list_corpus;
     private javax.swing.JList list_texts;
+    private javax.swing.JTextArea text_area_input;
+    private javax.swing.JTextArea text_area_result;
     private javax.swing.JScrollPane texts_scroll;
     // End of variables declaration//GEN-END:variables
 
