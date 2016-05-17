@@ -50,7 +50,7 @@ public class TFIDF {
         for (HashMap.Entry<String, Integer> entry : document.keywords.keywordMap.entrySet()) {
             total += entry.getValue();
         }
-//        System.out.println("\tFrequency: " + frequency +" / "+total);
+        
         double d = (double) frequency / (double) total;
 //        System.out.println("\tTF: " + d);
         return d;

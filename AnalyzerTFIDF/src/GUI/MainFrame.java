@@ -47,7 +47,6 @@ public class MainFrame extends javax.swing.JFrame {
         walkFilesActual();
         calculateTFDIF();
         initComponents();
-        System.out.println("Filepath: " + filePath);
     }
 
     public MainFrame(String filePath) {
@@ -386,12 +385,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         int count = 1;
         for (Centroid c : freqResult) {
-            cluster_list.add("Centroid" + count);
+            System.out.println(c);
+            c.name = "Centroid" + count;
+            cluster_list.add(c.name);
             count++;
         }
-
-        pack();
         
+        pack();
+
         try {
             // GENERATE TRAINING DATA
             tp.generateTrainingData(freqResult, filePath);
@@ -401,7 +402,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         // Initialize classifier
         classifier = new BayesClassifier(freqResult.size(), filePath);
-
+        
         return cluster_list;
     }
 
