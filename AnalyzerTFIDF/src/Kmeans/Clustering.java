@@ -24,31 +24,13 @@ public class Clustering {
     private int counter;
     public int publicCounter;
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
+    private EvaluationWrapper evaluation = new EvaluationWrapper();
 
     //k is number of clusters.
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {
         globalCounter = 0;
-        ArrayList<Centroid> centroids = new ArrayList<>();
-        Centroid x;
-        if (betterStart) {
-            //Use chooseinitialCenters method which is not entirely random
-            for (Text t : chooseInitialCenters(texts, k)) {
-                x = new Centroid();
-                x.GroupedDocument = new ArrayList<>();
-                x.GroupedDocument.add(t);
-                centroids.add(x);
-
-            }
-        } else {
-            //Choose 3 centroids at random
-            HashSet<Integer> uniqNumber = generateRandomNumbers(k, texts.size());
-            for (Integer i : uniqNumber) {
-                x = new Centroid();
-                x.GroupedDocument = new ArrayList<>();
-                x.GroupedDocument.add(texts.get(i));
-                centroids.add(x);
-            }
-        }
+        ArrayList<Centroid> centroids;
+        centroids = initialize(texts, k, betterStart);
 
         Boolean stop;
         ArrayList<Centroid> result;
@@ -67,6 +49,10 @@ public class Clustering {
             stop = CheckStop(previousClusterCenter, centroids);
             if (!stop) {
                 result = InitializeClusterCentroid(centroids.size());
+            }
+            if(evaluation.getAvgSimilarity(result) < 0.5) {
+                stop = false;
+                centroids = initialize(texts, k, betterStart);
             }
         } while (stop == false);
         publicCounter = counter;
@@ -328,6 +314,30 @@ public class Clustering {
         }
 
         return resultSet;
+    }
+    private ArrayList<Centroid> initialize(ArrayList<Text> texts, int k, boolean betterStart) {
+        Centroid x;
+        ArrayList<Centroid> centroids = new ArrayList<>();
+        if (betterStart) {
+            //Use chooseinitialCenters method which is not entirely random
+            for (Text t : chooseInitialCenters(texts, k)) {
+                x = new Centroid();
+                x.GroupedDocument = new ArrayList<>();
+                x.GroupedDocument.add(t);
+                centroids.add(x);
+
+            }
+        } else {
+            //Choose 3 centroids at random
+            HashSet<Integer> uniqNumber = generateRandomNumbers(k, texts.size());
+            for (Integer i : uniqNumber) {
+                x = new Centroid();
+                x.GroupedDocument = new ArrayList<>();
+                x.GroupedDocument.add(texts.get(i));
+                centroids.add(x);
+            }
+        }
+        return centroids;
     }
 
 }

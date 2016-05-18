@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Evaluation.EvaluationWrapper;
 import Kmeans.Centroid;
 import analyzertfidf.BayesClassifier;
 import analyzertfidf.Text;
@@ -26,6 +27,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ArrayList<String> cluster_list;
     private BayesClassifier classifier;
     private final TextProcessor tp = new TextProcessor();
+    private EvaluationWrapper evaluation = new EvaluationWrapper();
 
     /**
      * Creates new form MainFrame
@@ -64,7 +66,12 @@ public class MainFrame extends javax.swing.JFrame {
     private void initFields() {
         texts_list = new ArrayList<>();
     }
-
+    private void evaluateResult(ArrayList<Centroid> result) {
+        avgDistToCenterLabel.setText(String.valueOf(evaluation.getAvgDistance(result)));
+        avgDistBetweenClustersLabel.setText(String.valueOf(evaluation.getAvgInterClusterDist(result)));
+        avgSimToCenterLabel.setText(String.valueOf(evaluation.getAvgSimilarity(result)));
+        avgSimBetweenCentersLabel.setText(String.valueOf(evaluation.getAvgInterClusterSim(result)));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,6 +95,15 @@ public class MainFrame extends javax.swing.JFrame {
         text_area_result = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        avgDistToCenterLabel = new javax.swing.JLabel();
+        avgDistBetweenClustersLabel = new javax.swing.JLabel();
+        avgSimToCenterLabel = new javax.swing.JLabel();
+        avgSimBetweenCentersLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,6 +161,24 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel4.setText("Input");
 
+        jLabel5.setText("Stats for clustering");
+
+        jLabel6.setText("Average distance to cluster center");
+
+        jLabel7.setText("Average distance bewtween clusters");
+
+        jLabel8.setText("Average similarity to cluster center");
+
+        jLabel9.setText("Average similarity between cluster centers:");
+
+        avgDistToCenterLabel.setText("jLabel10");
+
+        avgDistBetweenClustersLabel.setText("jLabel11");
+
+        avgSimToCenterLabel.setText("jLabel12");
+
+        avgSimBetweenCentersLabel.setText("jLabel13");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,7 +197,20 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
-                                .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(avgDistToCenterLabel)
+                                    .addComponent(avgDistBetweenClustersLabel)
+                                    .addComponent(avgSimToCenterLabel)
+                                    .addComponent(avgSimBetweenCentersLabel))))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
@@ -206,8 +253,26 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(texts_scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                         .addComponent(corpora_scroll, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(classify)
-                .addGap(151, 151, 151))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(classify)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(avgDistToCenterLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(avgDistBetweenClustersLabel))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(avgSimToCenterLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(avgSimBetweenCentersLabel))
+                .addGap(54, 54, 54))
         );
 
         pack();
@@ -273,6 +338,10 @@ public class MainFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel avgDistBetweenClustersLabel;
+    private javax.swing.JLabel avgDistToCenterLabel;
+    private javax.swing.JLabel avgSimBetweenCentersLabel;
+    private javax.swing.JLabel avgSimToCenterLabel;
     private javax.swing.JButton button_back;
     private javax.swing.JButton classify;
     private javax.swing.JScrollPane corpora_scroll;
@@ -280,6 +349,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList list_corpus;
