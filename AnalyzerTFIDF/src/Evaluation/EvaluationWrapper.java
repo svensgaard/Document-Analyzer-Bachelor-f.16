@@ -16,25 +16,6 @@ import java.util.ArrayList;
  */
 public class EvaluationWrapper {
 
-    ArrayList<Centroid> trueFreqResult = new ArrayList<>();
-
-    public ArrayList<Centroid> getTrueFreqResult() {
-        return trueFreqResult;
-    }
-
-    public void setTrueFreqResult(ArrayList<Centroid> trueFreqResult) {
-        this.trueFreqResult = trueFreqResult;
-    }
-
-    public ArrayList<Centroid> getTrueMostCommonWordsResult() {
-        return trueMostCommonWordsResult;
-    }
-
-    public void setTrueMostCommonWordsResult(ArrayList<Centroid> trueMostCommonWordsResult) {
-        this.trueMostCommonWordsResult = trueMostCommonWordsResult;
-    }
-    ArrayList<Centroid> trueMostCommonWordsResult = new ArrayList<>();
-
     SimilarityMatrics simMatrics = new SimilarityMatrics();
 
     
@@ -43,34 +24,43 @@ public class EvaluationWrapper {
 
     }
 
-    public double getAverageSimilarityToTrueFreqResult(ArrayList<Centroid> result) {
-        double total = 0;
-        
-        //Find the distance to the 
-        for (Centroid centroid : result) {
-            for (Centroid trueCentroid : trueFreqResult) {
-                if (centroid.getClusterType().getKey().equalsIgnoreCase(trueCentroid.getClusterType().getKey())) {
-                    total += simMatrics.findCosineSimilarity(trueCentroid.getAverageVector(), centroid.getAverageVector());
-                }
+    public double getAvgSimilarity(ArrayList<Centroid> clusters) {
+        int numberOfTexts = 0;
+        double totalSimilarity = 0.0;
+        if(clusters != null) {
+            for(Centroid c : clusters) {
+            //Add texts to total
+            numberOfTexts += c.GroupedDocument.size();
+            //Count similarity
+            for(Text t : c.GroupedDocument) {
+                totalSimilarity += simMatrics.findCosineSimilarity(c.getAverageVector(), t.getVectorSpace());
             }
         }
-           
-        // Divide by number of clusters
-        return total / 3;
+        }
+        
+        return totalSimilarity / (double) numberOfTexts;
     }
-    public double getAverageSimilarityToTrueMostCommonWordsResult(ArrayList<Centroid> result) {
-        double total = 0;
-        
-        //Find the distance to the 
-        for (Centroid centroid : result) {
-            for (Centroid trueCentroid : trueMostCommonWordsResult) {
-                if (centroid.getClusterType().getKey().equalsIgnoreCase(trueCentroid.getClusterType().getKey())) {
-                    total += simMatrics.findCosineSimilarity(trueCentroid.getAverageVector(), centroid.getAverageVector());
-                }
+    
+    public double getAvgDistance(ArrayList<Centroid> clusters) {
+        int numberOfTexts = 0;
+        double totalDistance = 0.0;
+        for(Centroid c : clusters) {
+            //Add texts to total
+            numberOfTexts += c.GroupedDocument.size();
+            //Count similarity
+            for(Text t : c.GroupedDocument) {
+               
+                totalDistance += getDistance(t.getVectorSpace(), c.getAverageVector());
             }
         }
-           
-        // Divide by number of clusters
-        return total / 3;
+        return totalDistance / (double) numberOfTexts;
+    
+    }
+    private double getDistance(Double[] vector1, Double[] vector2) {
+        double diff_square_sum = 0.0;
+        for (int i = 0; i < vector1.length; i++) {
+            diff_square_sum += (vector1[i] - vector2[i]) * (vector1[i] - vector2[i]);
+        }
+        return Math.sqrt(diff_square_sum);
     }
 }

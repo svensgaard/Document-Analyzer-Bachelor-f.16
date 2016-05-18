@@ -5,6 +5,7 @@
  */
 package Kmeans;
 
+import Evaluation.EvaluationWrapper;
 import analyzertfidf.Text;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -177,6 +178,11 @@ public class Clustering {
                     stop = true;
                 }
             }
+        }
+        EvaluationWrapper evaluation = new EvaluationWrapper();
+        
+        if(evaluation.getAvgSimilarity(centroids) < 0.30) {
+            stop = false;
         }
         return stop;
     }
