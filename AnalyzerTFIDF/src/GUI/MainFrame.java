@@ -96,7 +96,7 @@ public class MainFrame extends javax.swing.JFrame {
         texts_scroll = new javax.swing.JScrollPane();
         list_texts = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
-        button_back = new javax.swing.JButton();
+        button_close = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         text_area_input = new javax.swing.JTextArea();
         classify = new javax.swing.JButton();
@@ -143,10 +143,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Texts");
 
-        button_back.setText("Back");
-        button_back.addActionListener(new java.awt.event.ActionListener() {
+        button_close.setText("Close");
+        button_close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_backActionPerformed(evt);
+                button_closeActionPerformed(evt);
             }
         });
 
@@ -202,7 +202,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(button_back)
+                            .addComponent(button_close)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
@@ -244,7 +244,7 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(button_back)
+                .addComponent(button_close)
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -287,10 +287,9 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void button_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_backActionPerformed
-        new StartFrame().setVisible(true);
+    private void button_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_closeActionPerformed
         this.dispose();
-    }//GEN-LAST:event_button_backActionPerformed
+    }//GEN-LAST:event_button_closeActionPerformed
 
     private void classifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classifyActionPerformed
         text_area_result.setText("Your input belongs to cluster: " + classifier.predictClassification(text_area_input.getText()));
@@ -351,7 +350,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel avgDistToCenterLabel;
     private javax.swing.JLabel avgSimBetweenCentersLabel;
     private javax.swing.JLabel avgSimToCenterLabel;
-    private javax.swing.JButton button_back;
+    private javax.swing.JButton button_close;
     private javax.swing.JButton classify;
     private javax.swing.JScrollPane corpora_scroll;
     private javax.swing.JLabel jLabel1;
