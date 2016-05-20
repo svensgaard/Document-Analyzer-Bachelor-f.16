@@ -21,10 +21,11 @@ import java.util.Random;
 public class Clustering {
 
     private int globalCounter = 0;
-    private int counter;
     public int publicCounter;
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
-    private EvaluationWrapper evaluation = new EvaluationWrapper();
+    private final EvaluationWrapper evaluation = new EvaluationWrapper();
+    private final int MAX_ITERATIONS = 500;
+    private final double MIN_SIMILARITY = 0.4;
 
     //k is number of clusters.
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {
@@ -50,29 +51,21 @@ public class Clustering {
             if (!stop) {
                 result = InitializeClusterCentroid(centroids.size());
             }
-            if(evaluation.getAvgSimilarity(result) < 0.5) {
-                stop = false;
-                centroids = initialize(texts, k, betterStart);
+            if (evaluation.getAvgSimilarity(result) < MIN_SIMILARITY) {
+                if (globalCounter < MAX_ITERATIONS) {
+                    stop = false;
+                    centroids = initialize(texts, k, betterStart);
+                }
+
             }
         } while (stop == false);
-        publicCounter = counter;
+
         return result;
 
     }
 
-    private HashSet<Integer> generateRandomNumbers(int k, int size) {
-        HashSet<Integer> uniqRandom = new HashSet<>();
-        ArrayList<Integer> randomNumbers = new ArrayList<>();
-        for (int i = 1; i < size; i++) {
-            randomNumbers.add(i);
-        }
-        Collections.shuffle(randomNumbers);
-        for (int i = 0; i < k; i++) {
-            uniqRandom.add(randomNumbers.get(i));
-        }
-
-        return uniqRandom;
-    }
+    //Is this method really necessary?
+    //TODO clean up.
     private ArrayList<Centroid> InitializeClusterCentroid(int size) {
         Centroid c;
         ArrayList<Centroid> centroid = new ArrayList<>();
@@ -126,9 +119,8 @@ public class Clustering {
 
     private Boolean CheckStop(ArrayList<Centroid> previousClusterCenter, ArrayList<Centroid> centroids) {
         globalCounter++;
-        counter = globalCounter;
         Boolean stop = false;
-        if (globalCounter > 1000) {
+        if (globalCounter > MAX_ITERATIONS) {
             return true;
         } else {
 
@@ -166,8 +158,8 @@ public class Clustering {
             }
         }
         EvaluationWrapper evaluation = new EvaluationWrapper();
-        
-        if(evaluation.getAvgSimilarity(centroids) < 0.30) {
+
+        if (evaluation.getAvgSimilarity(centroids) < 0.30) {
             stop = false;
         }
         return stop;
@@ -194,7 +186,6 @@ public class Clustering {
     }
 
     //Choose better inital centroids
-
     private ArrayList<Text> chooseInitialCenters(ArrayList<Text> texts, int k) {
 
         // Convert to list for indexed access. Make it unmodifiable, since removal of items
@@ -315,6 +306,7 @@ public class Clustering {
 
         return resultSet;
     }
+
     private ArrayList<Centroid> initialize(ArrayList<Text> texts, int k, boolean betterStart) {
         Centroid x;
         ArrayList<Centroid> centroids = new ArrayList<>();
@@ -338,6 +330,20 @@ public class Clustering {
             }
         }
         return centroids;
+    }
+
+    private HashSet<Integer> generateRandomNumbers(int k, int size) {
+        HashSet<Integer> uniqRandom = new HashSet<>();
+        ArrayList<Integer> randomNumbers = new ArrayList<>();
+        for (int i = 1; i < size; i++) {
+            randomNumbers.add(i);
+        }
+        Collections.shuffle(randomNumbers);
+        for (int i = 0; i < k; i++) {
+            uniqRandom.add(randomNumbers.get(i));
+        }
+
+        return uniqRandom;
     }
 
 }
