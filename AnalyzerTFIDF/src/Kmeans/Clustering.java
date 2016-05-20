@@ -31,13 +31,13 @@ public class Clustering {
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {
         globalCounter = 0;
         ArrayList<Centroid> centroids;
-        centroids = initialize(texts, k, betterStart);
+        
 
         Boolean stop;
         ArrayList<Centroid> result;
         ArrayList<Centroid> previousClusterCenter;
+        centroids = initialize(texts, k, betterStart);
         result = InitializeClusterCentroid(centroids.size());
-
         do { //Continue until stop criteria are met.
             previousClusterCenter = centroids;
 
@@ -130,11 +130,14 @@ public class Clustering {
             do {
                 if (centroids.get(index).GroupedDocument.isEmpty() && previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
                     index++;
+                    changeIndex[index] = 0;
                 } else if (!centroids.get(index).GroupedDocument.isEmpty() && !previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
                     for (int k = 0; k < centroids.get(index).getAverageVector().length; k++) {
 //                        if (centroids.get(index).GroupedDocument.get(0).getVectorSpace()[k].equals(previousClusterCenter.get(index).GroupedDocument.get(0).getVectorSpace()[k])) {
                         if (!centroids.get(index).getAverageVector()[k].equals(previousClusterCenter.get(index).getAverageVector()[k])) { //Change back to document[0].getvectorspace if bad results.
                             changeIndex[index] = 1;
+                        } else {
+                            changeIndex[index] = 0;
                         }
                     }
 //                    if (count == centroids.get(index).GroupedDocument.get(0).getVectorSpace().length) {
