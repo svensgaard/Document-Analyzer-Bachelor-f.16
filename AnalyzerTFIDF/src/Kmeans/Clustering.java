@@ -25,7 +25,7 @@ public class Clustering {
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
     private final int MAX_ITERATIONS = 500;
-    private final double MIN_SIMILARITY = 0.6;
+    private final double MIN_SIMILARITY = 0.3;
 
     //k is number of clusters.
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {

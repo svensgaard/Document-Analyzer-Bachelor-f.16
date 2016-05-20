@@ -84,6 +84,7 @@ public class TextProcessor {
         // Read file
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
+            
 
             HashMap<String, Integer> tempMap = new HashMap<>();
             String line = "";
@@ -118,6 +119,7 @@ public class TextProcessor {
             return tempMap;
 
         } catch (IOException e) {
+            e.printStackTrace();
             throw new Error("Reading File Exception", e);
         }
     }
@@ -365,7 +367,8 @@ public class TextProcessor {
 
             // Iterate through all texts in clusters
             for (Text t : c.GroupedDocument) {
-                br = new BufferedReader(new FileReader(path + "/" + t.fileName));
+//                br = new BufferedReader(new FileReader(path + "/" + t.fileName));
+                br = new BufferedReader(new FileReader(t.path));
 
                 String line = "";
 

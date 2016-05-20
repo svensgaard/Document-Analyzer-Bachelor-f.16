@@ -13,6 +13,7 @@ import analyzertfidf.Keywords;
 import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
 import analyzertfidf.TextProcessor;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -299,7 +300,7 @@ public class StartFrame extends javax.swing.JFrame {
 
     //Our own immplementation without most common read files and cluster
     private void wordFrequencyMCWReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyMCWReadBtnActionPerformed
-       
+
         filePath = promptFilepath();
         if (filePath != "") {
             ArrayList<Text> texts = readFiles(filePath, true);
@@ -322,7 +323,7 @@ public class StartFrame extends javax.swing.JFrame {
 
     //Kmeans with better start readfiles and cluster
     private void kmeansPlusReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansPlusReadBtnActionPerformed
-        
+
         filePath = promptFilepath();
         if (filePath != "") {
             ArrayList<Text> texts = readFiles(filePath, false);
@@ -334,7 +335,7 @@ public class StartFrame extends javax.swing.JFrame {
 
     //Kmeans with better start test
     private void kmeansPlusTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansPlusTestBtnActionPerformed
-       
+
         ArrayList<Text> texts = readFiles(filePath, false);
         ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
         initClassifier(result);
@@ -343,7 +344,7 @@ public class StartFrame extends javax.swing.JFrame {
 
     //kmeans wihtout most common words read files and cluster
     private void kmeansMCWReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansMCWReadBtnActionPerformed
-        
+
         filePath = promptFilepath();
         if (filePath != "") {
             ArrayList<Text> texts = readFiles(filePath, true);
@@ -484,42 +485,44 @@ public class StartFrame extends javax.swing.JFrame {
 
         ArrayList<Text> tempTexts = new ArrayList<>();
 
-        if (withoutMostCommon) {
-            //Read files without most common words
+        File[] files = new File(filePath).listFiles();
+        showFiles(files, tempTexts);
 
-            try {
-                Files.walk(Paths.get(filePath)).forEach(fp -> {
-                    if (Files.isRegularFile(fp)) {
-                        //Read corpus files
-                        final HashMap<String, Integer> tempMap;
-                        tempMap = tp.readFileWith100MostCommon(fp.getFileName().toString());
-                        tempTexts.add(new Text(fp.getFileName().toString(), new Keywords(tempMap)));
-                    }
-                });
-            } catch (IOException ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            System.out.println("Processing Done");
-        } else {
-            //Just read files
-            try {
-                System.out.println(Paths.get(filePath));
-                Files.walk(Paths.get(filePath)).forEach(fp -> {
-                    if (Files.isRegularFile(fp)) {
-                        //Read corpus files
-                        final HashMap<String, Integer> tempMap;
-                        tempMap = tp.readFileActual(fp.getFileName().toString());
-                        tempTexts.add(new Text(fp.getFileName().toString(), new Keywords(tempMap)));
-                    }
-                });
-            } catch (IOException ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            System.out.println("Processing Done");
-        }
-
+//        if (withoutMostCommon) {
+//            //Read files without most common words
+//
+//            try {
+//                Files.walk(Paths.get(filePath)).forEach(fp -> {
+//                    if (Files.isRegularFile(fp)) {
+//                        //Read corpus files
+//                        final HashMap<String, Integer> tempMap;
+//                        tempMap = tp.readFileWith100MostCommon(fp.getFileName().toString());
+//                        tempTexts.add(new Text(fp.getFileName().toString(), new Keywords(tempMap)));
+//                    }
+//                });
+//            } catch (IOException ex) {
+//                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//            System.out.println("Processing Done");
+//        } else {
+//            //Just read files
+//            try {
+//                System.out.println(Paths.get(filePath));
+//                Files.walk(Paths.get(filePath)).forEach(fp -> {
+//                    if (Files.isRegularFile(fp)) {
+//                        //Read corpus files
+//                        final HashMap<String, Integer> tempMap;
+//                        tempMap = tp.readFileActual(fp.getFileName().toString());
+//                        tempTexts.add(new Text(fp.getFileName().toString(), new Keywords(tempMap)));
+//                    }
+//                });
+//            } catch (IOException ex) {
+//                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//            System.out.println("Processing Done");
+//        }
         ArrayList<Text> texts = calculateTFDIF(tempTexts);
 
         return texts;
@@ -540,6 +543,23 @@ public class StartFrame extends javax.swing.JFrame {
         } else {
             System.out.println("No Selection ");
             return "";
+        }
+    }
+
+    private void showFiles(File[] files, ArrayList<Text> texts) {
+        for (File file : files) {
+
+            if (file.isDirectory()) {
+                System.out.println("Directory: " + file.getName());
+                showFiles(file.listFiles(), texts); // Calls same method again.
+            } else {
+                System.out.println("File: " + file.getName());
+                //Read corpus files
+                HashMap<String, Integer> tempMap;
+
+                tempMap = tp.readFileActual(file.getPath());
+                texts.add(new Text(file.getName(), new Keywords(tempMap), file.getPath()));
+            }
         }
     }
 }
