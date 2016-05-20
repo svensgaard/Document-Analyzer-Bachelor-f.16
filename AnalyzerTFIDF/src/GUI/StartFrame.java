@@ -14,6 +14,7 @@ import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
 import analyzertfidf.TextProcessor;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -397,7 +398,7 @@ public class StartFrame extends javax.swing.JFrame {
 
     private void updateFilePath() {
         if (filePath == null) {
-            filePath = "/Users/Bryan/NetBeansProjects/Bachelor/BachelorProgram/Document-Analyzer-Bachelor-f.16/AnalyzerTFIDF/resources/documents";
+            filePath = "./resources/documents";
         }
     }
 
@@ -501,7 +502,6 @@ public class StartFrame extends javax.swing.JFrame {
         } else {
             //Just read files
             try {
-                System.out.println(filePath);
                 System.out.println(Paths.get(filePath));
                 Files.walk(Paths.get(filePath)).forEach(fp -> {
                     if (Files.isRegularFile(fp)) {

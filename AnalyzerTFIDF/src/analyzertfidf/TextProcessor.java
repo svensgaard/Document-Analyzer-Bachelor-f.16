@@ -44,8 +44,8 @@ public class TextProcessor {
 
         //Read 100 most common
         try {
-//            FileReader fr = new FileReader(new File("100MostUsedWords.txt"));
-            FileReader fr = new FileReader(new File("top200words.txt"));
+            FileReader fr = new FileReader(new File("100MostUsedWords.txt"));
+//            FileReader fr = new FileReader(new File("top200words.txt"));
             BufferedReader br = new BufferedReader(fr);
             String line;
 
