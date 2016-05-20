@@ -5,6 +5,7 @@
  */
 package analyzertfidf;
 
+import GUI.MainFrame;
 import Kmeans.Centroid;
 import Stemming.WordStemmer;
 import java.io.BufferedReader;
@@ -17,12 +18,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -164,7 +169,7 @@ public class TextProcessor {
         }
         // Read file
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName + ".txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
             HashMap<String, Integer> tempMap = new HashMap<>();
             String line = "";
@@ -335,6 +340,16 @@ public class TextProcessor {
      */
     public void generateTrainingData(ArrayList<Centroid> clusters, String path) throws IOException {
 
+        Files.walk(Paths.get("./resources/datasets")).forEach(fp -> {
+            if (Files.isRegularFile(fp)) {
+                try {
+                    Files.deleteIfExists(fp);
+                } catch (IOException ex) {
+                    Logger.getLogger(TextProcessor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
         BufferedReader br;
         BufferedWriter bw;
 
@@ -342,11 +357,11 @@ public class TextProcessor {
         System.out.println("CLUSTER SIZE: " + clusters.size());
         // Iterate through all clusters
         for (Centroid c : clusters) {
-            
+
             // Create dataset for cluster
-            String fileName = "Centroid"+(i+1)+".txt";
+            String fileName = "Centroid" + (i + 1) + ".txt";
             c.name = fileName;
-            bw = new BufferedWriter(new FileWriter(new File("./resources/datasets/"+fileName)));
+            bw = new BufferedWriter(new FileWriter(new File("./resources/datasets/" + fileName)));
 
             // Iterate through all texts in clusters
             for (Text t : c.GroupedDocument) {
@@ -361,7 +376,7 @@ public class TextProcessor {
                         bw.write(w + " ");
                     }
                 }
-                
+
                 // Write to dataset
                 bw.write("\n");
             }
