@@ -164,14 +164,14 @@ public class TextProcessor {
         }
     }
 
-    public HashMap readFileWith100MostCommon(String fileName) {
+    public HashMap readFileWith100MostCommon(String filePath) {
         //Read common words
         if (mostCommon100Words == null) {
             readCommonWords();
         }
         // Read file
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
             HashMap<String, Integer> tempMap = new HashMap<>();
             String line = "";
@@ -341,7 +341,8 @@ public class TextProcessor {
      * @throws IOException
      */
     public void generateTrainingData(ArrayList<Centroid> clusters, String path) throws IOException {
-
+        
+        // MAKE SURE DIR IS FRESH
         Files.walk(Paths.get("./resources/datasets")).forEach(fp -> {
             if (Files.isRegularFile(fp)) {
                 try {

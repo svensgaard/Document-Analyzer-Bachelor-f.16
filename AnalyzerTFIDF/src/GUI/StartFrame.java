@@ -424,22 +424,22 @@ public class StartFrame extends javax.swing.JFrame {
             t.keywords.keywordTFIDFMap = termWeightMap;
         }
 
-        //Make a list of all distinct terms in the corpus
-        distinctTerms = new ArrayList<>();
-        for (Text t : texts) {
-            Iterator it = t.keywords.keywordMap.entrySet().iterator();
-            for (int i = 0; i < t.keywords.size(); i++) {
-                Map.Entry<String, Integer> pair = (Map.Entry) it.next();
-                if (!distinctTerms.contains(pair.getKey())) {
-                    distinctTerms.add(pair.getKey());
-                }
-            }
-        }
+//        //Make a list of all distinct terms in the corpus
+//        distinctTerms = new ArrayList<>();
+//        for (Text t : texts) {
+//            Iterator it = t.keywords.keywordMap.entrySet().iterator();
+//            for (int i = 0; i < t.keywords.size(); i++) {
+//                Map.Entry<String, Integer> pair = (Map.Entry) it.next();
+//                if (!distinctTerms.contains(pair.getKey())) {
+//                    distinctTerms.add(pair.getKey());
+//                }
+//            }
+//        }
         //Initialize vectorspace in all texts
         for (Text t : texts) {
-            t.vectorSpace = new Double[distinctTerms.size()];
+            t.vectorSpace = new Double[calculator.termIDF.size()];
             int count = 0;
-            for (String s : distinctTerms) {
+            for (String s : calculator.termIDF.keySet()) {
                 if (t.keywords.keywordTFIDFMap.containsKey(s)) {
                     t.vectorSpace[count] = t.keywords.keywordTFIDFMap.get(s);
                 } else {
@@ -452,11 +452,16 @@ public class StartFrame extends javax.swing.JFrame {
     }
 
     private void initClassifier(ArrayList<Centroid> result) {
+        long start = System.currentTimeMillis();
+
         try {
             tp.generateTrainingData(result, filePath);
         } catch (IOException ex) {
             Logger.getLogger(StartFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        long end = System.currentTimeMillis();
+
+        System.out.println("GENERATE TRAINING DATA Running time: " + (end - start) + "ms");
         // Initialize classifier
         classifier = new BayesClassifier();
     }
@@ -485,8 +490,13 @@ public class StartFrame extends javax.swing.JFrame {
 
         ArrayList<Text> tempTexts = new ArrayList<>();
 
-        File[] files = new File(filePath).listFiles();
-        showFiles(files, tempTexts);
+        if (withoutMostCommon) {
+            File[] files = new File(filePath).listFiles();
+            showFilesWithout(files, tempTexts);
+        } else {
+            File[] files = new File(filePath).listFiles();
+            showFiles(files, tempTexts);
+        }
 
 //        if (withoutMostCommon) {
 //            //Read files without most common words
@@ -523,7 +533,11 @@ public class StartFrame extends javax.swing.JFrame {
 //
 //            System.out.println("Processing Done");
 //        }
+        long start = System.currentTimeMillis();
         ArrayList<Text> texts = calculateTFDIF(tempTexts);
+        long end = System.currentTimeMillis();
+
+        System.out.println("TF-IDF Running time: " + (end - start) + "ms");
 
         return texts;
     }
@@ -546,13 +560,30 @@ public class StartFrame extends javax.swing.JFrame {
         }
     }
 
+    private void showFilesWithout(File[] files, ArrayList<Text> texts) {
+        for (File file : files) {
+
+            if (file.isDirectory()) {
+                System.out.println("Directory: " + file.getName());
+                showFiles(file.listFiles(), texts); // Calls same method again.
+            } else if (!file.getName().contains("DS_Store")) {
+                System.out.println("File: " + file.getName());
+                //Read corpus files
+                HashMap<String, Integer> tempMap;
+
+                tempMap = tp.readFileWith100MostCommon(file.getPath());
+                texts.add(new Text(file.getName(), new Keywords(tempMap), file.getPath()));
+            }
+        }
+    }
+
     private void showFiles(File[] files, ArrayList<Text> texts) {
         for (File file : files) {
 
             if (file.isDirectory()) {
                 System.out.println("Directory: " + file.getName());
                 showFiles(file.listFiles(), texts); // Calls same method again.
-            } else {
+            } else if (!file.getName().contains("DS_Store")) {
                 System.out.println("File: " + file.getName());
                 //Read corpus files
                 HashMap<String, Integer> tempMap;
