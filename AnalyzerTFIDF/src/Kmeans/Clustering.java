@@ -25,7 +25,7 @@ public class Clustering {
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
     private final int MAX_ITERATIONS = 500;
-    private final double MIN_SIMILARITY = 0.3;
+    private final double MIN_SIMILARITY = 0.61;
 
     //k is number of clusters.
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {
@@ -136,9 +136,7 @@ public class Clustering {
 //                        if (centroids.get(index).GroupedDocument.get(0).getVectorSpace()[k].equals(previousClusterCenter.get(index).GroupedDocument.get(0).getVectorSpace()[k])) {
                         if (!centroids.get(index).getAverageVector()[k].equals(previousClusterCenter.get(index).getAverageVector()[k])) { //Change back to document[0].getvectorspace if bad results.
                             changeIndex[index] = 1;
-                        } else {
-                            changeIndex[index] = 0;
-                        }
+                        } 
                     }
 //                    if (count == centroids.get(index).GroupedDocument.get(0).getVectorSpace().length) {
 //                    if (count == centroids.get(index).getAverageVector().length) {
@@ -160,11 +158,7 @@ public class Clustering {
                 }
             }
         }
-        EvaluationWrapper evaluation = new EvaluationWrapper();
-
-        if (evaluation.getAvgSimilarity(centroids) < 0.30) {
-            stop = false;
-        }
+        
         return stop;
     }
 
