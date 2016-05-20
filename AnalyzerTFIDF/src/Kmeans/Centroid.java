@@ -20,7 +20,6 @@ import java.util.Map;
 public class Centroid {
 
     public ArrayList<Text> GroupedDocument = new ArrayList<>();
-    public boolean isTheOne = false;
     private Double[] averageVector;
     public String name;
 
@@ -32,7 +31,7 @@ public class Centroid {
     public Keywords keywords;
 
     public Centroid(Text text) {
-        GroupedDocument = new ArrayList<Text>();
+        GroupedDocument = new ArrayList<>();
         keywords = new Keywords(text.keywords.keywordMap);
         update(text);
     }
@@ -115,27 +114,6 @@ public class Centroid {
         }
     }
 
-    //Return the average sentence length for the cluster
-    public Double getAverageSentenceLength() {
-
-        double totalLength = 0;
-        for (Text t : GroupedDocument) {
-            totalLength += t.averageSentenceLength;
-        }
-        return totalLength / (double) GroupedDocument.size();
-
-    }
-
-    //Only works for frequency!
-
-    public double getAverageDistance() {
-        SimilarityMatrics simMatrics = new SimilarityMatrics();
-        double totalDistance = 0;
-        for (Text t : GroupedDocument) {
-            totalDistance += simMatrics.findCosineSimilarity(t.getVectorSpace(), averageVector);
-        }
-        return totalDistance / GroupedDocument.size();
-    }
 
     public void update(Text text) {
         // TODO update keywords
