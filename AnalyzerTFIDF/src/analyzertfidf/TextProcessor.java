@@ -196,8 +196,6 @@ public class TextProcessor {
                 }
             }
 
-//            writeToFile(fileName, sorted);
-            // Sort HashMap and return a LinkedHashMap
             return tempMap;
 
         } catch (IOException e) {

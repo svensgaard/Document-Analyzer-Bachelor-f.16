@@ -121,7 +121,7 @@ public class BayesClassifier {
 //            String fileName = "Centroid"+(i+1);
 //            trainingFiles.put(fileName, BayesClassifier.class.getResource("/datasets/"+fileName+".txt"));
 //        }
-        Files.walk(Paths.get("/Users/Bryan/NetBeansProjects/Bachelor/BachelorProgram/Document-Analyzer-Bachelor-f.16/AnalyzerTFIDF/resources/datasets/")).forEach(filePath -> {
+        Files.walk(Paths.get("./resources/datasets/")).forEach(filePath -> {
             if (Files.isRegularFile(filePath)) {
                 try {
                     trainingFiles.put(filePath.getFileName().toString(), filePath.toUri().toURL());
@@ -162,8 +162,6 @@ public class BayesClassifier {
     }
 
     public String predictClassification(String text) {
-        System.out.println("NB: " + nb);
-        System.out.println("Text: " + text);
         return nb.predict(text);
     }
 
