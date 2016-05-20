@@ -253,25 +253,15 @@ public class StartFrame extends javax.swing.JFrame {
 
     private void readFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readFilesActionPerformed
 
-        chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setDialogTitle(choosertitle);
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        //
-        // disable the "All files" option.
-        //
-        chooser.setAcceptAllFileFilterUsed(false);
-        //    
-        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-
-            filePath = chooser.getSelectedFile().getPath();
+        filePath = promptFilepath();
+        if (filePath != "") {
             ArrayList<Text> texts = readFiles(filePath, false);
             ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
             initClassifier(result);
             new MainFrame(result, classifier).setVisible(true);
-        } else {
-            System.out.println("No Selection ");
         }
+
+
     }//GEN-LAST:event_readFilesActionPerformed
 
     //Test kmeans plain
@@ -289,11 +279,14 @@ public class StartFrame extends javax.swing.JFrame {
 
     //Our won implementation read files and cluster
     private void wordFrequencyReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyReadBtnActionPerformed
-        // TODO read files
-        ArrayList<Text> texts = readFiles(filePath, false);
-        ArrayList<Centroid> result = grouper.group(texts);
-        initClassifier(result);
-        new MainFrame(result, classifier).setVisible(true);
+
+        filePath = promptFilepath();
+        if (filePath != "") {
+            ArrayList<Text> texts = readFiles(filePath, false);
+            ArrayList<Centroid> result = grouper.group(texts);
+            initClassifier(result);
+            new MainFrame(result, classifier).setVisible(true);
+        }
     }//GEN-LAST:event_wordFrequencyReadBtnActionPerformed
     //Our own implementation test
     private void wordFrequencyTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyTestBtnActionPerformed
@@ -306,11 +299,14 @@ public class StartFrame extends javax.swing.JFrame {
 
     //Our own immplementation without most common read files and cluster
     private void wordFrequencyMCWReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyMCWReadBtnActionPerformed
-        // TODO read files without most frequent words
-        ArrayList<Text> texts = readFiles(filePath, true);
-        ArrayList<Centroid> result = grouper.group(texts);
-        initClassifier(result);
-        new MainFrame(result, classifier).setVisible(true);
+       
+        filePath = promptFilepath();
+        if (filePath != "") {
+            ArrayList<Text> texts = readFiles(filePath, true);
+            ArrayList<Centroid> result = grouper.group(texts);
+            initClassifier(result);
+            new MainFrame(result, classifier).setVisible(true);
+        }
     }//GEN-LAST:event_wordFrequencyMCWReadBtnActionPerformed
 
     //Our own immplementation without most common words test
@@ -326,16 +322,19 @@ public class StartFrame extends javax.swing.JFrame {
 
     //Kmeans with better start readfiles and cluster
     private void kmeansPlusReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansPlusReadBtnActionPerformed
-        //TODO read files
-        ArrayList<Text> texts = readFiles(filePath, false);
-        ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
-        initClassifier(result);
-        new MainFrame(result, classifier).setVisible(true);
+        
+        filePath = promptFilepath();
+        if (filePath != "") {
+            ArrayList<Text> texts = readFiles(filePath, false);
+            ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
+            initClassifier(result);
+            new MainFrame(result, classifier).setVisible(true);
+        }
     }//GEN-LAST:event_kmeansPlusReadBtnActionPerformed
 
     //Kmeans with better start test
     private void kmeansPlusTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansPlusTestBtnActionPerformed
-        //TODO read test files
+       
         ArrayList<Text> texts = readFiles(filePath, false);
         ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
         initClassifier(result);
@@ -344,12 +343,15 @@ public class StartFrame extends javax.swing.JFrame {
 
     //kmeans wihtout most common words read files and cluster
     private void kmeansMCWReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansMCWReadBtnActionPerformed
-        //TODO read files without most common words
-        ArrayList<Text> texts = readFiles(filePath, true);
-        ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
+        
+        filePath = promptFilepath();
+        if (filePath != "") {
+            ArrayList<Text> texts = readFiles(filePath, true);
+            ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
 
-        initClassifier(result);
-        new MainFrame(result, classifier).setVisible(true);
+            initClassifier(result);
+            new MainFrame(result, classifier).setVisible(true);
+        }
     }//GEN-LAST:event_kmeansMCWReadBtnActionPerformed
     //kmeans without most common words test
     private void kmeansMCWTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansMCWTestBtnActionPerformed
@@ -523,4 +525,21 @@ public class StartFrame extends javax.swing.JFrame {
         return texts;
     }
 
+    public String promptFilepath() {
+        chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle(choosertitle);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //    
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            return chooser.getSelectedFile().getPath();
+        } else {
+            System.out.println("No Selection ");
+            return "";
+        }
+    }
 }
