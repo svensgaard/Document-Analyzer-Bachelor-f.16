@@ -34,24 +34,30 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initFields();
-        
+
         initComponents();
+        evaluateResult(result);
+
     }
-    
+
     public MainFrame(ArrayList<Centroid> result) {
         initFields();
         this.result = result;
         initComponents();
+        evaluateResult(result);
+
     }
-    
+
     public MainFrame(ArrayList<Centroid> result, String filePath, BayesClassifier classifier) {
         initFields();
 
         this.filePath = filePath;
         this.result = result;
         this.classifier = classifier;
-        
+
         initComponents();
+        evaluateResult(result);
+
     }
 
     public MainFrame(ArrayList<Centroid> result, BayesClassifier classifier) {
@@ -59,19 +65,22 @@ public class MainFrame extends javax.swing.JFrame {
 
         this.result = result;
         this.classifier = classifier;
-        
+
         initComponents();
+        evaluateResult(result);
     }
 
     private void initFields() {
         texts_list = new ArrayList<>();
     }
+
     private void evaluateResult(ArrayList<Centroid> result) {
         avgDistToCenterLabel.setText(String.valueOf(evaluation.getAvgDistance(result)));
         avgDistBetweenClustersLabel.setText(String.valueOf(evaluation.getAvgInterClusterDist(result)));
         avgSimToCenterLabel.setText(String.valueOf(evaluation.getAvgSimilarity(result)));
         avgSimBetweenCentersLabel.setText(String.valueOf(evaluation.getAvgInterClusterSim(result)));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

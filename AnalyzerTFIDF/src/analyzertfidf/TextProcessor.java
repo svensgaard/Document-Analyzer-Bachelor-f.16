@@ -348,7 +348,7 @@ public class TextProcessor {
             // Create dataset for cluster
             String fileName = "Centroid"+(i+1)+".txt";
             c.name = fileName;
-            bw = new BufferedWriter(new FileWriter(new File("/Users/Bryan/NetBeansProjects/Bachelor/BachelorProgram/Document-Analyzer-Bachelor-f.16/AnalyzerTFIDF/resources/datasets/"+fileName)));
+            bw = new BufferedWriter(new FileWriter(new File("./resources/datasets/"+fileName)));
 
             // Iterate through all texts in clusters
             for (Text t : c.GroupedDocument) {
