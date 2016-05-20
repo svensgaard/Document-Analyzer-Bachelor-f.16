@@ -25,6 +25,7 @@ public class Clustering {
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
     private final int MAX_ITERATIONS = 500;
+    private final double MIN_SIMILARITY = 0.4;
 
     //k is number of clusters.
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {
@@ -50,7 +51,7 @@ public class Clustering {
             if (!stop) {
                 result = InitializeClusterCentroid(centroids.size());
             }
-            if (evaluation.getAvgSimilarity(result) < 0.4) {
+            if (evaluation.getAvgSimilarity(result) < MIN_SIMILARITY) {
                 if (globalCounter < MAX_ITERATIONS) {
                     stop = false;
                     centroids = initialize(texts, k, betterStart);
