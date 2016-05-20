@@ -25,7 +25,7 @@ public class Clustering {
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
     private final int MAX_ITERATIONS = 500;
-    private final double MIN_SIMILARITY = 0.4;
+    private final double MIN_SIMILARITY = 0.0;
 
     //k is number of clusters.
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {
@@ -45,7 +45,6 @@ public class Clustering {
                 int i = FindClosestClusterCenter(centroids, t);
                 result.get(i).GroupedDocument.add(t);
             }
-//            centroids = InitializeClusterCentroid(centroids.size());
             centroids = CalculateMeanPoints(result);
             stop = CheckStop(previousClusterCenter, centroids);
             if (!stop) {
@@ -55,6 +54,7 @@ public class Clustering {
                 if (globalCounter < MAX_ITERATIONS) {
                     stop = false;
                     centroids = initialize(texts, k, betterStart);
+                    result = InitializeClusterCentroid(centroids.size());
                 }
 
             }
