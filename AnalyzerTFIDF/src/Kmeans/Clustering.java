@@ -24,10 +24,15 @@ public class Clustering {
     public int publicCounter;
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
-    private final int MAX_ITERATIONS = 100;
-    private final double MIN_SIMILARITY = 0.61;
+    private int MAX_ITERATIONS = 100; // Should be final, but can't setParameters with final
+    private double MIN_SIMILARITY = 0.61; // Should be final, but can't setParameters with final
 
-    //k is number of clusters.
+    public void setParameters(int max_iterations, double min_similarity) {
+        MAX_ITERATIONS = max_iterations;
+        MIN_SIMILARITY = min_similarity;
+    }
+
+//k is number of clusters.
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {
         long start = System.currentTimeMillis();
         globalCounter = 0;

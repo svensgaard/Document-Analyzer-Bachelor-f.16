@@ -41,7 +41,7 @@ public class Grouper {
             }
         }
 
-        match = match;
+//        match = match;
         if (match < 0.5) {
             corpora.add(new Centroid(toCompare));
         } else if (tempCorpus != null) {
