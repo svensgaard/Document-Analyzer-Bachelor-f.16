@@ -80,6 +80,7 @@ public class StartFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         kmeansPlusReadBtn = new javax.swing.JButton();
         kmeansPlusTestBtn = new javax.swing.JButton();
+        benchMarkBtn = new javax.swing.JButton();
 
         readFiles1.setText("Read files");
         readFiles1.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +171,13 @@ public class StartFrame extends javax.swing.JFrame {
             }
         });
 
+        benchMarkBtn.setText("Benchmark");
+        benchMarkBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                benchMarkBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -212,6 +220,10 @@ public class StartFrame extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(kmeansPlusReadBtn))
                         .addGap(0, 73, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addComponent(benchMarkBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,7 +258,9 @@ public class StartFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kmeansPlusReadBtn)
                     .addComponent(kmeansPlusTestBtn))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(benchMarkBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -364,6 +378,11 @@ public class StartFrame extends javax.swing.JFrame {
         new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_kmeansMCWTestBtnActionPerformed
 
+    private void benchMarkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_benchMarkBtnActionPerformed
+        //Open benchmanrk options.
+        new BenchmarkOptions().setVisible(true);
+    }//GEN-LAST:event_benchMarkBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -463,6 +482,7 @@ public class StartFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton benchMarkBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
