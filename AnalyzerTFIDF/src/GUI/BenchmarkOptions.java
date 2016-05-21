@@ -201,13 +201,13 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         if (corpus != null) {
             
             //Texts
-            ArrayList<Text> corpusTexts = new ArrayList<>();
-            ArrayList<Text> corpusTextsMCW = new ArrayList<>();
+            ArrayList<Text> corpusTexts;
+            ArrayList<Text> corpusTextsMCW;
 
             //Read files
             statusLabel.setText("Reading files..");
-            readFiles(corpus, corpusTexts);
-            readFiles(corpus, corpusTextsMCW);
+            corpusTexts = readFiles(corpus, corpusTexts);
+            corpusTextsMCW = readFilesMCW(corpus, corpusTextsMCW);
 
             ArrayList<Result> results = cluster(corpusTexts, corpusTextsMCW);
             new BenchmarkResults(results).setVisible(true);

@@ -7,7 +7,16 @@ package GUI;
 
 import Evaluation.EvaluationWrapper;
 import Evaluation.Result;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,13 +26,17 @@ import javax.swing.table.DefaultTableModel;
 public class BenchmarkResults extends javax.swing.JFrame {
 
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
+    private ArrayList<Result> results;
+
     /**
      * Creates new form BenchmarkResults
+     *
      * @param results
      */
     public BenchmarkResults(ArrayList<Result> results) {
         initComponents();
         fillTable(results);
+        this.results = results;
     }
 
     private BenchmarkResults() {
@@ -112,7 +125,19 @@ public class BenchmarkResults extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void printBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printBtnActionPerformed
-        //Open file chooser and save result to that file.
+        String filepath = promptFilepath();
+        if (filepath != "") {
+            try {
+                writeResultToFile(results, filepath);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(BenchmarkResults.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(BenchmarkResults.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //Show some alertbox or something...
+        }
+
     }//GEN-LAST:event_printBtnActionPerformed
 
     /**
@@ -149,13 +174,52 @@ public class BenchmarkResults extends javax.swing.JFrame {
             }
         });
     }
+
     private void fillTable(ArrayList<Result> results) {
         DefaultTableModel model = (DefaultTableModel) resultsTabel.getModel();
-        for(Result result : results) {
-            model.addRow(new Object[]{ result.method, evaluation.getAvgSimilarity(result.result), evaluation.getAvgInterClusterSim(result.result), result.runtime});
+        for (Result result : results) {
+            model.addRow(new Object[]{result.method, evaluation.getAvgSimilarity(result.result), evaluation.getAvgInterClusterSim(result.result), result.runtime});
         }
     }
 
+    private void writeResultToFile(ArrayList<Result> results, String filepath) throws UnsupportedEncodingException, FileNotFoundException, IOException {
+        FileWriter fileWriter = new FileWriter("resultsMCW100Counted++.txt");
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        String headers = "Mehtod \t Internal cluster similarity \t Inter cluster similarity \t Runtime";
+        bufferedWriter.write(headers);
+        for (Result result : results) {
+            String stringToWrite = result.method + "\t"
+                    + evaluation.getAvgSimilarity(result.result) + "\t"
+                    + evaluation.getAvgInterClusterSim(result.result) + "\t"
+                    + result.runtime;
+            try {
+                bufferedWriter.newLine();
+                bufferedWriter.write(stringToWrite);
+
+            } catch (IOException ex) {
+            }
+        }
+        bufferedWriter.close();
+
+    }
+
+    public String promptFilepath() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Choose where to save");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //    
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            return chooser.getSelectedFile().getPath();
+        } else {
+            System.out.println("No Selection ");
+            return "";
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
