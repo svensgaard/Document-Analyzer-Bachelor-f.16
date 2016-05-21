@@ -14,16 +14,8 @@ import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
 import analyzertfidf.TextProcessor;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 /**
@@ -48,7 +40,7 @@ public class StartFrame extends javax.swing.JFrame {
      */
     public StartFrame() {
         grouper = new Grouper();
-        filePath = null;
+        filePath = "";
         clustering = new Clustering();
         updateFilePath();
 
@@ -258,9 +250,9 @@ public class StartFrame extends javax.swing.JFrame {
         if (filePath != "") {
             ArrayList<Text> texts = readFiles(filePath, false);
             ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
-            initClassifier(result);
             new MainFrame(result, classifier).setVisible(true);
         }
+        updateFilePath();
 
 
     }//GEN-LAST:event_readFilesActionPerformed
@@ -270,7 +262,6 @@ public class StartFrame extends javax.swing.JFrame {
         //TODO read test files
         ArrayList<Text> texts = readFiles(filePath, false);
         ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
-        initClassifier(result);
         new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_startTestActionPerformed
 
@@ -285,16 +276,16 @@ public class StartFrame extends javax.swing.JFrame {
         if (filePath != "") {
             ArrayList<Text> texts = readFiles(filePath, false);
             ArrayList<Centroid> result = grouper.group(texts);
-            initClassifier(result);
             new MainFrame(result, classifier).setVisible(true);
         }
+        
+        updateFilePath();
     }//GEN-LAST:event_wordFrequencyReadBtnActionPerformed
     //Our own implementation test
     private void wordFrequencyTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFrequencyTestBtnActionPerformed
         // TODO read test files
         ArrayList<Text> texts = readFiles(filePath, false);
         ArrayList<Centroid> result = grouper.group(texts);
-        initClassifier(result);
         new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_wordFrequencyTestBtnActionPerformed
 
@@ -305,9 +296,10 @@ public class StartFrame extends javax.swing.JFrame {
         if (filePath != "") {
             ArrayList<Text> texts = readFiles(filePath, true);
             ArrayList<Centroid> result = grouper.group(texts);
-            initClassifier(result);
             new MainFrame(result, classifier).setVisible(true);
         }
+        
+        updateFilePath();
     }//GEN-LAST:event_wordFrequencyMCWReadBtnActionPerformed
 
     //Our own immplementation without most common words test
@@ -316,7 +308,6 @@ public class StartFrame extends javax.swing.JFrame {
         ArrayList<Text> texts = readFiles(filePath, true);
         ArrayList<Centroid> result = grouper.group(texts);
 
-        initClassifier(result);
 
         new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_wordFrequencyMCWTestBtnActionPerformed
@@ -328,9 +319,10 @@ public class StartFrame extends javax.swing.JFrame {
         if (filePath != "") {
             ArrayList<Text> texts = readFiles(filePath, false);
             ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
-            initClassifier(result);
             new MainFrame(result, classifier).setVisible(true);
         }
+        
+        updateFilePath();
     }//GEN-LAST:event_kmeansPlusReadBtnActionPerformed
 
     //Kmeans with better start test
@@ -338,21 +330,22 @@ public class StartFrame extends javax.swing.JFrame {
 
         ArrayList<Text> texts = readFiles(filePath, false);
         ArrayList<Centroid> result = clustering.prepareCluster(3, texts, true);
-        initClassifier(result);
         new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_kmeansPlusTestBtnActionPerformed
 
     //kmeans wihtout most common words read files and cluster
     private void kmeansMCWReadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansMCWReadBtnActionPerformed
 
+     
         filePath = promptFilepath();
         if (filePath != "") {
             ArrayList<Text> texts = readFiles(filePath, true);
             ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
 
-            initClassifier(result);
             new MainFrame(result, classifier).setVisible(true);
         }
+        
+        updateFilePath();
     }//GEN-LAST:event_kmeansMCWReadBtnActionPerformed
     //kmeans without most common words test
     private void kmeansMCWTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmeansMCWTestBtnActionPerformed
@@ -360,7 +353,6 @@ public class StartFrame extends javax.swing.JFrame {
         ArrayList<Text> texts = readFiles(filePath, true);
         ArrayList<Centroid> result = clustering.prepareCluster(3, texts, false);
 
-        initClassifier(result);
         new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_kmeansMCWTestBtnActionPerformed
 
@@ -400,7 +392,7 @@ public class StartFrame extends javax.swing.JFrame {
     }
 
     private void updateFilePath() {
-        if (filePath == null) {
+        if (filePath == "") {
             filePath = "./resources/documents";
         }
     }
@@ -451,21 +443,6 @@ public class StartFrame extends javax.swing.JFrame {
         return texts;
     }
 
-    private void initClassifier(ArrayList<Centroid> result) {
-        long start = System.currentTimeMillis();
-
-        try {
-            tp.generateTrainingData(result, filePath);
-        } catch (IOException ex) {
-            Logger.getLogger(StartFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        long end = System.currentTimeMillis();
-
-        System.out.println("GENERATE TRAINING DATA Running time: " + (end - start) + "ms");
-        // Initialize classifier
-        classifier = new BayesClassifier();
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -494,6 +471,7 @@ public class StartFrame extends javax.swing.JFrame {
             File[] files = new File(filePath).listFiles();
             showFilesWithout(files, tempTexts);
         } else {
+            System.out.println("Filepath: " + filePath);
             File[] files = new File(filePath).listFiles();
             showFiles(files, tempTexts);
         }

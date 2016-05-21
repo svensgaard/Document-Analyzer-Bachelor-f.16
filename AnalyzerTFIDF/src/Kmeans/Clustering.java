@@ -24,8 +24,8 @@ public class Clustering {
     public int publicCounter;
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
-    private final int MAX_ITERATIONS = 5;
-    private final double MIN_SIMILARITY = 0.00;
+    private final int MAX_ITERATIONS = 100;
+    private final double MIN_SIMILARITY = 0.61;
 
     //k is number of clusters.
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {
@@ -63,6 +63,13 @@ public class Clustering {
         
         long end = System.currentTimeMillis();
         System.out.println("Clustering running time: " + (end-start) + "ms");
+        
+        int i = 1;
+        for (Centroid c : result) {
+            c.name = "Centroid"+i;
+            i++;
+        }
+        
         return result;
 
     }
