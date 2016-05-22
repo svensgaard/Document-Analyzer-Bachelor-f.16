@@ -206,8 +206,8 @@ public class BenchmarkOptions extends javax.swing.JFrame {
 
             //Read files
             statusLabel.setText("Reading files..");
-            corpusTexts = readFiles(corpus, corpusTexts);
-            corpusTextsMCW = readFilesMCW(corpus, corpusTextsMCW);
+            corpusTexts = readFiles(corpus);
+            corpusTextsMCW = readFilesMCW(corpus);
 
             ArrayList<Result> results = cluster(corpusTexts, corpusTextsMCW);
             new BenchmarkResults(results).setVisible(true);
@@ -321,4 +321,12 @@ public class BenchmarkOptions extends javax.swing.JFrame {
     private javax.swing.JLabel statusLabel;
     private javax.swing.JRadioButton twentyCorpusRadioBtn;
     // End of variables declaration//GEN-END:variables
+
+    private ArrayList<Text> readFiles(String corpus) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private ArrayList<Text> readFilesMCW(String corpus) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
