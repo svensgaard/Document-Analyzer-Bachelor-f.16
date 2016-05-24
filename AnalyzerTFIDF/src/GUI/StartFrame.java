@@ -74,6 +74,11 @@ public class StartFrame extends javax.swing.JFrame {
         kmeansMCWReadBtn = new javax.swing.JButton();
         kmeansMCWTestBtn = new javax.swing.JButton();
         becnhmarkBtn = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        checkbox_common_words = new javax.swing.JCheckBox();
+        checkbox_better_start = new javax.swing.JCheckBox();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -183,10 +188,39 @@ public class StartFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setText("Auto increment k means");
+
+        jButton1.setText("Read files");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        checkbox_common_words.setText("Common words");
+        checkbox_common_words.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkbox_common_wordsActionPerformed(evt);
+            }
+        });
+
+        checkbox_better_start.setText("Better start");
+
+        jButton2.setText("Start clustering");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(becnhmarkBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,19 +232,10 @@ public class StartFrame extends javax.swing.JFrame {
                         .addComponent(wordFrequencyReadBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(wordFrequencyTestBtn))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(kmeansMCWReadBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(kmeansMCWTestBtn))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(wordFrequencyMCWReadBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(kmeansPlusTestBtn)
-                            .addComponent(wordFrequencyMCWTestBtn)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -218,12 +243,24 @@ public class StartFrame extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(kmeansPlusReadBtn))
-                        .addGap(175, 175, 175)))
+                        .addGap(175, 193, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(wordFrequencyMCWReadBtn)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(39, 39, 39)
+                                .addComponent(checkbox_common_words)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(checkbox_better_start)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2)
+                            .addComponent(kmeansPlusTestBtn)
+                            .addComponent(wordFrequencyMCWTestBtn))))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(becnhmarkBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,8 +296,16 @@ public class StartFrame extends javax.swing.JFrame {
                     .addComponent(kmeansPlusReadBtn)
                     .addComponent(kmeansPlusTestBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(checkbox_common_words)
+                    .addComponent(checkbox_better_start)
+                    .addComponent(jButton2))
+                .addGap(18, 18, 18)
                 .addComponent(becnhmarkBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jLabel6.setText("Parameters");
@@ -368,18 +413,18 @@ public class StartFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -399,7 +444,9 @@ public class StartFrame extends javax.swing.JFrame {
 
     //Test kmeans plain
     private void startTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTestActionPerformed
-        startClustering(false, false);
+        ArrayList<Text> texts = readFiles("./resources/uploads", false);
+        ArrayList<Centroid> result = clustering.prepareClusterIncrement(texts, false);
+        new MainFrame(result, classifier).setVisible(true);
 
     }//GEN-LAST:event_startTestActionPerformed
 
@@ -484,8 +531,46 @@ public class StartFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_checkbox_use_paramsStateChanged
 
     private void becnhmarkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_becnhmarkBtnActionPerformed
-       new BenchmarkOptions().setVisible(true);
+        new BenchmarkOptions().setVisible(true);
     }//GEN-LAST:event_becnhmarkBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        boolean betterStart = false;
+        boolean withCommonWords = false;
+
+        filePath = promptFilepath();
+        if (filePath != "") {
+            if (checkbox_better_start.isSelected()) {
+                betterStart = true;
+            }
+
+            if (checkbox_common_words.isSelected()) {
+                withCommonWords = true;
+            }
+            startClustering(withCommonWords, betterStart);
+
+        }
+        updateFilePath();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void checkbox_common_wordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_common_wordsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkbox_common_wordsActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        boolean betterStart = false;
+        boolean withCommonWords = false;
+
+        if (checkbox_better_start.isSelected()) {
+            betterStart = true;
+        }
+
+        if (checkbox_common_words.isSelected()) {
+            withCommonWords = true;
+        }
+
+        startClustering(withCommonWords, betterStart);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -596,10 +681,15 @@ public class StartFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton becnhmarkBtn;
+    private javax.swing.JCheckBox checkbox_better_start;
+    private javax.swing.JCheckBox checkbox_common_words;
     private javax.swing.JCheckBox checkbox_use_params;
     private javax.swing.JComboBox combo_similarity;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -40,29 +40,34 @@ public class EvaluationWrapper {
     }
 
     public double getAvgDistance(ArrayList<Centroid> clusters) {
-        
+
         int numberOfTexts = 0;
         double totalDistance = 0.0;
         for (Centroid c : clusters) {
             //Add texts to total
             numberOfTexts += c.GroupedDocument.size();
             //Count similarity
-            if(c.getAverageVector().length != 0) {
+            if (c.getAverageVector().length != 0) {
                 for (Text t : c.GroupedDocument) {
 
-                totalDistance += getDistance(t.getVectorSpace(), c.getAverageVector());
+                    totalDistance += getDistance(t.getVectorSpace(), c.getAverageVector());
                 }
             }
-            
+
         }
         return totalDistance / (double) numberOfTexts;
 
     }
 
     private double getDistance(Double[] vector1, Double[] vector2) {
+        System.out.println("VECTOR1: " + vector1.length);
+        System.out.println("VECTOR2: " + vector2.length);
+
         double diff_square_sum = 0.0;
-        for (int i = 0; i < vector1.length; i++) {
-            diff_square_sum += (vector1[i] - vector2[i]) * (vector1[i] - vector2[i]);
+        if (vector1.length > 0 && vector2.length > 0) {
+            for (int i = 0; i < vector1.length; i++) {
+                diff_square_sum += (vector1[i] - vector2[i]) * (vector1[i] - vector2[i]);
+            }
         }
         return Math.sqrt(diff_square_sum);
     }
@@ -81,7 +86,7 @@ public class EvaluationWrapper {
     }
 
     public double getAvgInterClusterSim(ArrayList<Centroid> result) {
-        
+
         if (result.size() >= 1) {
             double totalSimilarity = 0.0;
             for (Centroid c : result) {
@@ -94,7 +99,6 @@ public class EvaluationWrapper {
         } else {
             return 0.0;
         }
-        
 
     }
 }

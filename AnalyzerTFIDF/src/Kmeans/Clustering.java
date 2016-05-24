@@ -22,8 +22,9 @@ public class Clustering {
     public int publicCounter;
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
-    private int MAX_ITERATIONS = 200;
-    private double MIN_SIMILARITY = 0.5;
+    private int MAX_ITERATIONS = 5;
+    private double MIN_SIMILARITY = 0.6;
+    private double currentSimilarity = 0;
 
     public void setParameters(int max_iterations, double min_similarity) {
         MAX_ITERATIONS = max_iterations;
@@ -35,7 +36,6 @@ public class Clustering {
         long start = System.currentTimeMillis();
         globalCounter = 0;
         ArrayList<Centroid> centroids;
-        
 
         Boolean stop;
         ArrayList<Centroid> result;
@@ -54,7 +54,8 @@ public class Clustering {
             if (!stop) {
                 result = InitializeClusterCentroid(centroids.size());
             }
-            if (evaluation.getAvgSimilarity(result) < MIN_SIMILARITY) {
+            currentSimilarity = evaluation.getAvgSimilarity(result);
+            if (currentSimilarity < MIN_SIMILARITY) {
                 if (globalCounter < MAX_ITERATIONS) {
                     stop = false;
                     centroids = initialize(texts, k, betterStart);
@@ -63,21 +64,42 @@ public class Clustering {
 
             }
         } while (stop == false);
-        
+
         long end = System.currentTimeMillis();
-        System.out.println("Clustering running time: " + (end-start) + "ms");
-        
+        System.out.println("Clustering running time: " + (end - start) + "ms");
+
         int i = 1;
         for (Centroid c : result) {
-            c.name = "Centroid"+i;
+            c.name = "Centroid" + i;
             i++;
         }
-        
+
         return result;
 
     }
 
-    
+    public ArrayList<Centroid> prepareClusterIncrement(ArrayList<Text> texts, boolean betterStart) {
+        long start = System.currentTimeMillis();
+        int totalCentroids = 1;
+        ArrayList<Centroid> result;
+
+        do {
+            result = prepareCluster(totalCentroids, texts, betterStart);
+            System.out.println("Total centroids: " + totalCentroids
+                    + "Minimum similarity: " + MIN_SIMILARITY
+                    + "Current Similarity: " + currentSimilarity + "\n");
+            if (currentSimilarity < MIN_SIMILARITY) {
+                totalCentroids++;
+            }
+        } while (currentSimilarity < MIN_SIMILARITY);
+        System.out.println("CLUSTERING DONE\n"
+                + "RESULT:\n"
+                + "Total centroids: " + totalCentroids
+                + "Minimum similarity: " + MIN_SIMILARITY
+                + "Current Similarity: " + currentSimilarity + "\n");
+        return result;
+    }
+
     private ArrayList<Centroid> InitializeClusterCentroid(int size) {
         Centroid c;
         ArrayList<Centroid> centroid = new ArrayList<>();
@@ -141,7 +163,7 @@ public class Clustering {
             do {
                 if (centroids.get(index).GroupedDocument.isEmpty() && previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
                     index++;
-                    System.out.println("INDEX: " + index );
+                    System.out.println("INDEX: " + index);
                     System.out.println("CHANGEINDEX LENGHT: " + changeIndex.length);
                     changeIndex[index] = 0;
                 } else if (!centroids.get(index).GroupedDocument.isEmpty() && !previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
@@ -175,7 +197,7 @@ public class Clustering {
                 }
             }
         }
-        
+
         return stop;
     }
 

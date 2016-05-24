@@ -69,8 +69,8 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         clustersTxtBx = new javax.swing.JTextField();
         iterationTxtBx = new javax.swing.JTextField();
-        similarityTxtBx = new javax.swing.JTextField();
         clusterBtn = new javax.swing.JButton();
+        combobox_similarity = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,12 +121,18 @@ public class BenchmarkOptions extends javax.swing.JFrame {
 
         jLabel6.setText("Minimum similarity");
 
+        clustersTxtBx.setText("3");
+
+        iterationTxtBx.setText("50");
+
         clusterBtn.setText("Cluster");
         clusterBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clusterBtnActionPerformed(evt);
             }
         });
+
+        combobox_similarity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,11 +162,12 @@ public class BenchmarkOptions extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(clusterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(similarityTxtBx)
-                    .addComponent(iterationTxtBx)
-                    .addComponent(clustersTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(iterationTxtBx)
+                        .addComponent(clustersTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(combobox_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +191,8 @@ public class BenchmarkOptions extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(classicCorpusRadioBtn)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(combobox_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(twentyCorpusRadioBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -192,10 +200,8 @@ public class BenchmarkOptions extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(clustersTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(iterationTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(similarityTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addComponent(iterationTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(clusterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -278,7 +284,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         ArrayList<Result> results = new ArrayList<>();
         int clusters = Integer.parseInt(clustersTxtBx.getText());
         int maxIterations = Integer.parseInt(iterationTxtBx.getText());
-        double minSimilarity = Double.parseDouble(similarityTxtBx.getText());
+        double minSimilarity = Double.parseDouble(combobox_similarity.getSelectedItem().toString());
         clustering.setParameters(maxIterations, minSimilarity);
         
        System.out.println("Clustering with k means plain");
@@ -314,6 +320,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
     private javax.swing.JRadioButton classicCorpusRadioBtn;
     private javax.swing.JButton clusterBtn;
     private javax.swing.JTextField clustersTxtBx;
+    private javax.swing.JComboBox combobox_similarity;
     private javax.swing.ButtonGroup corpusBtnGroups;
     private javax.swing.JRadioButton danishCorpusRadioBtn;
     private javax.swing.JRadioButton englishCorpusRadioBtn;
@@ -323,7 +330,6 @@ public class BenchmarkOptions extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField similarityTxtBx;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JRadioButton twentyCorpusRadioBtn;
     // End of variables declaration//GEN-END:variables
