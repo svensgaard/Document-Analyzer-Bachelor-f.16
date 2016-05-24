@@ -94,18 +94,17 @@ public class Clustering {
 
     public int FindClosestClusterCenter(ArrayList<Centroid> centroids, Text t) {
         SimilarityMatrics similarityMatrics = new SimilarityMatrics();
-        Double[] tfdif = new Double[centroids.size()];
+        Double[] similarities = new Double[centroids.size()];
         for (int i = 0; i < centroids.size(); i++) {
-
 //            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).GroupedDocument.get(0).getVectorSpace(), t.getVectorSpace());
-            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace()); //BEST RESULTS
+            similarities[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace()); //BEST RESULTS
         }
-
+        //Evaluate the maximum 
         int index = 0;
-        Double maxFound = tfdif[0];
-        for (int i = 0; i < tfdif.length; i++) {
-            if (tfdif[i] < maxFound) {
-                maxFound = tfdif[i];
+        Double maxFound = similarities[0];
+        for (int i = 0; i < similarities.length; i++) {
+            if (similarities[i] < maxFound) {
+                maxFound = similarities[i];
                 index = i;
             }
         }
