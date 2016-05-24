@@ -145,12 +145,15 @@ public class Clustering {
             do {
                 if (centroids.get(index).GroupedDocument.isEmpty() && previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
                     index++;
+                    System.out.println("INDEX: " + index );
+                    System.out.println("CHANGEINDEX LENGHT: " + changeIndex.length);
                     changeIndex[index] = 0;
                 } else if (!centroids.get(index).GroupedDocument.isEmpty() && !previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
                     for (int k = 0; k < centroids.get(index).getAverageVector().length; k++) {
 //                        if (centroids.get(index).GroupedDocument.get(0).getVectorSpace()[k].equals(previousClusterCenter.get(index).GroupedDocument.get(0).getVectorSpace()[k])) {
                         if (!centroids.get(index).getAverageVector()[k].equals(previousClusterCenter.get(index).getAverageVector()[k])) { //Change back to document[0].getvectorspace if bad results.
-                            changeIndex[index] = 1;
+//                            changeIndex[index] = 1;
+                            return true;
                         } else {
                             changeIndex[index] = 0;
                         }
@@ -170,6 +173,7 @@ public class Clustering {
             } while (index < centroids.size());
 //            If any index contains 1
             for (int i : changeIndex) {
+                System.out.println("i: " + i);
                 if (i == 1) {
                     stop = true;
                 }

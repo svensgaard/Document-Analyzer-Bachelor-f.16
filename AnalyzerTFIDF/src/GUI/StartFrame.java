@@ -311,7 +311,6 @@ public class StartFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        checkbox_use_params.setText("Use parameters");
         checkbox_use_params.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 checkbox_use_paramsStateChanged(evt);
@@ -361,7 +360,7 @@ public class StartFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -533,6 +532,8 @@ public class StartFrame extends javax.swing.JFrame {
             ArrayList<Centroid> result = clustering.prepareCluster(3, texts, betterStart);
             new MainFrame(result, classifier).setVisible(true);
         }
+        filePath = "";
+        updateFilePath();
     }
 
     private void startGrouping(boolean withcommonwords) {
