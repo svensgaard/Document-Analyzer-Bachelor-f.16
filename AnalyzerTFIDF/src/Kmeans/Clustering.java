@@ -22,13 +22,17 @@ public class Clustering {
     public int publicCounter;
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
-    private int MAX_ITERATIONS = 5;
+    private int MAX_ITERATIONS = 50;
     private double MIN_SIMILARITY = 0.6;
     private double currentSimilarity = 0;
 
     public void setParameters(int max_iterations, double min_similarity) {
         MAX_ITERATIONS = max_iterations;
         MIN_SIMILARITY = min_similarity;
+    }
+    
+    public void setMinSimilarity(double min) {
+        MIN_SIMILARITY = min;
     }
 
 //k is number of clusters.
@@ -80,6 +84,7 @@ public class Clustering {
 
     public ArrayList<Centroid> prepareClusterIncrement(ArrayList<Text> texts, boolean betterStart) {
         long start = System.currentTimeMillis();
+        System.out.println("TOTAL TEXTS: " + texts.size() + "\n");
         int totalCentroids = 1;
         ArrayList<Centroid> result;
 
@@ -95,8 +100,8 @@ public class Clustering {
         System.out.println("CLUSTERING DONE\n"
                 + "RESULT:\n"
                 + "Total centroids: " + totalCentroids
-                + "Minimum similarity: " + MIN_SIMILARITY
-                + "Current Similarity: " + currentSimilarity + "\n");
+                + "\tMinimum similarity: " + MIN_SIMILARITY
+                + "\tCurrent Similarity: " + currentSimilarity + "\n");
         return result;
     }
 
@@ -238,7 +243,7 @@ public class Clustering {
             if (i != firstPointIndex) { // That point isn't considered
 //                double d = firstPoint.distanceFrom(pointList.get(i));
                 double d = simMatrics.findCosineSimilarity(firstPoint.getVectorSpace(), pointList.get(i).getVectorSpace());
-                minDistSquared[i] = d * d;
+                minDistSquared[i] = d * 2;
             }
         }
 

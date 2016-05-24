@@ -79,6 +79,7 @@ public class StartFrame extends javax.swing.JFrame {
         checkbox_common_words = new javax.swing.JCheckBox();
         checkbox_better_start = new javax.swing.JCheckBox();
         jButton2 = new javax.swing.JButton();
+        combo_similarity_increment = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -213,6 +214,8 @@ public class StartFrame extends javax.swing.JFrame {
             }
         });
 
+        combo_similarity_increment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -225,6 +228,14 @@ public class StartFrame extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(kmeansPlusReadBtn))
+                        .addGap(0, 244, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(readFiles)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(startTest))
@@ -236,26 +247,23 @@ public class StartFrame extends javax.swing.JFrame {
                         .addComponent(kmeansMCWReadBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(kmeansMCWTestBtn))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(kmeansPlusReadBtn))
-                        .addGap(175, 193, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(wordFrequencyMCWReadBtn)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(wordFrequencyMCWReadBtn)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addGap(39, 39, 39)
                                 .addComponent(checkbox_common_words)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(checkbox_better_start)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(checkbox_better_start)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(combo_similarity_increment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton2)
                             .addComponent(kmeansPlusTestBtn)
@@ -302,7 +310,8 @@ public class StartFrame extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(checkbox_common_words)
                     .addComponent(checkbox_better_start)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(combo_similarity_increment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(becnhmarkBtn)
                 .addContainerGap())
@@ -316,7 +325,7 @@ public class StartFrame extends javax.swing.JFrame {
 
         text_clusters.setText("1");
 
-        combo_similarity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9" }));
+        combo_similarity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0" }));
 
         jLabel10.setText("Clustering Iterations");
 
@@ -358,7 +367,7 @@ public class StartFrame extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(text_clusters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(combo_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(39, 39, 39)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel10)
@@ -416,7 +425,7 @@ public class StartFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,10 +453,8 @@ public class StartFrame extends javax.swing.JFrame {
 
     //Test kmeans plain
     private void startTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTestActionPerformed
-        ArrayList<Text> texts = readFiles("./resources/uploads", false);
-        ArrayList<Centroid> result = clustering.prepareClusterIncrement(texts, false);
-        new MainFrame(result, classifier).setVisible(true);
 
+        startClustering(false, false);
     }//GEN-LAST:event_startTestActionPerformed
 
     private void readFiles1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readFiles1ActionPerformed
@@ -510,6 +517,7 @@ public class StartFrame extends javax.swing.JFrame {
 
         filePath = promptFilepath();
         if (filePath != "") {
+
             startClustering(true, false);
 
         }
@@ -547,7 +555,9 @@ public class StartFrame extends javax.swing.JFrame {
             if (checkbox_common_words.isSelected()) {
                 withCommonWords = true;
             }
-            startClustering(withCommonWords, betterStart);
+            ArrayList<Text> texts = readFiles(filePath, withCommonWords);
+            ArrayList<Centroid> result = clustering.prepareClusterIncrement(texts, betterStart);
+            new MainFrame(result, classifier).setVisible(true);
 
         }
         updateFilePath();
@@ -569,7 +579,10 @@ public class StartFrame extends javax.swing.JFrame {
             withCommonWords = true;
         }
 
-        startClustering(withCommonWords, betterStart);
+        ArrayList<Text> texts = readFiles(filePath, withCommonWords);
+        clustering.setMinSimilarity(Double.parseDouble(combo_similarity_increment.getSelectedItem().toString()));
+        ArrayList<Centroid> result = clustering.prepareClusterIncrement(texts, betterStart);
+        new MainFrame(result, classifier).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -685,6 +698,7 @@ public class StartFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkbox_common_words;
     private javax.swing.JCheckBox checkbox_use_params;
     private javax.swing.JComboBox combo_similarity;
+    private javax.swing.JComboBox combo_similarity_increment;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

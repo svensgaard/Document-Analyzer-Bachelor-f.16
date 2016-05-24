@@ -60,8 +60,6 @@ public class EvaluationWrapper {
     }
 
     private double getDistance(Double[] vector1, Double[] vector2) {
-        System.out.println("VECTOR1: " + vector1.length);
-        System.out.println("VECTOR2: " + vector2.length);
 
         double diff_square_sum = 0.0;
         if (vector1.length > 0 && vector2.length > 0) {
