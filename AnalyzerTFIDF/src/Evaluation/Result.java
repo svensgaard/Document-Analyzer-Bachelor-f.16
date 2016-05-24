@@ -17,10 +17,13 @@ public class Result {
     public long runtime;
     public String method;
     public int iterations;
-    public Result(ArrayList<Centroid> result, long runtime, String method, int iterations) {
+    public double purity;
+    
+    public Result(ArrayList<Centroid> result, long runtime, String method, int iterations, double purity) {
         this.result = result;
         this.runtime = runtime;
         this.method = method;
         this.iterations = iterations;
+        this.purity = purity;
     }
 }

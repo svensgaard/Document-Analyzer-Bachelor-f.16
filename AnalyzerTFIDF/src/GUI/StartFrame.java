@@ -835,7 +835,7 @@ public class StartFrame extends javax.swing.JFrame {
                 HashMap<String, Integer> tempMap;
 
                 tempMap = tp.readFileActual(file.getPath());
-                texts.add(new Text(file.getName(), new Keywords(tempMap), file.getPath()));
+                texts.add(new Text(file.getName(), new Keywords(tempMap), file.getPath(), file.getParentFile().getName()));
             }
         }
     }

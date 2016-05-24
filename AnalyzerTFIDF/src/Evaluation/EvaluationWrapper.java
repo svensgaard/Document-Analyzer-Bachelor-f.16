@@ -99,4 +99,17 @@ public class EvaluationWrapper {
         }
 
     }
+    
+    public double getAvgPurity(ArrayList<Centroid> result) {
+        
+        double sum = 0.0;
+        
+        for (Centroid c : result) {
+            sum += c.getPurity();
+        }
+        
+        double avgPurity = sum / result.size();
+        
+        return avgPurity;
+    }
 }
