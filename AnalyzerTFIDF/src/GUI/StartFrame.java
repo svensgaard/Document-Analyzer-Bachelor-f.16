@@ -73,6 +73,7 @@ public class StartFrame extends javax.swing.JFrame {
         kmeansPlusTestBtn = new javax.swing.JButton();
         kmeansMCWReadBtn = new javax.swing.JButton();
         kmeansMCWTestBtn = new javax.swing.JButton();
+        becnhmarkBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -175,6 +176,13 @@ public class StartFrame extends javax.swing.JFrame {
             }
         });
 
+        becnhmarkBtn.setText("Benchmark");
+        becnhmarkBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                becnhmarkBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -206,15 +214,16 @@ public class StartFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(kmeansPlusReadBtn))
-                        .addGap(136, 136, 136)))
+                        .addGap(175, 175, 175)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(174, 174, 174)
+                .addComponent(becnhmarkBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +258,9 @@ public class StartFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kmeansPlusReadBtn)
                     .addComponent(kmeansPlusTestBtn))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(becnhmarkBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel6.setText("Parameters");
@@ -365,7 +376,7 @@ public class StartFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(75, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -471,6 +482,10 @@ public class StartFrame extends javax.swing.JFrame {
     private void checkbox_use_paramsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_checkbox_use_paramsStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_checkbox_use_paramsStateChanged
+
+    private void becnhmarkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_becnhmarkBtnActionPerformed
+       new BenchmarkOptions().setVisible(true);
+    }//GEN-LAST:event_becnhmarkBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -580,6 +595,7 @@ public class StartFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton becnhmarkBtn;
     private javax.swing.JCheckBox checkbox_use_params;
     private javax.swing.JComboBox combo_similarity;
     private javax.swing.JLabel jLabel1;

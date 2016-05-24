@@ -40,16 +40,20 @@ public class EvaluationWrapper {
     }
 
     public double getAvgDistance(ArrayList<Centroid> clusters) {
+        
         int numberOfTexts = 0;
         double totalDistance = 0.0;
         for (Centroid c : clusters) {
             //Add texts to total
             numberOfTexts += c.GroupedDocument.size();
             //Count similarity
-            for (Text t : c.GroupedDocument) {
+            if(c.getAverageVector().length != 0) {
+                for (Text t : c.GroupedDocument) {
 
                 totalDistance += getDistance(t.getVectorSpace(), c.getAverageVector());
+                }
             }
+            
         }
         return totalDistance / (double) numberOfTexts;
 
@@ -76,16 +80,21 @@ public class EvaluationWrapper {
 
     }
 
-    public Object getAvgInterClusterSim(ArrayList<Centroid> result) {
-        if (result.size() > 1) {
+    public double getAvgInterClusterSim(ArrayList<Centroid> result) {
+        
+        if (result.size() >= 1) {
             double totalSimilarity = 0.0;
             for (Centroid c : result) {
+//                System.out.println("Cosine sim: " + simMatrics.findCosineSimilarity(result.get(0).getAverageVector(), c.getAverageVector()));
                 totalSimilarity += simMatrics.findCosineSimilarity(result.get(0).getAverageVector(), c.getAverageVector());
             }
+//            System.out.println("Result size " + result.size());
+//            System.out.println("Total similarity " + totalSimilarity);
             return totalSimilarity / result.size();
         } else {
             return 0.0;
         }
+        
 
     }
 }
