@@ -84,7 +84,6 @@ public class TextProcessor {
         // Read file
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
-            
 
             HashMap<String, Integer> tempMap = new HashMap<>();
             String line = "";
@@ -164,14 +163,14 @@ public class TextProcessor {
         }
     }
 
-    public HashMap readFileWith100MostCommon(String fileName) {
+    public HashMap readFileWith100MostCommon(String filePath) {
         //Read common words
         if (mostCommon100Words == null) {
             readCommonWords();
         }
         // Read file
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
             HashMap<String, Integer> tempMap = new HashMap<>();
             String line = "";
@@ -342,6 +341,7 @@ public class TextProcessor {
      */
     public void generateTrainingData(ArrayList<Centroid> clusters, String path) throws IOException {
 
+        // MAKE SURE DIR IS FRESH
         Files.walk(Paths.get("./resources/datasets")).forEach(fp -> {
             if (Files.isRegularFile(fp)) {
                 try {
@@ -361,8 +361,7 @@ public class TextProcessor {
         for (Centroid c : clusters) {
 
             // Create dataset for cluster
-            String fileName = "Centroid" + (i + 1) + ".txt";
-            c.name = fileName;
+            String fileName = c.name + ".txt";
             bw = new BufferedWriter(new FileWriter(new File("./resources/datasets/" + fileName)));
 
             // Iterate through all texts in clusters
@@ -385,6 +384,33 @@ public class TextProcessor {
             }
             bw.close();
             i++;
+        }
+    }
+
+    /**
+     * Used in MAIN FRAME
+     *
+     * Reads input file, and returns it as a string
+     *
+     * @return
+     */
+    public String readFileToString(String path) {
+        try {
+            System.out.println("LOG: Trying to read file");
+            BufferedReader reader = new BufferedReader(new FileReader(path));
+
+            String line = "";
+            String text = "";
+            
+            while ((line = reader.readLine()) != null) {
+                text += line;
+            }
+            System.out.println("LOG: READ FILE DONE");
+            return text;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new Error("Reading File Exception", e);
         }
     }
 

@@ -44,4 +44,11 @@ public class Text {
         this.path = path;
     }
 
+    public Text(String fileName, Keywords keywords, String path, String parent) {
+        this.fileName = fileName;
+        this.keywords = keywords;
+        this.path = path;
+        this.type = parent;
+    }
+
 }

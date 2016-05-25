@@ -17,6 +17,7 @@ import java.util.HashMap;
 public class TFIDF {
 
     private ArrayList<String> distinctTerms;
+    public HashMap<String, Double> termIDF;
 
     public ArrayList<String> getDistinctTerms() {
         return distinctTerms;
@@ -27,7 +28,7 @@ public class TFIDF {
     }
 
     public TFIDF() {
-
+        termIDF = new HashMap<>();
     }
 
     /**
@@ -50,7 +51,7 @@ public class TFIDF {
         for (HashMap.Entry<String, Integer> entry : document.keywords.keywordMap.entrySet()) {
             total += entry.getValue();
         }
-        
+
         double d = (double) frequency / (double) total;
 //        System.out.println("\tTF: " + d);
         return d;
@@ -99,10 +100,18 @@ public class TFIDF {
      * @return
      */
     public double calculateTFIDF(String term, Text document, ArrayList<Text> corpus) {
-//        System.out.println("TERM: " + term + ", Document: " + document.fileName);       
-        double tfidf = calculateTF(term, document) * calculateIDF(term, corpus);
-//        System.out.println("TF-IDF: " + tfidf + "\n");
+        double tfidf = 0;
+        // MAP !CONTAINS TERM
+        if (!termIDF.containsKey(term)) {
+            double tf = calculateTF(term, document);
+            double idf = calculateIDF(term, corpus);
+            termIDF.put(term, idf);
+            tfidf = tf * idf;
+        } else {
+            tfidf = calculateTF(term, document) * termIDF.get(term);
+        }
         return tfidf;
+
     }
 
 }
