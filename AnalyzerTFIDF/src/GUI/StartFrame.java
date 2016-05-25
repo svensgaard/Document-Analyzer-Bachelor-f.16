@@ -91,6 +91,8 @@ public class StartFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         text_run_times = new javax.swing.JTextField();
+        checkbox_use_distance = new javax.swing.JCheckBox();
+        jLabel12 = new javax.swing.JLabel();
         checkbox_use_params = new javax.swing.JCheckBox();
 
         readFiles1.setText("Read files");
@@ -234,7 +236,7 @@ public class StartFrame extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(kmeansPlusReadBtn))
-                        .addGap(0, 244, Short.MAX_VALUE))
+                        .addGap(0, 313, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(readFiles)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -305,7 +307,7 @@ public class StartFrame extends javax.swing.JFrame {
                     .addComponent(kmeansPlusTestBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(checkbox_common_words)
@@ -316,6 +318,8 @@ public class StartFrame extends javax.swing.JFrame {
                 .addComponent(becnhmarkBtn)
                 .addContainerGap())
         );
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jLabel6.setText("Parameters");
 
@@ -334,6 +338,10 @@ public class StartFrame extends javax.swing.JFrame {
         jLabel7.setText("Min similarity");
 
         text_run_times.setText("1");
+
+        checkbox_use_distance.setText("Use distance");
+
+        jLabel12.setText("Default: cosine");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -355,8 +363,13 @@ public class StartFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(text_run_times, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combo_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(combo_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(checkbox_use_distance))))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,8 +379,11 @@ public class StartFrame extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel9)
                     .addComponent(text_clusters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combo_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                    .addComponent(combo_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkbox_use_distance))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel12)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel10)
@@ -376,6 +392,7 @@ public class StartFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        checkbox_use_params.setText("Use parameters");
         checkbox_use_params.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 checkbox_use_paramsStateChanged(evt);
@@ -397,7 +414,7 @@ public class StartFrame extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(checkbox_use_params)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -416,26 +433,7 @@ public class StartFrame extends javax.swing.JFrame {
                         .addGap(38, 38, 38))))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -643,9 +641,15 @@ public class StartFrame extends javax.swing.JFrame {
             double min_similarity = Double.valueOf(combo_similarity.getSelectedItem().toString());
 
             clustering.setParameters(max_iterations, min_similarity);
+            
+            if (checkbox_use_distance.isSelected()) {
+                clustering.enableDistance(true);
+            }
+            
             ArrayList<Centroid> result = clustering.prepareCluster(clusters, texts, betterStart);
             new MainFrame(result, classifier).setVisible(true);
         } else {
+            clustering.enableDistance(false);
             ArrayList<Text> texts = readFiles(filePath, withcommonwords);
             ArrayList<Centroid> result = clustering.prepareCluster(3, texts, betterStart);
             new MainFrame(result, classifier).setVisible(true);
@@ -701,6 +705,7 @@ public class StartFrame extends javax.swing.JFrame {
     private javax.swing.JButton becnhmarkBtn;
     private javax.swing.JCheckBox checkbox_better_start;
     private javax.swing.JCheckBox checkbox_common_words;
+    private javax.swing.JCheckBox checkbox_use_distance;
     private javax.swing.JCheckBox checkbox_use_params;
     private javax.swing.JComboBox combo_similarity;
     private javax.swing.JComboBox combo_similarity_increment;
@@ -709,6 +714,7 @@ public class StartFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -748,42 +754,7 @@ public class StartFrame extends javax.swing.JFrame {
             File[] files = new File(filePath).listFiles();
             showFiles(files, tempTexts);
         }
-
-//        if (withoutMostCommon) {
-//            //Read files without most common words
-//
-//            try {
-//                Files.walk(Paths.get(filePath)).forEach(fp -> {
-//                    if (Files.isRegularFile(fp)) {
-//                        //Read corpus files
-//                        final HashMap<String, Integer> tempMap;
-//                        tempMap = tp.readFileWith100MostCommon(fp.getFileName().toString());
-//                        tempTexts.add(new Text(fp.getFileName().toString(), new Keywords(tempMap)));
-//                    }
-//                });
-//            } catch (IOException ex) {
-//                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//            System.out.println("Processing Done");
-//        } else {
-//            //Just read files
-//            try {
-//                System.out.println(Paths.get(filePath));
-//                Files.walk(Paths.get(filePath)).forEach(fp -> {
-//                    if (Files.isRegularFile(fp)) {
-//                        //Read corpus files
-//                        final HashMap<String, Integer> tempMap;
-//                        tempMap = tp.readFileActual(fp.getFileName().toString());
-//                        tempTexts.add(new Text(fp.getFileName().toString(), new Keywords(tempMap)));
-//                    }
-//                });
-//            } catch (IOException ex) {
-//                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//            System.out.println("Processing Done");
-//        }
+        
         long start = System.currentTimeMillis();
         ArrayList<Text> texts = calculateTFDIF(tempTexts);
         long end = System.currentTimeMillis();

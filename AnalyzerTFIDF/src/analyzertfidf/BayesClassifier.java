@@ -117,10 +117,6 @@ public class BayesClassifier {
         //map of dataset files
         Map<String, URL> trainingFiles = new HashMap<>();
 
-//        for (int i = 0; i < sets; i++) {
-//            String fileName = "Centroid"+(i+1);
-//            trainingFiles.put(fileName, BayesClassifier.class.getResource("/datasets/"+fileName+".txt"));
-//        }
         Files.walk(Paths.get("./resources/datasets/")).forEach(filePath -> {
             if (Files.isRegularFile(filePath)) {
                 try {
@@ -136,9 +132,6 @@ public class BayesClassifier {
             System.out.println("DATA: " + entry.getKey());
         }
 
-//        trainingFiles.put("Physics", BayesClassifier.class.getResource("/datasets/training.physics.en.txt"));
-//        trainingFiles.put("Politics", BayesClassifier.class.getResource("/datasets/training.politics.en.txt"));
-//        trainingFiles.put("Legal", BayesClassifier.class.getResource("/datasets/training.legal.en.txt"));
         //loading examples in memory
         Map<String, String[]> trainingExamples = new HashMap<>();
 

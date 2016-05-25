@@ -5,12 +5,20 @@
  */
 package Analysis;
 
+import analyzertfidf.BayesClassifier;
+
 /**
  *
  * @author Bryan
  */
 public class BayesAnalysis {
  
+    public BayesAnalysis() {
+        BayesClassifier bc = new BayesClassifier();
+        
+        
+    }
+    
     
     public static void main(String[] args) {
         

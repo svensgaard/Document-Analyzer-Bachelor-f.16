@@ -25,14 +25,19 @@ public class Clustering {
     private int MAX_ITERATIONS = 50;
     private double MIN_SIMILARITY = 0.6;
     private double currentSimilarity = 0;
+    private boolean useDistance = false;
 
     public void setParameters(int max_iterations, double min_similarity) {
         MAX_ITERATIONS = max_iterations;
         MIN_SIMILARITY = min_similarity;
     }
-    
+
     public void setMinSimilarity(double min) {
         MIN_SIMILARITY = min;
+    }
+
+    public void enableDistance(boolean useDistance) {
+        this.useDistance = useDistance;
     }
 
 //k is number of clusters.
@@ -53,11 +58,14 @@ public class Clustering {
                 int i = FindClosestClusterCenter(centroids, t);
                 result.get(i).GroupedDocument.add(t);
             }
+
             centroids = CalculateMeanPoints(result);
             stop = CheckStop(previousClusterCenter, centroids);
+
             if (!stop) {
                 result = InitializeClusterCentroid(centroids.size());
             }
+
             currentSimilarity = evaluation.getAvgSimilarity(result);
             if (currentSimilarity < MIN_SIMILARITY) {
                 if (globalCounter < MAX_ITERATIONS) {
@@ -83,7 +91,6 @@ public class Clustering {
     }
 
     public ArrayList<Centroid> prepareClusterIncrement(ArrayList<Text> texts, boolean betterStart) {
-        long start = System.currentTimeMillis();
         System.out.println("TOTAL TEXTS: " + texts.size() + "\n");
         int totalCentroids = 1;
         ArrayList<Centroid> result;
@@ -122,13 +129,26 @@ public class Clustering {
         Double[] similarities = new Double[centroids.size()];
         for (int i = 0; i < centroids.size(); i++) {
 //            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).GroupedDocument.get(0).getVectorSpace(), t.getVectorSpace());
-            similarities[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace()); //BEST RESULTS
+            if (useDistance) {
+                similarities[i] = evaluation.getDistance(centroids.get(i).getAverageVector(), t.getVectorSpace());
+            } else {
+                similarities[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace()); //BEST RESULTS
+
+            }
         }
         //Evaluate the maximum 
         int index = 0;
         Double maxFound = similarities[0];
+        boolean b = false;
         for (int i = 0; i < similarities.length; i++) {
-            if (similarities[i] < maxFound) {
+            
+            if (useDistance) {
+                b = similarities[i] < maxFound;
+            } else {
+                b = similarities[i] > maxFound;
+            }
+            
+            if (b) { // CHANGED prev: <
                 maxFound = similarities[i];
                 index = i;
             }

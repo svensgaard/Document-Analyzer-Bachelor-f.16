@@ -1,0 +1,80 @@
+Furop. 07. Cancer Vol. 17, No. 6, pp. 685-693, 1981 0014-2964/81:1160685-08 $02.00/0
+Pergamon Press Ltd. 1981. Printed in Great Britain 1981 Pergamon Press Ltd.
+Herpes Simplex Virus and Human Cancer.
+I. Relationship Between Human Cervical
+Tumours and Herpes Simplex Type 2*
+E. CASSAI,~'II A. ROTOLA,~" G. MENEGUZZI, + G. MILANESI, + S. GARSIA,§ G. REMOTTI
+and G. RIZZI§
+~ lstituto di Microbiologia, Universith degli Studi, Via L. Borsari 46, 44100 Ferrara, Italy,
++ Laboratorio di Genetica Biochimica ed Evoluzionist#a CNR, Via S. Epifanio 14, 27100 Pavia, Italy,
++ Istituto di Clinica Ostetrica e Ginecologica, Universitlz di Milano, Italy
+Abstract- The presence of HS V-2 DNA was investigated in ten dysplasias and five genital
+tumours by the blotting technique. The sensitivity of the technique employed could reveal 0.5
+viral genome equivalents per diploid cell genome. Viral DNA was not detected in any of the
+tested tumours.
+INTRODUCTION
+STUDIES on the relationship between
+cervicocarcinomas and genital infections by
+Herpes Simplex Virus Type 2 (HSV-2), and
+other sporadic reports on labial carcinomas
+developing at the site of herpetic recurrences,
+support the hypothesis of an association between
+Herpes Simplex Virus and human tumours [1].
+The significant association between HSV and
+cervicocarcinomas is supported in the literature
+by the fact that sera from women affected by such
+tumours show higher antibody titers to HSV-2
+than control sera [2-4], although such a
+relationship has not been found in all the
+populations examined [3, 4]. Other substantial
+elements exist to support the association between
+HSV-2 and cervicocarcinomas. It has been
+shown that tumours contain not only structural
+viral antigens [5], but also early viral antigens [6]
+and non-virionic antigens [7]. A search for viral
+nucleic acids in human cancer cells has so far been
+successful only in a large (70 g) exophytic cervical
+squamous cell carcinoma [8]. Analysis of the
+nucleic acids extracted from the tumour by
+renaturation kinetics with labeled viral DNA
+revealed that only a fragment of the viral genome
+was present in the tumour cells and that a small
+portion of the fragment was transcribed.
+Acccpwd 13 January 1981.
+*This work was supported by the Consiglio Nazionale delle
+Ricerche, grants No. 80.00590.84 (Progetto Finalizzato
+Virus) and No. 77.01577.65.
+][To whom reprint requests should be addressed.
+Unfortunately, such a technique requires a large
+quantity of pathologic material and results are
+severely affected by experimental conditions [9].
+In fact Hansen et al. [10] tested human tumours
+for the presence of HSV DNA by the same
+technique, but with different experimental
+conditions, and obtained negative results.
+McDougall et al. [11] have examined sections of
+cervical cancer biopsies for evidence of HSVspecific
+RNA and have found hybridization of
+3H-labeled HSV-2 DNA to RNA in cells within
+areas of abnormal tissue.
+In this study we analysed 50 genital dysplasias
+for the presence of HSV, and ten dysplasias, four
+cervical tumours and one vulva tumour for both
+the presence of HSV as infectious particles and for
+the presence ofHSV DNA. To detect the presence
+of viral DNA in tumour cells we employed the blot
+transfer technique originally described by
+Southern [12]. Such a technique allowed us to
+work with small quantities of pathologic material.
+The vulva tumour was also analysed by DNADNA
+reassociation kinetics.
+685
+MATERIALS AND METHODS
+Clinical tumours
+For our survey, 28 cases were selected whose
+histological reports showed a cervical cancer, a
+cervical intraepithelial neoplasia or a cervical
+dysplasia, as indicated in Fig 1. In this figure we
+have also specified the relationship with the
+cytological report which, in eight cases, showed
+only inflammatory modifications. In all these

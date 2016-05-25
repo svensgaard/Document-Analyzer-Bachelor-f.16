@@ -1,5 +1,5 @@
 # Text documents
-*.txt
+#*.txt
 
 # Compiled Object files
 *.slo
