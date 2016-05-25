@@ -22,7 +22,7 @@ public class Clustering {
     public int publicCounter;
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
-    private int MAX_ITERATIONS = 50;
+    private int MAX_ITERATIONS = 5;
     private double MIN_SIMILARITY = 0.6;
     private double currentSimilarity = 0;
     private boolean useDistance = false;
@@ -54,13 +54,23 @@ public class Clustering {
         do { //Continue until stop criteria are met.
             previousClusterCenter = centroids;
 
+            long start1 = System.currentTimeMillis();
             for (Text t : texts) {
                 int i = FindClosestClusterCenter(centroids, t);
                 result.get(i).GroupedDocument.add(t);
             }
+            long end1 = System.currentTimeMillis();
+            System.out.println("PrepareCluster forloop FindClosestClusterCenter time: " + (end1 - start1) + "ms");
 
+            long start2 = System.currentTimeMillis();
             centroids = CalculateMeanPoints(result);
+            long end2 = System.currentTimeMillis();
+            System.out.println("CalculateMeanPoints time: " + (end2 - start2) + "ms");
+
+            long start3 = System.currentTimeMillis();
             stop = CheckStop(previousClusterCenter, centroids);
+            long end3 = System.currentTimeMillis();
+            System.out.println("Checkstop time: " + (end2 - start2) + "ms");
 
             if (!stop) {
                 result = InitializeClusterCentroid(centroids.size());
@@ -113,6 +123,7 @@ public class Clustering {
     }
 
     private ArrayList<Centroid> InitializeClusterCentroid(int size) {
+        long start = System.currentTimeMillis();
         Centroid c;
         ArrayList<Centroid> centroid = new ArrayList<>();
         for (int i = 0; i < size; i++) {
@@ -120,11 +131,14 @@ public class Clustering {
             c.GroupedDocument = new ArrayList<>();
             centroid.add(c);
         }
+        long end = System.currentTimeMillis();
+        System.out.println("InitializeClusterCentroid time: " + (end - start) + "ms");
         return centroid;
 
     }
 
     public int FindClosestClusterCenter(ArrayList<Centroid> centroids, Text t) {
+        long start = System.currentTimeMillis();
         SimilarityMatrics similarityMatrics = new SimilarityMatrics();
         Double[] similarities = new Double[centroids.size()];
         for (int i = 0; i < centroids.size(); i++) {
@@ -141,18 +155,20 @@ public class Clustering {
         Double maxFound = similarities[0];
         boolean b = false;
         for (int i = 0; i < similarities.length; i++) {
-            
+
             if (useDistance) {
                 b = similarities[i] < maxFound;
             } else {
                 b = similarities[i] > maxFound;
             }
-            
+
             if (b) { // CHANGED prev: <
                 maxFound = similarities[i];
                 index = i;
             }
         }
+        long end = System.currentTimeMillis();
+//        System.out.println("FindClosestClusterCenter time: " + (end - start) + "ms");
         return index;
     }
 
@@ -349,7 +365,9 @@ public class Clustering {
     }
 
     private ArrayList<Centroid> initialize(ArrayList<Text> texts, int k, boolean betterStart) {
+        long start = System.currentTimeMillis();
         Centroid x;
+        Random rng = new Random();
         ArrayList<Centroid> centroids = new ArrayList<>();
         if (betterStart) {
             //Use chooseinitialCenters method which is not just random
@@ -370,10 +388,14 @@ public class Clustering {
                 centroids.add(x);
             }
         }
+
+        long end = System.currentTimeMillis();
+        System.out.println("Initialize Centroid time: " + (end - start) + "ms");
         return centroids;
     }
 
     private HashSet<Integer> generateRandomNumbers(int k, int size) {
+        long start = System.currentTimeMillis();
         HashSet<Integer> uniqRandom = new HashSet<>();
         ArrayList<Integer> randomNumbers = new ArrayList<>();
         for (int i = 1; i < size; i++) {
@@ -384,6 +406,8 @@ public class Clustering {
             uniqRandom.add(randomNumbers.get(i));
         }
 
+        long end = System.currentTimeMillis();
+        System.out.println("GenerateRandomNumbers time: " + (end - start) + "ms");
         return uniqRandom;
     }
 
