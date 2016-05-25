@@ -112,7 +112,7 @@ public class EvaluationWrapper {
         }
         
         double avgPurity = sum / result.size();
-        
+        System.out.println(avgPurity);
         return avgPurity;
     }
 }
