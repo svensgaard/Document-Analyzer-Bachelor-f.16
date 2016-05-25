@@ -10,7 +10,12 @@ import Kmeans.Centroid;
 import analyzertfidf.BayesClassifier;
 import analyzertfidf.Text;
 import analyzertfidf.TextProcessor;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -19,66 +24,67 @@ import javax.swing.event.ListSelectionListener;
  * @author Bryan
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    
     String filePath;
     ArrayList<Text> texts_list;
     ArrayList<String> distinctTerms;
     private ArrayList<Centroid> result;
-    private ArrayList<String> cluster_list;
     private BayesClassifier classifier;
     private final TextProcessor tp = new TextProcessor();
     private EvaluationWrapper evaluation = new EvaluationWrapper();
+    boolean classifierInitiated = false;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initFields();
-
+        
         initComponents();
         evaluateResult(result);
-
+        
     }
-
+    
     public MainFrame(ArrayList<Centroid> result) {
         initFields();
         this.result = result;
         initComponents();
         evaluateResult(result);
-
+        
     }
-
+    
     public MainFrame(ArrayList<Centroid> result, String filePath, BayesClassifier classifier) {
         initFields();
-
+        
         this.filePath = filePath;
         this.result = result;
         this.classifier = classifier;
-
+        
         initComponents();
         evaluateResult(result);
-
+        
     }
-
+    
     public MainFrame(ArrayList<Centroid> result, BayesClassifier classifier) {
         initFields();
-
+        
         this.result = result;
         this.classifier = classifier;
-
+        
         initComponents();
         evaluateResult(result);
     }
-
+    
     private void initFields() {
         texts_list = new ArrayList<>();
     }
-
+    
     private void evaluateResult(ArrayList<Centroid> result) {
         avgDistToCenterLabel.setText(String.valueOf(evaluation.getAvgDistance(result)));
         avgDistBetweenClustersLabel.setText(String.valueOf(evaluation.getAvgInterClusterDist(result)));
         avgSimToCenterLabel.setText(String.valueOf(evaluation.getAvgSimilarity(result)));
         avgSimBetweenCentersLabel.setText(String.valueOf(evaluation.getAvgInterClusterSim(result)));
+        label_average_purity.setText(String.valueOf(evaluation.getAvgPurity(result)));
     }
 
     /**
@@ -113,12 +119,21 @@ public class MainFrame extends javax.swing.JFrame {
         avgDistBetweenClustersLabel = new javax.swing.JLabel();
         avgSimToCenterLabel = new javax.swing.JLabel();
         avgSimBetweenCentersLabel = new javax.swing.JLabel();
+        button_readfile = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        button_clear = new javax.swing.JButton();
+        button_initialize_classifier = new javax.swing.JButton();
+        button_open = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        label_purity = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        label_average_purity = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         list_corpus.setModel(new javax.swing.AbstractListModel() {
             public int getSize() { return result.size(); }
-            public Object getElementAt(int i) { return result.get(i); }
+            public Object getElementAt(int i) { return result.get(i).toString(); }
         });
         list_corpus.setSelectedIndex(0);
 
@@ -126,6 +141,7 @@ public class MainFrame extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
                     getTexts(list_corpus.getSelectedIndex());
+                    getPurity(list_corpus.getSelectedIndex());
                 }
             }
         });
@@ -137,6 +153,11 @@ public class MainFrame extends javax.swing.JFrame {
 
             public int getSize() { return texts_list.size(); }
             public Object getElementAt(int i) { return texts_list.get(i).fileName; }
+        });
+        list_texts.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                list_textsValueChanged(evt);
+            }
         });
         texts_scroll.setViewportView(list_texts);
         getTexts(list_corpus.getSelectedIndex());
@@ -151,7 +172,9 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         text_area_input.setColumns(20);
+        text_area_input.setLineWrap(true);
         text_area_input.setRows(5);
+        text_area_input.setWrapStyleWord(true);
         jScrollPane1.setViewportView(text_area_input);
 
         classify.setText("Classify");
@@ -163,7 +186,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         text_area_result.setEditable(false);
         text_area_result.setColumns(20);
+        text_area_result.setLineWrap(true);
         text_area_result.setRows(5);
+        text_area_result.setWrapStyleWord(true);
         jScrollPane2.setViewportView(text_area_result);
 
         jLabel3.setText("Result");
@@ -180,108 +205,195 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel9.setText("Average similarity between cluster centers:");
 
-        avgDistToCenterLabel.setText("jLabel10");
+        avgDistToCenterLabel.setText("0");
 
-        avgDistBetweenClustersLabel.setText("jLabel11");
+        avgDistBetweenClustersLabel.setText("0");
 
-        avgSimToCenterLabel.setText("jLabel12");
+        avgSimToCenterLabel.setText("0");
 
-        avgSimBetweenCentersLabel.setText("jLabel13");
+        avgSimBetweenCentersLabel.setText("0");
+
+        button_readfile.setText("Read file");
+        button_readfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_readfileActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Classifier");
+
+        button_clear.setText("Clear");
+        button_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_clearActionPerformed(evt);
+            }
+        });
+
+        button_initialize_classifier.setText("Initialize classifier");
+        button_initialize_classifier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_initialize_classifierActionPerformed(evt);
+            }
+        });
+
+        button_open.setText("Open file");
+        button_open.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_openActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Purity");
+
+        label_purity.setText("0");
+
+        jLabel12.setText("Average purity");
+
+        label_average_purity.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel1)
                         .addGap(130, 130, 130)
-                        .addComponent(jLabel2))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(button_close)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(avgDistToCenterLabel)
-                                    .addComponent(avgDistBetweenClustersLabel)
-                                    .addComponent(avgSimToCenterLabel)
-                                    .addComponent(avgSimBetweenCentersLabel))))))
+                        .addComponent(button_close)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel10)))
+                .addGap(232, 232, 232))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label_purity))
+                            .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(44, 44, 44))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_open)
+                                .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(button_initialize_classifier)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(classify)
+                                                .addGap(74, 74, 74)
+                                                .addComponent(button_clear))
+                                            .addComponent(button_readfile)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(223, 223, 223)
+                                .addComponent(jLabel4))))
+                    .addComponent(jLabel5)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(avgDistToCenterLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(avgDistBetweenClustersLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(avgSimToCenterLabel))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(143, 143, 143))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(152, 152, 152))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(classify)
-                                .addGap(118, 118, 118))))))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel12))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_average_purity)
+                            .addComponent(avgSimBetweenCentersLabel))))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(button_close)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(button_close)
+                    .addComponent(jLabel10))
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel4)
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(corpora_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(label_purity)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(91, 91, 91)
+                                        .addComponent(button_open)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(texts_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 106, 106)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel5)
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(avgDistToCenterLabel))
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(avgDistBetweenClustersLabel))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(avgSimToCenterLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(texts_scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                        .addComponent(corpora_scroll, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(classify)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(avgDistToCenterLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(avgDistBetweenClustersLabel))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(avgSimBetweenCentersLabel)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(classify)
+                            .addComponent(button_clear))
+                        .addGap(12, 12, 12)
+                        .addComponent(button_readfile)
+                        .addGap(45, 45, 45)
+                        .addComponent(button_initialize_classifier)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(avgSimToCenterLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(avgSimBetweenCentersLabel))
-                .addGap(54, 54, 54))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(label_average_purity))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -292,8 +404,63 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_button_closeActionPerformed
 
     private void classifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classifyActionPerformed
-        text_area_result.setText("Your input belongs to cluster: " + classifier.predictClassification(text_area_input.getText()));
+        if (classifierInitiated) {
+            text_area_result.setText("Your input belongs to cluster: " + classifier.predictClassification(text_area_input.getText()));
+        } else {
+            text_area_result.setText("Please initialize classifier");
+        }
+
     }//GEN-LAST:event_classifyActionPerformed
+
+    private void button_readfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_readfileActionPerformed
+        if (classifierInitiated) {
+            String fp = promptFilePath();
+            
+            if (fp != "") {
+                System.out.println("LOG: GOT FILE PATH :: " + fp);
+                String text = tp.readFileToString(fp);
+                text_area_input.setText(text);
+                String prediction = classifier.predictClassification(text);
+                text_area_result.setText("Your input belongs to:\n" + prediction);
+                
+            }
+        } else {
+            text_area_result.setText("Please initialize classifier");
+        }
+
+    }//GEN-LAST:event_button_readfileActionPerformed
+
+    private void button_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_clearActionPerformed
+        text_area_input.setText("");
+    }//GEN-LAST:event_button_clearActionPerformed
+
+    private void button_initialize_classifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_initialize_classifierActionPerformed
+        initClassifier(result);
+        classifierInitiated = true;
+        text_area_result.setText("Classifier Initialized!\n"
+                + "Please type input, or read from a file");
+    }//GEN-LAST:event_button_initialize_classifierActionPerformed
+
+    private void list_textsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_list_textsValueChanged
+        
+
+    }//GEN-LAST:event_list_textsValueChanged
+
+    private void button_openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_openActionPerformed
+        String path = texts_list.get(list_texts.getSelectedIndex()).path;
+        
+        try {
+            System.out.println("TOKENS:");
+            String[] tokens = tp.readFileToString(path).split("[\\d\\p{Punct}\\s\\W]+");
+            for (String s : tokens) {
+                System.out.println(s);
+            }
+            
+            java.awt.Desktop.getDesktop().edit(new File(path));
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_openActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,19 +496,55 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
+    
+    public String promptFilePath() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Select a text");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
+        // disable the "All files" option.
+        chooser.setAcceptAllFileFilterUsed(false);
+        
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            return chooser.getSelectedFile().getPath();
+        } else {
+            System.out.println("No Selection ");
+            return "";
+        }
+    }
+    
+    public void getPurity(int index) {
+        label_purity.setText(String.valueOf(result.get(index).getPurity()));
+    }
+    
     public void getTexts(int index) {
         texts_list = result.get(index).GroupedDocument;
-
+        
         list_texts.setModel(new javax.swing.AbstractListModel() {
             public int getSize() {
                 return texts_list.size();
             }
-
+            
             public Object getElementAt(int i) {
                 return texts_list.get(i).fileName;
             }
         });
+    }
+    
+    private void initClassifier(ArrayList<Centroid> result) {
+        long start = System.currentTimeMillis();
+        
+        try {
+            tp.generateTrainingData(result, filePath);
+        } catch (IOException ex) {
+            Logger.getLogger(StartFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        long end = System.currentTimeMillis();
+        
+        System.out.println("GENERATE TRAINING DATA Running time: " + (end - start) + "ms");
+        // Initialize classifier
+        classifier = new BayesClassifier();
     }
 
 
@@ -350,10 +553,17 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel avgDistToCenterLabel;
     private javax.swing.JLabel avgSimBetweenCentersLabel;
     private javax.swing.JLabel avgSimToCenterLabel;
+    private javax.swing.JButton button_clear;
     private javax.swing.JButton button_close;
+    private javax.swing.JButton button_initialize_classifier;
+    private javax.swing.JButton button_open;
+    private javax.swing.JButton button_readfile;
     private javax.swing.JButton classify;
     private javax.swing.JScrollPane corpora_scroll;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -364,6 +574,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel label_average_purity;
+    private javax.swing.JLabel label_purity;
     private javax.swing.JList list_corpus;
     private javax.swing.JList list_texts;
     private javax.swing.JTextArea text_area_input;

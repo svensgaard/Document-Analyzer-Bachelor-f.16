@@ -7,6 +7,8 @@ package GUI;
 
 import Evaluation.EvaluationWrapper;
 import Evaluation.Result;
+import Kmeans.Centroid;
+import analyzertfidf.Text;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -25,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class BenchmarkResults extends javax.swing.JFrame {
 
-    private final EvaluationWrapper evaluation = new EvaluationWrapper();
+    private EvaluationWrapper evaluation = new EvaluationWrapper();
     private ArrayList<Result> results;
 
     /**
@@ -56,6 +58,7 @@ public class BenchmarkResults extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         resultsTabel = new javax.swing.JTable();
         printBtn = new javax.swing.JButton();
+        button_close = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,11 +69,11 @@ public class BenchmarkResults extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Method", "Internal cluster similarity", "Inter cluster similarity", "Runtime"
+                "Method", "Internal cluster similarity", "Inter cluster similarity", "Runtime", "Iterations run", "Purity"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -83,12 +86,21 @@ public class BenchmarkResults extends javax.swing.JFrame {
             resultsTabel.getColumnModel().getColumn(1).setResizable(false);
             resultsTabel.getColumnModel().getColumn(2).setResizable(false);
             resultsTabel.getColumnModel().getColumn(3).setResizable(false);
+            resultsTabel.getColumnModel().getColumn(4).setResizable(false);
+            resultsTabel.getColumnModel().getColumn(5).setResizable(false);
         }
 
         printBtn.setText("Print to file");
         printBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 printBtnActionPerformed(evt);
+            }
+        });
+
+        button_close.setText("Close");
+        button_close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_closeActionPerformed(evt);
             }
         });
 
@@ -99,26 +111,30 @@ public class BenchmarkResults extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(313, 313, 313)
+                        .addComponent(printBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(273, 273, 273)
+                        .addContainerGap()
+                        .addComponent(button_close)
+                        .addGap(239, 239, 239)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(256, 256, 256)
-                        .addComponent(printBtn)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                        .addGap(44, 44, 44)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_close))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(printBtn)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -134,11 +150,13 @@ public class BenchmarkResults extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(BenchmarkResults.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            //Show some alertbox or something...
         }
 
     }//GEN-LAST:event_printBtnActionPerformed
+
+    private void button_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_closeActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_button_closeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,21 +195,23 @@ public class BenchmarkResults extends javax.swing.JFrame {
 
     private void fillTable(ArrayList<Result> results) {
         DefaultTableModel model = (DefaultTableModel) resultsTabel.getModel();
-        for (Result result : results) {
-            model.addRow(new Object[]{result.method, evaluation.getAvgSimilarity(result.result), evaluation.getAvgInterClusterSim(result.result), result.runtime});
+        for (Result result : results) {             
+            model.addRow(new Object[]{result.method, evaluation.getAvgSimilarity(result.result), evaluation.getAvgInterClusterSim(result.result), result.runtime, result.iterations, result.purity});
         }
     }
 
     private void writeResultToFile(ArrayList<Result> results, String filepath) throws UnsupportedEncodingException, FileNotFoundException, IOException {
-        FileWriter fileWriter = new FileWriter("resultsMCW100Counted++.txt");
+        FileWriter fileWriter = new FileWriter(filepath+".txt");
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        String headers = "Mehtod \t Internal cluster similarity \t Inter cluster similarity \t Runtime";
+        String headers = "Mehtod \t Internal cluster similarity \t Inter cluster similarity \t Runtime \t Iterations \t Purity";
         bufferedWriter.write(headers);
         for (Result result : results) {
             String stringToWrite = result.method + "\t"
                     + evaluation.getAvgSimilarity(result.result) + "\t"
                     + evaluation.getAvgInterClusterSim(result.result) + "\t"
-                    + result.runtime;
+                    + result.runtime + "\t"
+                    + result.iterations + "\t"
+                    + result.purity;
             try {
                 bufferedWriter.newLine();
                 bufferedWriter.write(stringToWrite);
@@ -206,13 +226,7 @@ public class BenchmarkResults extends javax.swing.JFrame {
     public String promptFilepath() {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setDialogTitle("Choose where to save");
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        //
-        // disable the "All files" option.
-        //
-        chooser.setAcceptAllFileFilterUsed(false);
-        //    
+        chooser.setDialogTitle("Choose where to save"); 
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             return chooser.getSelectedFile().getPath();
         } else {
@@ -221,6 +235,7 @@ public class BenchmarkResults extends javax.swing.JFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_close;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton printBtn;

@@ -5,12 +5,18 @@
  */
 package GUI;
 
+import Evaluation.EvaluationWrapper;
 import Evaluation.Result;
 import GroupOnFrequency.Grouper;
 import Kmeans.Centroid;
 import Kmeans.Clustering;
+import analyzertfidf.Keywords;
+import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
+import analyzertfidf.TextProcessor;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -23,7 +29,9 @@ public class BenchmarkOptions extends javax.swing.JFrame {
     private static final String classicCorpus = "./resources/classicCorpus";
     private static final String twentyCorpus = "./resources/twentyCorpus";
     private Clustering clustering = new Clustering();
+    private EvaluationWrapper evaluation = new EvaluationWrapper();
     private final Grouper grouper = new Grouper();
+    private final TextProcessor tp = new TextProcessor();
     private String corpus;
 
     /**
@@ -31,6 +39,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
      */
     public BenchmarkOptions() {
         initComponents();
+        
         //Add radiobuttons to button group.
         corpusBtnGroups.add(englishCorpusRadioBtn);
         corpusBtnGroups.add(danishCorpusRadioBtn);
@@ -63,8 +72,9 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         clustersTxtBx = new javax.swing.JTextField();
         iterationTxtBx = new javax.swing.JTextField();
-        similarityTxtBx = new javax.swing.JTextField();
         clusterBtn = new javax.swing.JButton();
+        combobox_similarity = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,10 +125,23 @@ public class BenchmarkOptions extends javax.swing.JFrame {
 
         jLabel6.setText("Minimum similarity");
 
+        clustersTxtBx.setText("3");
+
+        iterationTxtBx.setText("50");
+
         clusterBtn.setText("Cluster");
         clusterBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clusterBtnActionPerformed(evt);
+            }
+        });
+
+        combobox_similarity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9" }));
+
+        jButton1.setText("Close");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -128,40 +151,46 @@ public class BenchmarkOptions extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(statusLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(danishCorpusRadioBtn)
-                                    .addComponent(englishCorpusRadioBtn)
-                                    .addComponent(classicCorpusRadioBtn, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(twentyCorpusRadioBtn, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(chooseFolderRadioBtn, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(40, 40, 40)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(184, 184, 184))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(danishCorpusRadioBtn)
+                                            .addComponent(englishCorpusRadioBtn)
+                                            .addComponent(classicCorpusRadioBtn, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(twentyCorpusRadioBtn, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(chooseFolderRadioBtn, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addGap(40, 40, 40)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(clusterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(clusterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(similarityTxtBx)
-                    .addComponent(iterationTxtBx)
-                    .addComponent(clustersTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(iterationTxtBx)
+                                .addComponent(clustersTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(combobox_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(statusLabel))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusLabel)
-                .addGap(27, 27, 27)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
@@ -178,7 +207,8 @@ public class BenchmarkOptions extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(classicCorpusRadioBtn)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(combobox_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(twentyCorpusRadioBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -186,10 +216,8 @@ public class BenchmarkOptions extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(clustersTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(iterationTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(similarityTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addComponent(iterationTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(clusterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -200,15 +228,11 @@ public class BenchmarkOptions extends javax.swing.JFrame {
     private void clusterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clusterBtnActionPerformed
         if (corpus != null) {
             
-            //Texts
-            ArrayList<Text> corpusTexts;
-            ArrayList<Text> corpusTextsMCW;
-
             //Read files
             statusLabel.setText("Reading files..");
-            corpusTexts = readFiles(corpus);
-            corpusTextsMCW = readFilesMCW(corpus);
-
+            ArrayList<Text> corpusTexts = readFiles(corpus, false);
+            ArrayList<Text> corpusTextsMCW = readFiles(corpus, true);
+            statusLabel.setText("Clustering....");
             ArrayList<Result> results = cluster(corpusTexts, corpusTextsMCW);
             new BenchmarkResults(results).setVisible(true);
         }
@@ -236,6 +260,10 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         // TODO show a filechooser to set equal to corpus;
         //corpus = filechooser.filename();
     }//GEN-LAST:event_chooseFolderRadioBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,32 +302,36 @@ public class BenchmarkOptions extends javax.swing.JFrame {
 
     private ArrayList<Result> cluster(ArrayList<Text> corpusTexts, ArrayList<Text> corpusTextsMCW) {
         ArrayList<Result> results = new ArrayList<>();
-
-        statusLabel.setText("Clustering with k means plain");
+        int clusters = Integer.parseInt(clustersTxtBx.getText());
+        int maxIterations = Integer.parseInt(iterationTxtBx.getText());
+        double minSimilarity = Double.parseDouble(combobox_similarity.getSelectedItem().toString());
+        clustering.setParameters(maxIterations, minSimilarity);
+        
+       System.out.println("Clustering with k means plain");
         long start = System.currentTimeMillis();
-        ArrayList<Centroid> resultKmeans = clustering.prepareCluster(Integer.parseInt(clustersTxtBx.getText()), corpusTexts, false);
+        ArrayList<Centroid> resultKmeans = clustering.prepareCluster(clusters, corpusTexts, false);
         long end = System.currentTimeMillis();
-        results.add(new Result(resultKmeans, start - end, "K means plain"));
-        statusLabel.setText("Clustering with k without most common words");
+        results.add(new Result(resultKmeans, end - start, "K means plain", clustering.globalCounter, evaluation.getAvgPurity(resultKmeans)));
+        System.out.println("Clustering with k without most common words");
         start = System.currentTimeMillis();
-        ArrayList<Centroid> resultKmeansMCW = clustering.prepareCluster(Integer.parseInt(clustersTxtBx.getText()), corpusTextsMCW, false);
+        ArrayList<Centroid> resultKmeansMCW = clustering.prepareCluster(clusters, corpusTextsMCW, false);
         end = System.currentTimeMillis();
-        results.add(new Result(resultKmeansMCW, start - end, "K means MCW"));
-        statusLabel.setText("Grouping on word frequency");
+        results.add(new Result(resultKmeansMCW, end - start, "K means MCW", clustering.globalCounter, evaluation.getAvgPurity(resultKmeansMCW)));
+        System.out.println("Grouping on word frequency");
         start = System.currentTimeMillis();
-        ArrayList<Centroid> resultGrouper = grouper.group(corpusTexts);
+        ArrayList<Centroid> resultGrouper = grouper.group(corpusTexts, clusters);
         end = System.currentTimeMillis();
-        results.add(new Result(resultGrouper, start - end, "Grouping"));
-        statusLabel.setText("Grouping on word frequency without most common words");
+        results.add(new Result(resultGrouper, start - end, "Grouping", grouper.counter, evaluation.getAvgPurity(resultGrouper)));
+        System.out.println("Grouping on word frequency without most common words");
         start = System.currentTimeMillis();
-        ArrayList<Centroid> resultGrouperMCW = grouper.group(corpusTextsMCW);
+        ArrayList<Centroid> resultGrouperMCW = grouper.group(corpusTextsMCW, clusters);
         end = System.currentTimeMillis();
-        results.add(new Result(resultGrouperMCW, start - end, "Grouping MCW"));
-        statusLabel.setText("Clustering with kmeans with better start");
+        results.add(new Result(resultGrouperMCW, end - start, "Grouping MCW", grouper.counter, evaluation.getAvgPurity(resultGrouperMCW)));
+        System.out.println("Clustering with kmeans with better start");
         start = System.currentTimeMillis();
-        ArrayList<Centroid> resultKmeansPlus = grouper.group(corpusTexts);
+        ArrayList<Centroid> resultKmeansPlus = clustering.prepareCluster(clusters, corpusTexts, true);
         end = System.currentTimeMillis();
-        results.add(new Result(resultKmeansPlus, start - end, "K means better start"));
+        results.add(new Result(resultKmeansPlus, end - start, "K means better start", clustering.globalCounter, evaluation.getAvgPurity(resultKmeansPlus)));
         return results;
     }
 
@@ -308,25 +340,102 @@ public class BenchmarkOptions extends javax.swing.JFrame {
     private javax.swing.JRadioButton classicCorpusRadioBtn;
     private javax.swing.JButton clusterBtn;
     private javax.swing.JTextField clustersTxtBx;
+    private javax.swing.JComboBox combobox_similarity;
     private javax.swing.ButtonGroup corpusBtnGroups;
     private javax.swing.JRadioButton danishCorpusRadioBtn;
     private javax.swing.JRadioButton englishCorpusRadioBtn;
     private javax.swing.JTextField iterationTxtBx;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField similarityTxtBx;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JRadioButton twentyCorpusRadioBtn;
     // End of variables declaration//GEN-END:variables
 
-    private ArrayList<Text> readFiles(String corpus) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private ArrayList<Text> readFiles(String filePath, boolean withoutMostCommon) {
+
+        ArrayList<Text> tempTexts = new ArrayList<>();
+
+        if (withoutMostCommon) {
+            File[] files = new File(filePath).listFiles();
+            showFilesWithout(files, tempTexts);
+        } else {
+            System.out.println("Filepath: " + filePath);
+            File[] files = new File(filePath).listFiles();
+            showFiles(files, tempTexts);
+        }
+
+        ArrayList<Text> texts = calculateTFDIF(tempTexts);
+        
+
+
+        return texts;
+    }
+    private void showFilesWithout(File[] files, ArrayList<Text> texts) {
+        for (File file : files) {
+
+            if (file.isDirectory()) {
+                System.out.println("Directory: " + file.getName());
+                showFiles(file.listFiles(), texts); // Calls same method again.
+            } else if (!file.getName().contains("DS_Store")) {
+                System.out.println("File: " + file.getName());
+                //Read corpus files
+                HashMap<String, Integer> tempMap;
+
+                tempMap = tp.readFileWith100MostCommon(file.getPath());
+                texts.add(new Text(file.getName(), new Keywords(tempMap), file.getPath()));
+            }
+        }
     }
 
-    private ArrayList<Text> readFilesMCW(String corpus) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void showFiles(File[] files, ArrayList<Text> texts) {
+        for (File file : files) {
+
+            if (file.isDirectory()) {
+                System.out.println("Directory: " + file.getName());
+                showFiles(file.listFiles(), texts); // Calls same method again.
+            } else if (!file.getName().contains("DS_Store")) {
+                System.out.println("File: " + file.getName());
+                //Read corpus files
+                HashMap<String, Integer> tempMap;
+
+                tempMap = tp.readFileActual(file.getPath());
+                texts.add(new Text(file.getName(), new Keywords(tempMap), file.getPath()));
+            }
+        }
+    }
+     private ArrayList<Text> calculateTFDIF(ArrayList<Text> texts) {
+        TFIDF calculator = new TFIDF();
+        HashMap<String, Double> termWeightMap;
+        System.out.println("-- IF-IDF weight processing --");
+
+        for (Text t : texts) {
+            termWeightMap = new HashMap<>();
+
+            for (HashMap.Entry<String, Integer> entry : t.keywords.keywordMap.entrySet()) {
+                termWeightMap.put(entry.getKey(), calculator.calculateTFIDF(entry.getKey(), t, texts));
+            }
+
+            t.keywords.keywordTFIDFMap = termWeightMap;
+        }
+
+        //Initialize vectorspace in all texts
+        for (Text t : texts) {
+//            System.out.println(t.fileName + " size = " + calculator.termIDF.size());
+            t.vectorSpace = new Double[calculator.termIDF.size()];
+            int count = 0;
+            for (String s : calculator.termIDF.keySet()) {
+                if (t.keywords.keywordTFIDFMap.containsKey(s)) {
+                    t.vectorSpace[count] = t.keywords.keywordTFIDFMap.get(s);
+                } else {
+                    t.vectorSpace[count] = 0.0;
+                }
+                count++;
+            }
+        }
+        return texts;
     }
 }
