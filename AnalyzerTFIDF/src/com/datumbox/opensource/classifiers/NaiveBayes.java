@@ -172,7 +172,7 @@ public class NaiveBayes {
         knowledgeBase.d = featureStats.featureCategoryJointCount.size(); //number of features
         
         
-        //check is prior probabilities are given
+        //check if prior probabilities are given
         if(categoryPriors==null) { 
             //if not estimate the priors from the sample
             knowledgeBase.c = featureStats.categoryCounts.size(); //number of cateogries
@@ -212,7 +212,7 @@ public class NaiveBayes {
             }
         }
         
-        //We are performing laplace smoothing (also known as add-1). This requires to estimate the total feature occurrences in each category
+        //We are performing laplace smoothing (also known as add-1). This is required to estimate the total feature occurrences in each category
         Map<String, Double> featureOccurrencesInCategory = new HashMap<>();
         
         Integer occurrences;
