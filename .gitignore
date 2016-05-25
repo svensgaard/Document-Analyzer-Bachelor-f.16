@@ -43,5 +43,6 @@ hs_err_pid*
 /AnalyzerTFIDF/nbproject/private/
 /AnalyzerTFIDF/dist/
 /AnalyzerTFIDF/TextAnalyzer/build/
+/AnalyzerTFIDF/build/
 /AnalyzerTFIDF/TextAnalyzer/build/built-jar.properties
 /AnalyzerTFIDF/TextAnalyzer/dist/
