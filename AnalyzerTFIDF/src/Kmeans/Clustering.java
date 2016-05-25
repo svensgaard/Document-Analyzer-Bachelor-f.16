@@ -7,11 +7,9 @@ package Kmeans;
 
 import Evaluation.EvaluationWrapper;
 import analyzertfidf.Text;
-import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -20,18 +18,28 @@ import java.util.Random;
  */
 public class Clustering {
 
-    private int globalCounter = 0;
+    public int globalCounter = 0;
     public int publicCounter;
     private final SimilarityMatrics simMatrics = new SimilarityMatrics();
     private final EvaluationWrapper evaluation = new EvaluationWrapper();
-    private final int MAX_ITERATIONS = 500;
-    private final double MIN_SIMILARITY = 0.61;
+    private int MAX_ITERATIONS = 50;
+    private double MIN_SIMILARITY = 0.6;
+    private double currentSimilarity = 0;
 
-    //k is number of clusters.
+    public void setParameters(int max_iterations, double min_similarity) {
+        MAX_ITERATIONS = max_iterations;
+        MIN_SIMILARITY = min_similarity;
+    }
+    
+    public void setMinSimilarity(double min) {
+        MIN_SIMILARITY = min;
+    }
+
+//k is number of clusters.
     public ArrayList<Centroid> prepareCluster(int k, ArrayList<Text> texts, boolean betterStart) {
+        long start = System.currentTimeMillis();
         globalCounter = 0;
         ArrayList<Centroid> centroids;
-        
 
         Boolean stop;
         ArrayList<Centroid> result;
@@ -50,7 +58,8 @@ public class Clustering {
             if (!stop) {
                 result = InitializeClusterCentroid(centroids.size());
             }
-            if (evaluation.getAvgSimilarity(result) < MIN_SIMILARITY) {
+            currentSimilarity = evaluation.getAvgSimilarity(result);
+            if (currentSimilarity < MIN_SIMILARITY) {
                 if (globalCounter < MAX_ITERATIONS) {
                     stop = false;
                     centroids = initialize(texts, k, betterStart);
@@ -60,12 +69,42 @@ public class Clustering {
             }
         } while (stop == false);
 
+        long end = System.currentTimeMillis();
+        System.out.println("Clustering running time: " + (end - start) + "ms");
+
+        int i = 1;
+        for (Centroid c : result) {
+            c.name = "Centroid" + i;
+            i++;
+        }
+
         return result;
 
     }
 
-    //Is this method really necessary?
-    //TODO clean up.
+    public ArrayList<Centroid> prepareClusterIncrement(ArrayList<Text> texts, boolean betterStart) {
+        long start = System.currentTimeMillis();
+        System.out.println("TOTAL TEXTS: " + texts.size() + "\n");
+        int totalCentroids = 1;
+        ArrayList<Centroid> result;
+
+        do {
+            result = prepareCluster(totalCentroids, texts, betterStart);
+            System.out.println("Total centroids: " + totalCentroids
+                    + "Minimum similarity: " + MIN_SIMILARITY
+                    + "Current Similarity: " + currentSimilarity + "\n");
+            if (currentSimilarity < MIN_SIMILARITY) {
+                totalCentroids++;
+            }
+        } while (currentSimilarity < MIN_SIMILARITY);
+        System.out.println("CLUSTERING DONE\n"
+                + "RESULT:\n"
+                + "Total centroids: " + totalCentroids
+                + "\tMinimum similarity: " + MIN_SIMILARITY
+                + "\tCurrent Similarity: " + currentSimilarity + "\n");
+        return result;
+    }
+
     private ArrayList<Centroid> InitializeClusterCentroid(int size) {
         Centroid c;
         ArrayList<Centroid> centroid = new ArrayList<>();
@@ -80,18 +119,17 @@ public class Clustering {
 
     public int FindClosestClusterCenter(ArrayList<Centroid> centroids, Text t) {
         SimilarityMatrics similarityMatrics = new SimilarityMatrics();
-        Double[] tfdif = new Double[centroids.size()];
+        Double[] similarities = new Double[centroids.size()];
         for (int i = 0; i < centroids.size(); i++) {
-
 //            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).GroupedDocument.get(0).getVectorSpace(), t.getVectorSpace());
-            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace()); //BEST RESULTS
+            similarities[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace()); //BEST RESULTS
         }
-
+        //Evaluate the maximum 
         int index = 0;
-        Double maxFound = tfdif[0];
-        for (int i = 0; i < tfdif.length; i++) {
-            if (tfdif[i] < maxFound) {
-                maxFound = tfdif[i];
+        Double maxFound = similarities[0];
+        for (int i = 0; i < similarities.length; i++) {
+            if (similarities[i] < maxFound) {
+                maxFound = similarities[i];
                 index = i;
             }
         }
@@ -130,13 +168,18 @@ public class Clustering {
             do {
                 if (centroids.get(index).GroupedDocument.isEmpty() && previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
                     index++;
+                    System.out.println("INDEX: " + index);
+                    System.out.println("CHANGEINDEX LENGHT: " + changeIndex.length);
                     changeIndex[index] = 0;
                 } else if (!centroids.get(index).GroupedDocument.isEmpty() && !previousClusterCenter.get(index).GroupedDocument.isEmpty()) {
                     for (int k = 0; k < centroids.get(index).getAverageVector().length; k++) {
 //                        if (centroids.get(index).GroupedDocument.get(0).getVectorSpace()[k].equals(previousClusterCenter.get(index).GroupedDocument.get(0).getVectorSpace()[k])) {
                         if (!centroids.get(index).getAverageVector()[k].equals(previousClusterCenter.get(index).getAverageVector()[k])) { //Change back to document[0].getvectorspace if bad results.
-                            changeIndex[index] = 1;
-                        } 
+//                            changeIndex[index] = 1;
+                            return true;
+                        } else {
+                            changeIndex[index] = 0;
+                        }
                     }
 //                    if (count == centroids.get(index).GroupedDocument.get(0).getVectorSpace().length) {
 //                    if (count == centroids.get(index).getAverageVector().length) {
@@ -153,33 +196,14 @@ public class Clustering {
             } while (index < centroids.size());
 //            If any index contains 1
             for (int i : changeIndex) {
+                System.out.println("i: " + i);
                 if (i == 1) {
                     stop = true;
                 }
             }
         }
-        
+
         return stop;
-    }
-
-    //Uses the average vectorspacemodel instead of the centroids.
-    public int findClosestClusterAverage(ArrayList<Centroid> centroids, Text t) {
-        SimilarityMatrics similarityMatrics = new SimilarityMatrics();
-        Double[] tfdif = new Double[centroids.size()];
-        for (int i = 0; i < centroids.size(); i++) {
-            tfdif[i] = similarityMatrics.findCosineSimilarity(centroids.get(i).getAverageVector(), t.getVectorSpace());
-        }
-
-        int index = 0;
-        Double maxFound = tfdif[0];
-        for (int i = 0; i < tfdif.length; i++) {
-            if (tfdif[i] < maxFound) {
-
-                maxFound = tfdif[i];
-                index = i;
-            }
-        }
-        return index;
     }
 
     //Choose better inital centroids
@@ -219,7 +243,7 @@ public class Clustering {
             if (i != firstPointIndex) { // That point isn't considered
 //                double d = firstPoint.distanceFrom(pointList.get(i));
                 double d = simMatrics.findCosineSimilarity(firstPoint.getVectorSpace(), pointList.get(i).getVectorSpace());
-                minDistSquared[i] = d * d;
+                minDistSquared[i] = d * 2;
             }
         }
 
@@ -308,7 +332,7 @@ public class Clustering {
         Centroid x;
         ArrayList<Centroid> centroids = new ArrayList<>();
         if (betterStart) {
-            //Use chooseinitialCenters method which is not entirely random
+            //Use chooseinitialCenters method which is not just random
             for (Text t : chooseInitialCenters(texts, k)) {
                 x = new Centroid();
                 x.GroupedDocument = new ArrayList<>();

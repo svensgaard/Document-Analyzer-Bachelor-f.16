@@ -46,9 +46,9 @@ public class Centroid {
 
     public Double[] getAverageVector() {
         if (averageVector == null) { //If null calculate it, else just return it. Saves calculations
-
+            
             if (GroupedDocument.size() > 0) {
-                averageVector = new Double[GroupedDocument.get(0).vectorSpace.length];
+                averageVector = new Double[findLongestLength()];
             } else {
                 averageVector = new Double[0];
             }
@@ -59,7 +59,7 @@ public class Centroid {
             //Add the total
             int count = 0;
             for (Text t : GroupedDocument) {
-                for (int i = 0; i < averageVector.length; i++) {
+                for (int i = 0; i < t.vectorSpace.length; i++) {                    
                     averageVector[i] += t.vectorSpace[i];
                 }
                 count++;
@@ -139,6 +139,15 @@ public class Centroid {
         }
     }
 
+    private int findLongestLength() {
+        int max = 0;
+        for(Text t : GroupedDocument) {
+            if(t.vectorSpace.length > max) {
+                max = t.vectorSpace.length;
+            }
+        }
+        return max;
+    }
     @Override
     public String toString() {
         return name;
