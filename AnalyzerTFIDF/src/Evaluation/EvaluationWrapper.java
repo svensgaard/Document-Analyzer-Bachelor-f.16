@@ -105,7 +105,10 @@ public class EvaluationWrapper {
         double sum = 0.0;
         
         for (Centroid c : result) {
-            sum += c.getPurity();
+            if(!c.GroupedDocument.isEmpty()) {
+                sum += c.getPurity();
+            }
+            
         }
         
         double avgPurity = sum / result.size();

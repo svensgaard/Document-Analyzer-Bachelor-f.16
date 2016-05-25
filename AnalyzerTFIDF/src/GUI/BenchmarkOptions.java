@@ -14,9 +14,18 @@ import analyzertfidf.Keywords;
 import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
 import analyzertfidf.TextProcessor;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -75,6 +84,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         clusterBtn = new javax.swing.JButton();
         combobox_similarity = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
+        resultBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,6 +155,13 @@ public class BenchmarkOptions extends javax.swing.JFrame {
             }
         });
 
+        resultBtn.setText("Generate results");
+        resultBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resultBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,9 +174,6 @@ public class BenchmarkOptions extends javax.swing.JFrame {
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(184, 184, 184))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(danishCorpusRadioBtn)
@@ -167,7 +181,14 @@ public class BenchmarkOptions extends javax.swing.JFrame {
                                             .addComponent(classicCorpusRadioBtn, javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(twentyCorpusRadioBtn, javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(chooseFolderRadioBtn, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGap(40, 40, 40)))
+                                        .addGap(40, 40, 40))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(33, 33, 33)
+                                                .addComponent(resultBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(77, 77, 77)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel3)
@@ -218,7 +239,9 @@ public class BenchmarkOptions extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(iterationTxtBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(clusterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(clusterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resultBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -264,6 +287,31 @@ public class BenchmarkOptions extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void resultBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resultBtnActionPerformed
+        if (corpus != null) {
+            
+            //Read files
+            statusLabel.setText("Reading files..");
+            ArrayList<Text> corpusTexts = readFiles(corpus, false);
+            ArrayList<Text> corpusTextsMCW = readFiles(corpus, true);
+            statusLabel.setText("Clustering....");
+            ArrayList<ArrayList<Result>> resultList = new ArrayList<>();
+            for(int i = 0; i < 20;i++) {
+                ArrayList<Result> results = cluster(corpusTexts, corpusTextsMCW);
+                resultList.add(results);
+            }
+            //Write to file
+            String filepath = promptFilepath();
+            try {
+                writeResultToFile(resultList, filepath);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(BenchmarkOptions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(BenchmarkOptions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_resultBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,16 +365,16 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         ArrayList<Centroid> resultKmeansMCW = clustering.prepareCluster(clusters, corpusTextsMCW, false);
         end = System.currentTimeMillis();
         results.add(new Result(resultKmeansMCW, end - start, "K means MCW", clustering.globalCounter, evaluation.getAvgPurity(resultKmeansMCW)));
-        System.out.println("Grouping on word frequency");
-        start = System.currentTimeMillis();
-        ArrayList<Centroid> resultGrouper = grouper.group(corpusTexts, clusters);
-        end = System.currentTimeMillis();
-        results.add(new Result(resultGrouper, start - end, "Grouping", grouper.counter, evaluation.getAvgPurity(resultGrouper)));
-        System.out.println("Grouping on word frequency without most common words");
-        start = System.currentTimeMillis();
-        ArrayList<Centroid> resultGrouperMCW = grouper.group(corpusTextsMCW, clusters);
-        end = System.currentTimeMillis();
-        results.add(new Result(resultGrouperMCW, end - start, "Grouping MCW", grouper.counter, evaluation.getAvgPurity(resultGrouperMCW)));
+//        System.out.println("Grouping on word frequency");
+//        start = System.currentTimeMillis();
+//        ArrayList<Centroid> resultGrouper = grouper.group(corpusTexts, clusters);
+//        end = System.currentTimeMillis();
+//        results.add(new Result(resultGrouper, start - end, "Grouping", grouper.counter, evaluation.getAvgPurity(resultGrouper)));
+//        System.out.println("Grouping on word frequency without most common words");
+//        start = System.currentTimeMillis();
+//        ArrayList<Centroid> resultGrouperMCW = grouper.group(corpusTextsMCW, clusters);
+//        end = System.currentTimeMillis();
+//        results.add(new Result(resultGrouperMCW, end - start, "Grouping MCW", grouper.counter, evaluation.getAvgPurity(resultGrouperMCW)));
         System.out.println("Clustering with kmeans with better start");
         start = System.currentTimeMillis();
         ArrayList<Centroid> resultKmeansPlus = clustering.prepareCluster(clusters, corpusTexts, true);
@@ -351,6 +399,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JButton resultBtn;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JRadioButton twentyCorpusRadioBtn;
     // End of variables declaration//GEN-END:variables
@@ -413,6 +462,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         System.out.println("-- IF-IDF weight processing --");
 
         for (Text t : texts) {
+            System.out.println("Calculating tf-idf for text " + t.fileName);
             termWeightMap = new HashMap<>();
 
             for (HashMap.Entry<String, Integer> entry : t.keywords.keywordMap.entrySet()) {
@@ -424,6 +474,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
 
         //Initialize vectorspace in all texts
         for (Text t : texts) {
+            System.out.println("Initializing vectorspace for  " + t.fileName);
 //            System.out.println(t.fileName + " size = " + calculator.termIDF.size());
             t.vectorSpace = new Double[calculator.termIDF.size()];
             int count = 0;
@@ -437,5 +488,46 @@ public class BenchmarkOptions extends javax.swing.JFrame {
             }
         }
         return texts;
+    }
+     private void writeResultToFile(ArrayList<ArrayList<Result>> resultList, String filepath) throws UnsupportedEncodingException, FileNotFoundException, IOException {
+        FileWriter fileWriter = new FileWriter(filepath+".txt");
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        String headers = "Mehtod \t Purity \t Runtime";
+        bufferedWriter.write(headers);
+        for(ArrayList<Result> result : resultList) {
+            for (Result r : result) {
+                for (Centroid c : r.result) {
+                    System.out.println("Centroid");
+                    for (Text t : c.GroupedDocument) {
+                        System.out.println(t.fileName);
+                    }
+                }
+            String stringToWrite = r.method + "\t"
+                    + r.purity + "\t"
+                    + r.runtime + "\t"
+                    ;
+            try {
+                bufferedWriter.newLine();
+                bufferedWriter.write(stringToWrite);
+
+            } catch (IOException ex) {
+            }
+        }
+        }
+        
+        bufferedWriter.close();
+
+    }
+
+    public String promptFilepath() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Choose where to save"); 
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            return chooser.getSelectedFile().getPath();
+        } else {
+            System.out.println("No Selection ");
+            return "";
+        }
     }
 }
