@@ -16,11 +16,9 @@ public class Result {
     public ArrayList<Centroid> result;
     public long runtime;
     public String method;
-    public int iterations;
-    public Result(ArrayList<Centroid> result, long runtime, String method, int iterations) {
+    public Result(ArrayList<Centroid> result, long runtime, String method) {
         this.result = result;
         this.runtime = runtime;
         this.method = method;
-        this.iterations = iterations;
     }
 }
