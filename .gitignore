@@ -41,14 +41,6 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /AnalyzerTFIDF/nbproject/private/
-/AnalyzerTFIDF/build/
-*.properties
-AnalyzerTFIDF/nbproject/genfiles.properties
-*.xml
-AnalyzerTFIDF/nbproject/project.xml
-/AnalyzerTFIDF/nbproject/
-AnalyzerTFIDF/nbproject/genfiles.properties
-AnalyzerTFIDF/nbproject/project.properties
 /AnalyzerTFIDF/dist/
 /AnalyzerTFIDF/TextAnalyzer/build/
 /AnalyzerTFIDF/TextAnalyzer/dist/
