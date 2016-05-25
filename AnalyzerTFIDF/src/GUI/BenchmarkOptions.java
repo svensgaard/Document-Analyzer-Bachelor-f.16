@@ -412,7 +412,6 @@ public class BenchmarkOptions extends javax.swing.JFrame {
             File[] files = new File(filePath).listFiles();
             showFilesWithout(files, tempTexts);
         } else {
-            System.out.println("Filepath: " + filePath);
             File[] files = new File(filePath).listFiles();
             showFiles(files, tempTexts);
         }
@@ -435,7 +434,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
                 HashMap<String, Integer> tempMap;
 
                 tempMap = tp.readFileWith100MostCommon(file.getPath());
-                texts.add(new Text(file.getName(), new Keywords(tempMap), file.getPath()));
+                texts.add(new Text(file.getName(), new Keywords(tempMap), file.getPath(), file.getParentFile().getName()));
             }
         }
     }
@@ -452,7 +451,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
                 HashMap<String, Integer> tempMap;
 
                 tempMap = tp.readFileActual(file.getPath());
-                texts.add(new Text(file.getName(), new Keywords(tempMap), file.getPath()));
+                texts.add(new Text(file.getName(), new Keywords(tempMap), file.getPath(), file.getParentFile().getName()));
             }
         }
     }
@@ -462,7 +461,6 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         System.out.println("-- IF-IDF weight processing --");
 
         for (Text t : texts) {
-            System.out.println("Calculating tf-idf for text " + t.fileName);
             termWeightMap = new HashMap<>();
 
             for (HashMap.Entry<String, Integer> entry : t.keywords.keywordMap.entrySet()) {
@@ -474,7 +472,6 @@ public class BenchmarkOptions extends javax.swing.JFrame {
 
         //Initialize vectorspace in all texts
         for (Text t : texts) {
-            System.out.println("Initializing vectorspace for  " + t.fileName);
 //            System.out.println(t.fileName + " size = " + calculator.termIDF.size());
             t.vectorSpace = new Double[calculator.termIDF.size()];
             int count = 0;
@@ -496,12 +493,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         bufferedWriter.write(headers);
         for(ArrayList<Result> result : resultList) {
             for (Result r : result) {
-                for (Centroid c : r.result) {
-                    System.out.println("Centroid");
-                    for (Text t : c.GroupedDocument) {
-                        System.out.println(t.fileName);
-                    }
-                }
+                
             String stringToWrite = r.method + "\t"
                     + r.purity + "\t"
                     + r.runtime + "\t"
