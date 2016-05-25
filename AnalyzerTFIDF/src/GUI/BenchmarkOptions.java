@@ -14,7 +14,6 @@ import analyzertfidf.Keywords;
 import analyzertfidf.TFIDF;
 import analyzertfidf.Text;
 import analyzertfidf.TextProcessor;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;

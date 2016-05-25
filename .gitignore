@@ -50,4 +50,8 @@ AnalyzerTFIDF/nbproject/project.xml
 #AnalyzerTFIDF/nbproject/project.properties
 /AnalyzerTFIDF/dist/
 /AnalyzerTFIDF/TextAnalyzer/build/
+/AnalyzerTFIDF/build/
+/AnalyzerTFIDF/TextAnalyzer/build/built-jar.properties
 /AnalyzerTFIDF/TextAnalyzer/dist/
+
+*.properties
