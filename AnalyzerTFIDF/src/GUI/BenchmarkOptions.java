@@ -296,7 +296,7 @@ public class BenchmarkOptions extends javax.swing.JFrame {
             ArrayList<Text> corpusTextsMCW = readFiles(corpus, true);
             statusLabel.setText("Clustering....");
             ArrayList<ArrayList<Result>> resultList = new ArrayList<>();
-            for(int i = 0; i < 20;i++) {
+            for(int i = 0; i < 25;i++) {
                 ArrayList<Result> results = cluster(corpusTexts, corpusTextsMCW);
                 resultList.add(results);
             }
@@ -379,6 +379,13 @@ public class BenchmarkOptions extends javax.swing.JFrame {
         ArrayList<Centroid> resultKmeansPlus = clustering.prepareCluster(clusters, corpusTexts, true);
         end = System.currentTimeMillis();
         results.add(new Result(resultKmeansPlus, end - start, "K means better start", clustering.globalCounter, evaluation.getAvgPurity(resultKmeansPlus)));
+        System.out.println("Clustering with kmeans with incremental");
+        start = System.currentTimeMillis();
+        ArrayList<Centroid> resultKmeansIncremental = clustering.prepareClusterIncrement(corpusTexts, true);//Use better start?
+        end = System.currentTimeMillis();
+        results.add(new Result(resultKmeansIncremental, end - start, "K means incremental", clustering.globalCounter, evaluation.getAvgPurity(resultKmeansIncremental)));
+        
+        
         return results;
     }
 
