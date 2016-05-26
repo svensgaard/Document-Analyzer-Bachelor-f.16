@@ -1,5 +1,6 @@
 # Text documents
-*.txt
+#*.txt
+/AnalyzerTFIDF/resources/datasets/
 
 # Compiled Object files
 *.slo
@@ -49,9 +50,5 @@ AnalyzerTFIDF/nbproject/project.xml
 #AnalyzerTFIDF/nbproject/genfiles.properties
 #AnalyzerTFIDF/nbproject/project.properties
 /AnalyzerTFIDF/dist/
-/AnalyzerTFIDF/TextAnalyzer/build/
 /AnalyzerTFIDF/build/
-/AnalyzerTFIDF/TextAnalyzer/build/built-jar.properties
-/AnalyzerTFIDF/TextAnalyzer/dist/
-
-*.properties
+/AnalyzerTFIDF/build/built-jar.properties
