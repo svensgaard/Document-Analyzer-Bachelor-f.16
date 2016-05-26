@@ -117,6 +117,7 @@ public class Clustering {
 
     }
 
+    // force commit
     public int FindClosestClusterCenter(ArrayList<Centroid> centroids, Text t) {
         SimilarityMatrics similarityMatrics = new SimilarityMatrics();
         Double[] similarities = new Double[centroids.size()];
