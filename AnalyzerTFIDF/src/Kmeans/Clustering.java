@@ -137,6 +137,7 @@ public class Clustering {
 
     }
 
+    // force commit
     public int FindClosestClusterCenter(ArrayList<Centroid> centroids, Text t) {
         long start = System.currentTimeMillis();
         SimilarityMatrics similarityMatrics = new SimilarityMatrics();
