@@ -59,7 +59,7 @@ public class EvaluationWrapper {
 
     }
 
-    private double getDistance(Double[] vector1, Double[] vector2) {
+    public double getDistance(Double[] vector1, Double[] vector2) {
 
         double diff_square_sum = 0.0;
         if (vector1.length > 0 && vector2.length > 0) {
